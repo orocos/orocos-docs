@@ -42,6 +42,7 @@ Welcome to Orocos' documentation!
   :maxdepth: 1
 
   kdl/overview
+  kdl/examples
 
 .. toctree::
   :hidden:
