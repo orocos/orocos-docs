@@ -27,6 +27,7 @@ Welcome to Orocos' documentation!
   rtt/overview
   rtt/examples
   API reference <rtt/api>
+  Orocos Component Builders' Manual <rtt/orocos-components-manual>
 
 .. toctree::
   :hidden:
