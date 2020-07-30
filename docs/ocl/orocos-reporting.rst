@@ -46,7 +46,7 @@ written.
   :figclass: align-center
   :name: reporting-example
 
-Component Reporting Example
+  Component Reporting Example
 
 One can not use the ``OCL::ReportingComponent`` directly but must use a
 derived component which implements the method of writing out the data.

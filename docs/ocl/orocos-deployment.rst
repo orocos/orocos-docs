@@ -33,7 +33,7 @@ the DeploymentComponent.
   :figclass: align-center
   :name: component-deployment-overview
 
-Component Deployment Overview
+  Component Deployment Overview
 
 :numref:`component-deployment-overview` shows the basic steps. An
 XML file contains instructions for the DeploymentComponent where to look
@@ -185,17 +185,17 @@ three groups:
 -  How each component is setup
 
 Let's demonstrate this principle with a simple application example as
-shown in `figure\_title <#fig-deployment-example>`__. We want to setup
+shown in :numref:`deployment-example`. We want to setup
 an application with three components: a Reporting component, a
 'Controller' and a 'Plant'. The Plant component provides access to the
 hardware, the Controller component contains the control algorithm. The
 Reporting component is here to sense the values exchanged and write them
 to a file.
 
-.. figure:: images/deployment-example.png
+.. figure:: images/deployment-example.svg
   :align: center
   :figclass: align-center
-  :alt: Deployment Example Application
+  :name: deployment-example
 
   Deployment Example Application
 

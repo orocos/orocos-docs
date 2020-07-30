@@ -31,7 +31,6 @@ When the component is left, the ports are disconnected and removed.
 .. figure:: images/taskbrowsing.svg
   :align: center
   :figclass: align-center
-  :alt: Task Browsing
 
   Task Browsing
 
