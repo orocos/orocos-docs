@@ -28,6 +28,8 @@ Welcome to Orocos' documentation!
   rtt/examples
   API reference <rtt/api>
   Orocos Component Builders' Manual <rtt/orocos-components-manual>
+  rtt/orocos-rtt-plugins
+  rtt/orocos-typekit-plugin
 
 .. toctree::
   :hidden:
