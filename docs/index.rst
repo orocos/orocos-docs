@@ -33,7 +33,10 @@ Welcome to Orocos' documentation!
   :caption: Orocos Component Library (OCL)
   :maxdepth: 1
 
-  ocl/overview
+  ocl/ocl-overview
+  ocl/orocos-taskbrowser
+  ocl/orocos-reporting
+  ocl/orocos-deployment
   API reference <ocl/api>
 
 .. toctree::
