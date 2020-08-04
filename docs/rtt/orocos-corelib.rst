@@ -42,6 +42,8 @@ Activities, which execute functions in a thread, in the system. Signals
 allow synchronous callback functions to be executed when other
 primitives are used. Operations are used to expose services.
 
+.. _corelib-activities:
+
 Activities
 ==========
 
@@ -84,7 +86,7 @@ There are two ways to run a function in a periodically. By :
               // your init stuff
               myperiod = this->getActivity()->getPeriod();
               isperiodic = this->getActivity()->isPeriodic();
-              
+
               // ...
               return true; // if all went well
            }
@@ -116,7 +118,7 @@ There are two ways to run a function in a periodically. By :
          npactivity.run( &run_impl_2);
          activity.start(); // calls 'loop()'
 
-         // etc...  
+         // etc...
 
 -  Inheriting from an Activity class and overriding the initialize(),
    step() and finalize() methods.
@@ -151,7 +153,7 @@ There are two ways to run a function in a periodically. By :
 
          // When started, will call your step
          MyOtherPeriodicFunction activity;
-         activity.start();  
+         activity.start();
 
 The Activity will detect if it must run an external RunnableInterface.
 If none was given, it will call its own virtual methods.
@@ -173,19 +175,19 @@ functions in a derived class of Activity.
 ::
 
       int priority = 5;
-      
+
       RTT::base::RunnableInterface* blocking_activity = ...
       RTT::Activity activity( priority, blocking_activity );
       activity.start(); // calls blocking_activity->initialize()
 
-      // now blocking_activity->loop() is called in a thread with priority 5.  
+      // now blocking_activity->loop() is called in a thread with priority 5.
       // assume loop() finished...
 
       activity.start();  // executes again blocking_activity->loop()
 
       // calls blocking_activity->breakLoop() if loop() is still executing,
       // when loop() returned, calls blocking_activity->finalize() :
-      activity.stop(); 
+      activity.stop();
 
 The Activity behaves differently when being non periodic in the way
 start() and stop() work. Only the first invocation of start() will
@@ -222,7 +224,7 @@ scheduler.
 
       // Run in the default scheduler (not real-time):
       Activity other_act ( 0.01 );
-          
+
 
 Custom or Slave Activities
 --------------------------
@@ -250,7 +252,7 @@ the ``SlaveActivity`` can be constructed:
       master_one.start();  // start the master.
       slave_one.start();   // ok: master is running.
       slave_one.execute(); // ok: calls step(), repeat...
-      
+
       // Without master
       // a 'slave' without explicit master, with period of 1KHz.
       RTT::extras::SlaveActivity slave_two( 0.001 );
@@ -264,7 +266,7 @@ the ``SlaveActivity`` can be constructed:
       slave_three.start();   // start not periodic.
       slave_three.execute(); // ok, calls 'loop()', may block !
       // if loop() blocks, execute() blocks as well.
-        
+
 
 Note that although there may be a master, it is still the user's
 responsibility to get a pointer to the slave and call ``execute()``.
@@ -350,7 +352,7 @@ This example shows how a handler is connected to an Signal.
      };
 
      SafetyStopRobot safety;
-     
+
 
 Now we will connect the handler function to a signal. Each event-handler
 connection is stored in a Handle object, for later reference and
@@ -368,7 +370,7 @@ connection management.
      // boost::bind is a way to connect the method of an object instance to
      // an event.
      std::cout << "Register appropriate handlers to the Emergency Stop Signal\n";
-     emergencyHandle = 
+     emergencyHandle =
        emergencyStop.connect( bind( &SafetyStopRobot::handle_now, &safety));
      assert( emergencyHandle.connected() );
 
@@ -386,7 +388,7 @@ The program will output these messages:
          Register appropriate handlers to the Emergency Stop Signal
          Emit the event
           Putting the robot in a safe state fast !
-          
+
 
 If you want to find out how boost::bind works, see the Boost `bind
 manual <http://www.boost.org/libs/bind/bind.html>`__. You must use bind
@@ -396,7 +398,7 @@ function to an object :
 ::
 
       ClassName object;
-      boost::bind( &ClassName::FunctionName, &object)   
+      boost::bind( &ClassName::FunctionName, &object)
 
 Where ClassName::FunctionName must have the same signature as the
 Signal. When the Signal is called,
@@ -471,7 +473,7 @@ Signal connections can be managed by using a Handle which both
       // reconnect the function(s) :
       eh.connect();
       // connected again !
-        
+
 
 Handle objects can be copied and will all show the same status. To have
 a connection setup, but not connected, one can write :
@@ -488,7 +490,7 @@ a connection setup, but not connected, one can write :
       // now connect the function(s) :
       eh.connect();
       assert( eh.connected() );  // connected !
-        
+
 
 If you do not store the connection of setup(), the connection will never
 be established and no memory is leaked. If you do not use 'eh' to
@@ -526,7 +528,9 @@ Also take a look at the interface documentation.
       TimeService::ticks timestamp = RTT::os::TimeService::Instance()->getTicks();
       //...
 
-      Seconds elapsed = TimeService::Instance()->secondsSince( timestamp ); 
+      Seconds elapsed = TimeService::Instance()->secondsSince( timestamp );
+
+.. _corelib-attributes:
 
 Attributes
 ==========
@@ -545,11 +549,13 @@ since it allows a component to make internal data to its scripts.
       // an attribute, representing a double of value 1.0:
       RTT::Attribute<double> myAttr(1.0);
       myAttr.set( 10.9 );
-      double a = myAttr.get(); 
+      double a = myAttr.get();
 
       // read-only attribute:
       RTT::Constant<double> pi(3.14);
       double p = pi.get();
+
+.. _corelib-properties:
 
 Properties
 ==========
@@ -585,7 +591,7 @@ successfully using them in your Software Component.
 
           RTT::Property<double> myProp("Parameter A","A demo parameter", 1.0); // not real-time !
           myProp = 10.9; // real-time
-          double a = myProp.get(); // real-time  
+          double a = myProp.get(); // real-time
 
 Properties are mainly used for two purposes. First, they allow an
 external entity to browse their contents, as they can form hierarchies
@@ -640,7 +646,7 @@ copied upon initialisation:
       bag.add( &pc );
       bag.add( &bd );
 
-      // setup mirrors: 
+      // setup mirrors:
       RTT::Property<double> weight = bag.getProperty("Weight");
       assert( weight.ready() );
 
@@ -651,7 +657,7 @@ copied upon initialisation:
 
       RTT::Property<BirthDate> bd_bis;
       assert( ! bd_bis.ready() );
-      
+
       bd_bis = bag.getProperty("BirthDate");
       assert( bd_bis.ready() );
 
@@ -715,11 +721,11 @@ bounded time. It is not subject to priority inversions.
       // A Buffer may also contain a class, instead of the simple
       // double in this example
       // A buffer with size 10:
-      RTT::base::BufferLockFree<double> my_Buf( 10 ); 
+      RTT::base::BufferLockFree<double> my_Buf( 10 );
       if ( my_Buf.Push( 3.14 ) ) {
          // ok. not full.
       }
-      double  contents; 
+      double  contents;
       if ( my_Buf.Pop( contents ) ) {
          // ok. not empty.
          // contents == 3.14
@@ -743,11 +749,11 @@ creating and using a DataObject :
 
       // A DataObject may also contain a class, instead of the simple
       // double in this example
-      RTT::base::DataObjectLockFree<double> my_Do("MyData"); 
-      my_Do.Set( 3.14 ); 
-      double  contents; 
+      RTT::base::DataObjectLockFree<double> my_Do("MyData");
+      my_Do.Set( 3.14 );
+      double  contents;
       my_Do.Get( contents );   // contents == 3.14
-      contents  = my_Do.Get(); // equivalent  
+      contents  = my_Do.Get(); // equivalent
 
 The virtual ``RTT::base::DataObjectInterface`` interface provides the
 ``Get()`` and ``Set()`` methods that each DataObject must have.
