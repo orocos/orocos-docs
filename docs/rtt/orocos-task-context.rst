@@ -288,9 +288,9 @@ component, Hello.
     Hello [S]>
 
 
-    **Note**
+**Note**
 
-    To get a quick overview of the commands, type ``help``.
+To get a quick overview of the commands, type ``help``.
 
 The first line shows the status between square brackets. The [S] here
 means that the component is in the stopped state. Other states can be
@@ -407,7 +407,7 @@ Reading and Writing Ports
 
 The Data Ports allow seamless communication of calculation or
 measurement results between components. Adding and using ports is
-described in `section\_title <#task-ports>`__.
+described in :ref:`data-flow-ports`.
 
 Last Words
 ----------
@@ -511,7 +511,7 @@ The beating hart of the component is its Execution Engine will check for
 new messages in it's queue and execute programs which are running in the
 task. When a TaskContext is created, the ExecutionEngine is always
 running. The complete state flow of a TaskContext is shown in
-`figure\_title <#fig-component-states>`__. You can add code in the
+:numref:`fig-component-states`. You can add code in the
 TaskContext by implementing \*Hook() functions, which will be called by
 the ExecutionEngine when it is in a certain state or transitioning
 between states.
@@ -520,6 +520,7 @@ between states.
    :align: center
    :figclass: align-center
    :alt: TaskContext State Diagram
+   :name: fig-component-states
 
    TaskContext State Diagram
 
@@ -591,11 +592,11 @@ The run-time (or: real-time) application code belongs in the
            }
       };
 
-    **Important**
+**Important**
 
-    By default, the TaskContext enters the ``Stopped`` state
-    (`figure\_title <#fig-component-states>`__) when it is created,
-    which makes ``configure()`` an optional call.
+By default, the TaskContext enters the ``Stopped`` state
+(:numref:`fig-component-states`) when it is created,
+which makes ``configure()`` an optional call.
 
 If you want to *force* the user to call configure() of your TaskContext,
 set the TaskState in your constructor as such:
@@ -620,7 +621,7 @@ TaskContext drops to the ``PreOperational`` state in that case. When
 state and is ready to run.
 
 A TaskContext in the ``Stopped`` state
-(`figure\_title <#fig-component-states>`__) may be ``start()``'ed upon
+(:numref:`fig-component-states`) may be ``start()``'ed upon
 which ``startHook()`` is called once and may abort the start up sequence
 by returning false. If true, it enters the ``Running`` state and
 ``updateHook()`` is called (a)periodically by the ExecutionEngine, see
@@ -636,7 +637,7 @@ The functionality of a component, i.e. its algorithm, is executed by its
 internal Execution Engine. To run a TaskContext, you need to use one of
 the ``RTT::base::ActivityInterface`` classes from the RTT, most likely
 ``RTT::Activity``. This relation is shown in
-`figure\_title <#fig-task-execution>`__. The Activity class allocates a
+:numref:`fig-task-execution`. The Activity class allocates a
 thread which executes the Execution Engine. The chosen ``Activity``
 object will run the Execution Engine, which will in turn call the
 application's hooks above. When created, the TaskContext is assigned the
@@ -648,6 +649,7 @@ updateHook().
    :align: center
    :figclass: align-center
    :alt: Executing a TaskContext
+   :name: fig-task-execution
 
    Executing a TaskContext
 
@@ -759,7 +761,7 @@ An ``updateHook()`` function of a non periodic task could look like:
 
       };
 
-    **Warning**
+**Warning**
 
     Non periodic activities should be used with care and with much
     thought in combination with scripts (see later). The ExecutionEngine
@@ -769,13 +771,15 @@ An ``updateHook()`` function of a non periodic task could look like:
     executed, as they will only progress upon these events and seem to
     be stalled otherwise.
 
-You can find more detailed information in `??? <#corelib-activities>`__
+You can find more detailed information in :ref:`corelib-activities`
 in the CoreLib reference.
+
+.. _data-flow-ports:
 
 Data Flow Ports
 ---------------
 
-    **Note**
+**Note**
 
     A component has ports in order to send or receive a stream of data.
     The algorithm writes Output ports to publish data to other
@@ -818,8 +822,7 @@ its class provides:
 
 -  An assignment operator: const X& X::operator=(const X& )
 
-For real-time data transfer (see also
-`section\_title <#guarantee-rt-data-flow>`__) the operator= must be
+For real-time data transfer (see also :ref:`guarantee-rt-data-flow`) the operator= must be
 real-time when assigning equal sized objects. When assigning not equal
 sized objects, your operator= should free the memory and allocate enough
 room for the new size.
@@ -831,7 +834,7 @@ another process or host, it will additionally need:
    Typekits)
 
 -  A transport for the data type registered with the type system (see
-   the transport (ROS,CORBA,MQueue,...) documentation)
+   the transport (ROS, CORBA ,MQueue, ...) documentation)
 
 The standard C++ and std::vector<double> data types are already included
 in the RTT library for real-time transfer and out of process transport.
@@ -881,20 +884,21 @@ parameter '<double>' specifies the type of data the task wants to
 exchange through that port. Logically, if input and output are to be
 connected, they must agree on this type. The name is given in the
 addPort() function. This name can be used to 'match' ports between
-connected tasks ( using 'connectPorts', see
-`section\_title <#connect-tasks>`__ ), but it is possible *and
-preferred* to connect Ports with different names using the Orocos
-deployer.
+connected tasks ( using 'connectPorts', see :ref:`connecting-services`),
+but it is possible *and preferred* to connect Ports with different
+names using the Orocos deployer.
 
 There are two ways to add a port to the TaskContext interface: using
 ``addPort()`` or ``addEventPort()``. In the latter case, new data
 arriving on the port will wake up ('trigger') the activity of our
 TaskContext and updateHook() get's executed.
 
-    **Note**
+**Note**
 
     Only ``RTT::InputPort`` can be added as EventPort and will cause
     your component to be triggered (ie wake up and call updateHook).
+
+.. _guarantee-rt-data-flow:
 
 Guaranteeing Real-Time data flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1150,7 +1154,7 @@ for you. It allows to modes:
 
 One OperationCaller object always offers both choices, and they can be
 used both interweaved, as far as the allocation scheme allows it. See
-`section\_title <#method-allocation>`__. Calling is used by default if
+:ref:`method-allocation`. Calling is used by default if
 you don't specify which mode you want to use.
 
 Each OperationCaller object is templated with the function signature of
@@ -1161,8 +1165,7 @@ the operation you wish to call. For example
     void(int,double)
 
 which is the signature of a function returning 'void' and having two
-arguments: an 'int' and a 'double', for example, ``void foo(int
-        i, double d);``.
+arguments: an 'int' and a 'double', for example, ``void foo(int i, double d);``.
 
 To setup a OperationCaller object, you need a pointer to a TaskContext
 object, for example using the 'getPeer()' class function. Then you
@@ -1330,6 +1333,8 @@ wishes to carry the burden of executing this function, the
 GlobalExecutionEngine, which runs with the lowest priority thread in the
 system, picks it up.
 
+.. _method-allocation:
+
 Executing methods in real-time.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1343,6 +1348,8 @@ a reserved amount, which will be guaranteed always available for that
 object.
 
 (to be completed).
+
+.. _method-args-types:
 
 Operation Argument and Return Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1367,6 +1374,8 @@ Table: Operation Return & Argument Types
 Summarised, every non-class argument is best passed by value, and every
 class type is best passed by const reference. The parser does handle
 references (&) in the arguments or return type as well.
+
+.. _attributes-and-properties-interface:
 
 The Attributes and Properties Interface
 ---------------------------------------
@@ -1446,7 +1455,7 @@ Accessing Task Attributes or Properties in C++
 An attribute is used in your C++ code transparantly. For properties, you
 need their set() and get() methods to write and read them.
 
-A external task can access attributes through an Attribute object and
+An external task can access attributes through an Attribute object and
 the getValue method:
 
 ::
@@ -1465,7 +1474,7 @@ the getValue method:
 The attributes 'the\_flag' and 'the\_max' are mirrors of the original
 attributes of the task.
 
-See also `??? <#corelib-properties>`__ in the Orocos CoreLib reference.
+See also :ref:`corelib-properties` in the Orocos CoreLib reference.
 
 Accessing Task Attributes in Scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1493,16 +1502,16 @@ throw an exception, thus before the program is run.
 
     **Important**
 
-    The same restrictions of `section\_title <#method-args-types>`__
+    The same restrictions of :ref:`method-args-types`
     hold for the attribute types, when you want to access them from
     program scripts.
 
-See also `??? <#corelib-attributes>`__ in the Orocos CoreLib reference.
+See also :ref:`corelib-attributes` in the Orocos CoreLib reference.
 
 Reading and writing Task Properties from XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-See `section\_title <#task-property-config>`__ for storing and loading
+See :ref:`task-property-config` for storing and loading
 the Properties to and from files, in order to store a TaskContext's
 state.
 
@@ -1513,12 +1522,13 @@ In addition to the ``PreOperational``, ``Stopped`` and ``Running``
 TaskContext states, you can use two additional states for more advanced
 component behaviour: the ``Exception``, ``FatalError`` and the
 ``RunTimeError`` states. The first two are shown in
-`figure\_title <#fig-ext-component-states>`__.
+:numref:`ext-component-states`.
 
 .. figure:: images/ComponentStatesExtended.svg
    :align: center
    :figclass: align-center
    :alt: Extended TaskContext State Diagram
+   :name: ext-component-states
 
    Extended TaskContext State Diagram
 
@@ -1538,13 +1548,13 @@ It is possible that non-fatal run-time errors occur which may require
 user action on one hand, but do not prevent the component from
 performing it's task, or allow degraded performance. Therefor, in the
 ``Running`` state, one can make a transition to the\ ``RunTimeError``
-sub-state by calling ``error()``. See
-`figure\_title <#fig-ext-runtime-states>`__.
+sub-state by calling ``error()``. See :numref:`ext-runtime-states`.
 
 .. figure:: images/RunTimeStates.svg
    :align: center
    :figclass: align-center
    :alt: Possible Run-Time failure.
+   :name: ext-runtime-states
 
    Possible Run-Time failure.
 
@@ -1621,6 +1631,8 @@ When you want to discard the 'error' state of the component, call
 mycomp.recover(). If your component went into FatalError, call
 mycomp.reset() and mycomp.start() again for processing updateHook()
 again.
+
+.. _connecting-services:
 
 Connecting Services
 ===================
@@ -1850,6 +1862,8 @@ In practice, you will use the deployer application to do the connection
 for you at run-time. See the DeploymentComponent documentation for the
 syntax.
 
+.. _task-property-config:
+
 Using Tasks
 ===========
 
@@ -1859,7 +1873,7 @@ This section elaborates on the interface all Task Contexts have from a
 Task Property Configuration and XML format
 ------------------------------------------
 
-As was seen in `section\_title <#task-attr-rep>`__, ``RTT::Property``
+As was seen in :ref:`attributes-and-properties-interface`, ``RTT::Property``
 objects can be added to a task's interface. To read and write properties
 from or to files, you can use the ``RTT::Marshalling`` service. It
 creates or reads files in the XML Component Property Format such that it
@@ -1892,7 +1906,7 @@ level of which one is a PropertyBag, holding two other properties.
 
 ::
 
-      #include <rtt/TaskContext.hpp>
+    #include <rtt/TaskContext.hpp>
     #include <rtt/Property.hpp>
     #include <rtt/PropertyBag.hpp>
 
@@ -2139,13 +2153,14 @@ they fit the target.
 Overview
 --------
 
-`figure\_title <#fig-comp-levels>`__ shows the distinction between the
+:numref:`fig-comp-levels` shows the distinction between the
 three levels of Component Deployment.
 
 .. figure:: images/DeploymentLevels.svg
    :align: center
    :figclass: align-center
    :alt: Component Deployment Levels
+   :name: fig-comp-levels
 
    Component Deployment Levels
 
@@ -2235,7 +2250,7 @@ Using the three levels of deployment in one application is possible as
 well. To save space or execution efficiency, one can use TaskCores to
 implement local (hidden) functionality and export publicly visible
 interface using a TaskContext.
-`figure\_title <#fig-deployment-example>`__ is an small example of a
+:numref:`fig-deployment-example` is an small example of a
 TaskContext which uses two TaskCores to delegate work to. The Execution
 Engines may run in one or multiple threads.
 
@@ -2243,6 +2258,7 @@ Engines may run in one or multiple threads.
    :align: center
    :figclass: align-center
    :alt: Example Component Deployment.
+   :name: fig-deployment-example
 
    Example Component Deployment.
 
@@ -2376,7 +2392,7 @@ interface from a task.
 
 ::
 
-          // now add it to the supervising task :
+      // now add it to the supervising task :
       MyDevice_1 mydev;
       supervisor.addPeer( &mydev, "device" );
 
