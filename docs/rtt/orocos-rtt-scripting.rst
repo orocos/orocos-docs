@@ -224,29 +224,31 @@ Table: array and string constructors
       biglist = list           // 'biglist' is now equal to 'list' (non real-time)
 
 
-    **Important**
+**Important**
 
-    The 'size' value given upon construction (array(10) or string(17))
-    must be a *legal expression at parse time and is only evaluated
-    once*. The safest method is using a literal integer ( i.e. (10) like
-    in the examples ), but if you create a Task constant or variable
-    which holds an integer, you can also use it as in :
+      The 'size' value given upon construction (array(10) or string(17))
+      must be a *legal expression at parse time and is only evaluated
+      once*. The safest method is using a literal integer ( i.e. (10) like
+      in the examples ), but if you create a Task constant or variable
+      which holds an integer, you can also use it as in :
 
-    ::
+::
 
-          var array example( 5 * numberOfItems )
+      var array example( 5 * numberOfItems )
+..
 
-    The expression may not contain any program variables, these will all
-    be zero upon parse time ! The following example is *a common
-    mistake* also :
+      The expression may not contain any program variables, these will all
+      be zero upon parse time ! The following example is *a common
+      mistake* also :
 
-    ::
+::
 
-          numberOfItems = 10
-          var array example( 5 * numberOfItems )
+      numberOfItems = 10
+      var array example( 5 * numberOfItems )
+..
 
-    Which will not lead to '50', but to '5 times the value of
-    numberOfItems, being still zero, when the program is parsed.
+      Which will not lead to '50', but to '5 times the value of
+      numberOfItems, being still zero, when the program is parsed.
 
 Another property of container types is that you can index (use []) their
 contents. The index may be any expression that return an int.
@@ -510,8 +512,8 @@ language. A ``do`` statement is not implemented
       }
 
 As with the if statement, you can optionally put parentheses around the
-condition 'i < 10'. Note that Orocos scripting does not support the
-postfix or prefix increment/decrement operators like ++ and --.
+condition ``i < 10``. Note that Orocos scripting does not support the
+postfix or prefix increment/decrement operators like ``++`` and ``--``.
 
 The break Statement
 ~~~~~~~~~~~~~~~~~~~
@@ -800,7 +802,7 @@ In order to enter the reactive mode, the State Machine must be
 exist: because an *event* occured or because a transition was
 *requested*.
 
-.. figure:: images/ReactiveState
+.. figure:: images/ReactiveState.png
    :alt: State Change Semantics in Reactive Mode
    :width: 600px
 
@@ -845,7 +847,7 @@ reactive and then started with the start() command (see later on).
     This mechanism is in addition to 'reactive' mode. A state machine in
     automatic mode still reacts to events.
 
-.. figure:: images/AutomaticState
+.. figure:: images/AutomaticState.png
    :alt: State Change Semantics in Automatic Mode
    :width: 300px
 
@@ -1125,7 +1127,7 @@ short notation statement is equivalent to writing (NOTE: the added
 ::
 
       transition if ( x_in_port.read(d) == NewData && d >1.3) then {...
-
+..
 
     **Important**
 
