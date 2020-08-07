@@ -30,6 +30,7 @@ Welcome to Orocos' documentation!
   Orocos Component Builders' Manual <rtt/orocos-components-manual>
   rtt/orocos-rtt-plugins
   rtt/orocos-typekit-plugin
+  rtt/rtt-lua-cookbook.rst
 
 .. toctree::
   :hidden:
