@@ -76,12 +76,12 @@ This section introduces tasks through the "hello world" application, for
 which you will create a component package using the ``orocreate-pkg``
 command on the command line:
 
-::
+.. code-block:: bash
 
     $   rosrun ocl orocreate-pkg HelloWorld    # ... for ROS users
 
 
-::
+.. code-block:: bash
 
     $   orocreate-pkg HelloWorld    # ... for non-ROS users
 
@@ -89,7 +89,7 @@ command on the command line:
 In a properly configured installation, you'll be able to enter this
 directory and build your package right away:
 
-::
+.. code-block:: bash
 
     $   cd HelloWorld
     $ make
@@ -98,7 +98,7 @@ directory and build your package right away:
 In case you are *not* using ROS to manage your packages, you also need
 to install your package:
 
-::
+.. code-block:: bash
 
     $ make install
 
@@ -119,14 +119,14 @@ your commands or press the up arrow to scroll through previous commands.
 
 You can start the deployer in any directory like this:
 
-::
+.. code-block:: bash
 
      $ deployer-gnulinux
 
 
 or in a ROS environment:
 
-::
+.. code-block:: bash
 
      $ rosrun ocl deployer-gnulinux
 
@@ -172,10 +172,9 @@ The figure below illustrates this difference:
    Dynamic vs static loading of components
 
 The output of the deployer should be similar to what we show below.
-Finally, type ``cd
-    Hello`` to start with the exercise.
+Finally, type ``cd Hello`` to start with the exercise.
 
-::
+.. code-block:: none
 
     0.000 [ Info   ][Logger] Real-time memory: 14096 bytes free of 20480 allocated.
     0.000 [ Info   ][Logger] No RTT_COMPONENT_PATH set. Using default: .../rtt/install/lib/orocos
@@ -226,8 +225,8 @@ The first ``[ Info ]`` lines are printed by the Orocos ``RTT::Logger``,
 which has been configured to display informative messages to console
 with the ``-linfo`` program option. Normally, only warnings or worse are
 displayed by Orocos. You can always watch the log file 'orocos.log' in
-the same directory to see all messages. After the ``[Log
-    Level]``, the ``[Origin]`` of the message is printed, and finally
+the same directory to see all messages. After the ``[LogLevel]``,
+the ``[Origin]`` of the message is printed, and finally
 the message itself. These messages leave a trace of what was going on in
 the main() function before the prompt appeared.
 
@@ -315,7 +314,7 @@ To get an overview of the Task's interface, you can use the help
 command, for example *help this* or *help this.activate* or just short:
 *help activate*
 
-::
+.. code-block:: none
 
     Hello [R]> help this
 
@@ -477,7 +476,7 @@ should create the component template and the CMakeLists.txt file using
 the ``orocreate-pkg`` program such that this compiles right away as in
 the HelloWorld example above:
 
-::
+.. code-block:: bash
 
                     $ orocreate-pkg mytask
 
@@ -488,7 +487,7 @@ at the TaskBrowser prompt and verify that it contains components using
 ``loadComponent("the_task","MyTask")`` loads a new component instance
 into the process:
 
-::
+.. code-block:: bash
 
           $ deployer-gnulinux
           ...
@@ -1944,7 +1943,7 @@ level of which one is a PropertyBag, holding two other properties.
 
 Using writeProperties() would produce the following XML file:
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">

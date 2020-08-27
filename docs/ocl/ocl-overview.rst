@@ -1,3 +1,4 @@
+
 ============================
 The Orocos Component Library
 ============================
@@ -35,3 +36,15 @@ available:
 
 -  Lua RTT Manual (TODO) Use Lua to script deployments,
    components and services.
+
+
+External resources
+==================
+
+`https://www.orocos.org/ocl <https://www.orocos.org/ocl>`_
+
+Manuals regarding the parts of OCL:
+
+- `The Task Browser <https://orocos.github.io/ocl/toolchain-2.9/xml/orocos-taskbrowser.html>`_
+- `The Deployment Component <https://orocos.github.io/ocl/toolchain-2.9/xml/orocos-deployment.html>`_
+- `The Reporting Component <https://orocos.github.io/ocl/toolchain-2.9/xml/orocos-reporting.html>`_

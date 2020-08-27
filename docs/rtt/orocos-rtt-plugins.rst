@@ -62,7 +62,7 @@ application. In case you want to make them optional, you may place them
 in a subdirectory of one of your RTT\_COMPONENT\_PATH directories. For
 example:
 
-::
+.. code-block:: none
 
      /usr/local/lib/orocos/myrobot         : component libraries for 'myrobot'
                           /myrobot/plugins : services and other plugins for 'myrobot'
@@ -105,7 +105,7 @@ RTT.
 Finally, you can load a new service into a component by using the
 ``.provide`` command:
 
-::
+.. code-block:: none
 
     Deployer [S]> .provide scripting
     Trying to locate service 'scripting'...
