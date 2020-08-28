@@ -31,6 +31,7 @@ Orocos Project documentation
   Orocos Component Builders' Manual <rtt/orocos-components-manual>
   rtt/orocos-rtt-plugins
   rtt/orocos-typekit-plugin
+  Tutorials <rtt/tutorials>
   Examples <rtt/examples>
 
 .. toctree::
@@ -53,7 +54,7 @@ Orocos Project documentation
   Overview <kdl/overview>
   API reference <http://docs.ros.org/indigo/api/orocos_kdl/html/index.html>
   ROS reference <https://wiki.ros.org/kdl>
-  Examples<kdl/examples>
+  Examples <kdl/examples>
 
 .. toctree::
   :hidden:
@@ -82,6 +83,7 @@ Orocos Project documentation
 
   Orocos + ROS 1 <https://github.com/orocos/rtt_ros_integration>
   Orocos + ROS 2 <https://github.com/orocos/rtt_ros2_integration>
+  Tutorials (external) <https://gitlab.com/dustingooding/orocos_examples>
 
 .. image:: https://www.orocos.org/files/logo-t.png
   :width: 150 px
