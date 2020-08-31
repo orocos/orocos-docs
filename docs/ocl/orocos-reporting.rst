@@ -69,7 +69,7 @@ Peer to the reporting component.
 The following deployment XML file creates a Reporting component as in
 the example above :numref:`reporting-example`
 
-::
+.. code-block:: xml
 
        <simple name="Import" type="string"><value>ocl</value></simple>
 
@@ -110,7 +110,7 @@ Reporting Configuration File
 This is an example property file, to configure a Reporting component,
 once it was created :
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -183,7 +183,7 @@ The scripting commands of the reporting components can be listed using
 the ``this`` command on the TaskBrowser. Below is a snippet of the
 output:
 
-::
+.. code-block:: none
 
         RTT::Method     : bool reportComponent( string const& Component )
        Add a peer Component and report all its data ports

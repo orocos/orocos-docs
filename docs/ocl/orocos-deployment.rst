@@ -100,9 +100,8 @@ There are four related programs to the deployer application.
    Naming Service, and if that fails, prints the IOR to a file and to
    the screen.
 
--  ``ctaskbrowser-<target>
-         ComponentName|IOR``: Connects to a remote component (like the
-   cdeployer above) using the CORBA *IOR* address or using the CORBA
+-  ``ctaskbrowser-<target> ComponentName|IOR``: Connects to a remote component
+   (like the cdeployer above) using the CORBA *IOR* address or using the CORBA
    Naming Service using *ComponentName*.
 
 -  ``deployer-corba-<target>``: Combines the cdeployer and deployer
@@ -238,7 +237,7 @@ or provide them in a colon or semi-colon separated list.
 
 In XML, the path statement looks like:
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -270,7 +269,7 @@ set.
 
 In XML, the import statement looks like:
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -305,7 +304,7 @@ available in the next step.
 To see the effects of the import function, the available types can be
 queried by invoking the ``displayComponentTypes`` (script) method:
 
-::
+.. code-block:: rest
 
      (type 'ls' for context info) :displayComponentTypes()
           Got :displayComponentTypes()
@@ -345,7 +344,7 @@ included file is inserted at that point.
 
 In XML, the include statement looks like:
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -367,7 +366,7 @@ current application, use the ``loadComponent`` function:
 In XML, the loadComponent statement of a reporting component would look
 like:
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -408,7 +407,7 @@ language.
 Below is an example of about all options you can use. They are explained
 in the sections below.
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -503,7 +502,7 @@ Thread, period, priority and scheduler.
 The first section of all three components sets up the active behaviour
 of the component in the ``Activity`` element.
 
-::
+.. code-block:: xml
 
         <struct name="Activity" type="Activity">
           <simple name="Period" type="double"><value>0.005</value></simple>
@@ -539,7 +538,7 @@ Loading Services or Plugins.
 You can load any number of plugins into a component. A plugin may also
 add a Service object to a component's interface, but this is optional.
 
-::
+.. code-block:: xml
 
         <!-- loads the 'scripting' service in this component -->
         <simple name="Service" type="string"><value>scripting</value></simple>
@@ -584,7 +583,7 @@ Auto-Configuration and Auto-Starting components.
 The next section of the Controller contains the ``AutoConf`` and
 ``AutoStart`` elements.
 
-::
+.. code-block:: xml
 
         <simple name="AutoConf" type="boolean"><value>1</value></simple>
         <simple name="AutoStart" type="boolean"><value>1</value></simple>
@@ -612,7 +611,7 @@ Connecting Data Ports
 The ``Ports`` struct describes which ports of this component participate
 in which data flow connection.
 
-::
+.. code-block:: xml
 
         <struct name="Ports" type="PropertyBag">
           <simple name="Position" type="string"><value>SensorValuesConnection</value></simple>
@@ -629,7 +628,7 @@ can tune each connection using a struct of type ``ConnPolicy`` with the
 name of the connection. The allowed fields in this struct are the same
 as in the C++ API, see ``RTT::ConnPolicy``.
 
-::
+.. code-block:: xml
 
       <!-- You can set per data flow connection policies -->
       <struct name="SensorValuesConnection" type="ConnPolicy">
@@ -692,7 +691,7 @@ The ``Properties`` struct allows to configure a component's properties
 from the main XML file. These values can be overridden by the listed
 property files:
 
-::
+.. code-block:: xml
 
       <!-- You can repeat this struct for each connection below ... -->
         <struct name="Properties" type="PropertyBag">
@@ -707,7 +706,7 @@ properties of the component.
 In case you only want to update part of the properties, use the
 ``UpdateProperties`` element.
 
-::
+.. code-block:: xml
 
         <simple name="PropertyFile" type="string"><value>controller-main.cpf</value></simple>
         <simple name="UpdateProperties" type="string"><value>controller-opts.cpf</value></simple>
@@ -717,7 +716,7 @@ Finally, it is also possible to load and create new properties from a
 file using ``LoadProperties`` the Reporting component requires this for
 example:
 
-::
+.. code-block:: xml
 
         <simple name="LoadProperties" type="string"><value>file-reporting.cpf</value></simple>
 
@@ -746,7 +745,7 @@ Setting up peer-to-peer relations
 
 The last section of the Reporter component lists its peers.
 
-::
+.. code-block:: xml
 
         <struct name="Peers" type="PropertyBag">
           <simple type="string"><value>Controller</value></simple>
@@ -774,7 +773,7 @@ The Controller has at the end two additional ``RunScript`` elements
 describing which script files must be loaded and executed into that
 component.
 
-::
+.. code-block:: xml
 
         <simple name="RunScript" type="string"><value>controller-program.ops</value></simple>
         <simple name="RunScript" type="string"><value>controller-states.ops</value></simple>
@@ -810,7 +809,7 @@ you need to load this script in the Deployer itself using the
 ``-s filename.ops`` command line option, or using a small XML file that
 only contains this code:
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -848,7 +847,7 @@ which are optional: ``Server`` (defaults to '0') and
 when you use the CORBA enabled ``cdeployer-<target>`` or
 ``deployer-corba-<target>`` applications.
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE properties SYSTEM "cpf.dtd">
@@ -891,7 +890,7 @@ was created in one corba enabled deployer application with the
 ``Server`` property set to 1. You can connect to it from another
 deployer application by using the XML syntax:
 
-::
+.. code-block:: xml
 
      <!-- Uses CORBA Naming Service to lookup 'Mycomponent' -->
      <struct name="MyComponent" type="CORBA">
@@ -1032,7 +1031,7 @@ options :
       CFLAGS= -O2 -Wall
       LDFLAGS=
 
-    **Note**
+**Note**
 
-    If you use CMake with the UseOrocos.cmake macros, you don't need any
-    of this manual setup. The Orocos macros set the right flags for you.
+  If you use CMake with the UseOrocos.cmake macros, you don't need any
+  of this manual setup. The Orocos macros set the right flags for you.

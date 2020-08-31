@@ -235,6 +235,7 @@ Table: array and string constructors
 ::
 
       var array example( 5 * numberOfItems )
+
 ..
 
       The expression may not contain any program variables, these will all
@@ -245,6 +246,7 @@ Table: array and string constructors
 
       numberOfItems = 10
       var array example( 5 * numberOfItems )
+
 ..
 
       Which will not lead to '50', but to '5 times the value of
@@ -333,7 +335,7 @@ This is the easiest procedure. You need to tell the taskbrowser that you
 want the scripting service and then use the scripting service to load
 the program script:
 
-::
+.. code-block:: none
 
       Component [R]> .provide scripting
       Trying to locate service 'scripting'...
@@ -876,7 +878,7 @@ This is the easiest procedure. You need to tell the taskbrowser that you
 want the scripting service and then use the scripting service to load
 the state machine
 
-::
+.. code-block:: none
 
       Component [R]> .provide scripting
       Trying to locate service 'scripting'...
@@ -1127,6 +1129,7 @@ short notation statement is equivalent to writing (NOTE: the added
 ::
 
       transition if ( x_in_port.read(d) == NewData && d >1.3) then {...
+
 ..
 
     **Important**
@@ -1195,12 +1198,12 @@ addEventOperation function:
          this->provides()->addEventOperation(requestSafe).doc("This operation does nothing except for requesting the SAFE state");
 
 
-    **Note**
+**Note**
 
     A StateMachine can only react to Operations which have been added
     with 'addEventOperation' to the TaskContext.
 
-    **Note**
+**Note**
 
     A StateMachine can only react to Operations of the component it runs
     in.

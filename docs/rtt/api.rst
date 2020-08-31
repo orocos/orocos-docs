@@ -1,20 +1,5 @@
 Orocos RTT API
 ==============
 
-API documentation of the latest release (2.9.0) can be found `here <https://orocos.github.io/rtt/toolchain-2.9/api/html/index.html>`_
-
-
-.. todo::
-    Integrate API documentation in this page directly.
-
-    Options:
-    1. Invoke doxygen from `conf.py` and reference HTML output from the Sphinx TOC (Doxygen layout):
-
-       - https://stackoverflow.com/questions/36064976/using-doxygen-in-read-the-docs
-       - https://breathe.readthedocs.io/en/latest/readthedocs.html
-
-    2. Use Breathe/Exhale to generate API documentation from Doxygen's XML output (ReadTheDocs layout):
-
-       - https://exhale.readthedocs.io/en/latest/
-
-    3. Link to API documentation hosted on orocos.github.io?
+API documentation of the latest release (2.9.0) can be found
+`here <https://orocos.github.io/rtt/toolchain-2.9/api/html/index.html>`_.
