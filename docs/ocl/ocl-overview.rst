@@ -45,6 +45,6 @@ External resources
 
 Manuals regarding the parts of OCL:
 
-- `The Task Browser <https://orocos.github.io/ocl/toolchain-2.9/xml/orocos-taskbrowser.html>`_
-- `The Deployment Component <https://orocos.github.io/ocl/toolchain-2.9/xml/orocos-deployment.html>`_
-- `The Reporting Component <https://orocos.github.io/ocl/toolchain-2.9/xml/orocos-reporting.html>`_
+- :doc:`The Task Browser <orocos-taskbrowser>`
+- :doc:`The Deployment Component <orocos-deployment>`
+- :doc:`The Reporting Component <orocos-reporting>`
