@@ -38,20 +38,20 @@ In order to distribute Orocos components over a network, your computers
 must be setup correctly for using Corba. Start a Corba Naming Service
 once with multicasting on. Using the TAO Naming Service, this would be:
 
-::
+.. code-block:: bash
 
       $ Naming_Service -m 1 &
 
 And your application as:
 
-::
+.. code-block:: bash
 
       $ deployer-corba-gnulinux
 
 *OR:* if that fails, start the Naming Service with the following options
 set:
 
-::
+.. code-block:: bash
 
       $ Naming_Service -m 0 -ORBListenEndpoints iiop://<the-ns-ip-address>:2809 -ORBDaemon
 
@@ -59,7 +59,7 @@ The *<the-ns-ip-address>* must be replaced with the ip address of a
 network interface of the computer where you start the Naming Service.
 And each computer where your start the application:
 
-::
+.. code-block:: bash
 
       $ export NameServiceIOR=corbaloc:iiop:<the-ns-ip-address>:2809/NameService
       $ deployer-corba-gnlinux
@@ -94,7 +94,7 @@ network:
 
 You can start this application with:
 
-::
+.. code-block:: bash
 
     $ deployer-corba-gnulinux -s server-script.ops
 
@@ -111,7 +111,7 @@ wishes to use this component:
 
 You can start this application with:
 
-::
+.. code-block:: bash
 
     $ deployer-corba-gnulinux -s client-script.ops
 
@@ -331,7 +331,7 @@ link <http://www.theaceorb.com/faq/index.html#115>`__), you shouldn't
 use it. Instead, it is better started via some extra lines in
 ``/etc/rc.local``:
 
-::
+.. code-block:: bash
 
       ################################################################################
       #  Start CORBA Naming Service
@@ -347,14 +347,14 @@ All clients (i.e. both your application and the ktaskbrowser) wishing to
 connect to the Naming\_Service should use the environment variable
 NameServiceIOR
 
-::
+.. code-block:: bash
 
       [user@host ~]$ echo $NameServiceIOR
       corbaloc:iiop:192.168.246.151:2809/NameService 
 
 You can set it f.i. in your .bashrc file or on the command line via
 
-::
+.. code-block:: bash
 
       export NameServiceIOR=corbaloc:iiop:192.168.246.151:2809/NameService
 

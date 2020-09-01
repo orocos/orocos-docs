@@ -52,7 +52,6 @@ of the real-time communication and execution of software components.
 .. figure:: images/FrameworkOverview.svg
    :align: center
    :figclass: align-center
-
    :alt: Orocos Toolchain as Middleware
 
    Orocos Toolchain as Middleware
