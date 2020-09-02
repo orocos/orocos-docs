@@ -1348,7 +1348,7 @@ The steps are:
 
 ..
 
-The last line means the following: launch fsm in <fsmfile> in service identified by execstr_op, true: create an execution engine hook so that the rfsm.step is called at the component frequency. (See the generated rfsm_rtt API docs).
+The last line means the following: launch fsm in ``<fsmfile>`` in service identified by ``execstr_op``, true: create an execution engine hook so that the ``rfsm.step`` is called at the component frequency. (See the generated ``rfsm_rtt`` API docs).
 
 Replacing states, functions and transitions of an existing FSM model
 --------------------------------------------------------------------
