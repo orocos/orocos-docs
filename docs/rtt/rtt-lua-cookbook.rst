@@ -179,9 +179,9 @@ Here:
 
 ..
 
-Above code calls the getTC() function, which returns the current TC and stores
-it in a variable 'tc'. For showing the interface just write =tc. In the repl
-the equal sign is a shortcut for 'return', which in turn causes the variable to
+Above code calls the ``getTC()`` function, which returns the current TC and stores
+it in a variable ``tc``. For showing the interface just write ``=tc``. In the repl
+the equal sign is a shortcut for ``return``, which in turn causes the variable to
 be printed. (BTW: This works for displaying any variable)
 
 ::
