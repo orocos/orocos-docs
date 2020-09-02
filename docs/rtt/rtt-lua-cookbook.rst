@@ -74,7 +74,7 @@ is to setup the ``LUA_PATH`` variable:
 ..
 
 If you are a orocos_toolchain_ros user and do not want to hardcode the path
-like this, you can source the following script in your .bashrc:
+like this, you can source the following script in your ``.bashrc``:
 
 ::
 
