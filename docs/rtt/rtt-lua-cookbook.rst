@@ -62,7 +62,7 @@ CMake options:
 Setting up the path to rttlib
 -----------------------------
 
-``rttlib.lua]`` is a Lua module, which is not strictly necessary, but highly
+``rttlib.lua`` is a Lua module, which is not strictly necessary, but highly
 recommended to load as it adds various syntactic shortcuts and pretty printing
 (Many examples on this page will not work without!). The easiest way to load it
 is to setup the ``LUA_PATH`` variable:
