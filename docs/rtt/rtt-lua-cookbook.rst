@@ -90,23 +90,19 @@ like this, you can source the following script in your ``.bashrc``:
 Starting rttlua
 ---------------
 
-::
+.. code-block:: bash
 
     $ ./rttlua-gnulinux
     OROCOS RTTLua 1.0-beta3 / Lua 5.1.4 (gnulinux)
     >
 
-..
+or for ``rtt_ros_integration`` users:
 
-or for orocos_toolchain_ros users:
-
-::
+.. code-block:: bash
 
     $ rosrun ocl rttlua-gnulinux
     OROCOS RTTLua 1.0-beta3 / Lua 5.1.4 (gnulinux)
     >
-
-..
 
 Now we have a Lua REPL that is enhanced with RTT specific functionality. In the
 following RTT-Lua code is indicated by a ``>`` prompt, while shell scripts are
@@ -118,33 +114,29 @@ Loading rttlib.lua
 Before doing anything it is recommended to load rttlib. Like any Lua module this
 can be done with the require statement. For example:
 
-::
+.. code-block:: bash
 
     $ ./rttlua-gnulinux
     OROCOS RTTLua 1.0-beta3 / Lua 5.1.4 (gnulinux)
     > require("rttlib")
     >
 
-..
-
 As it is annoying having to type this each time, this loading can automated by putting
-it in the ~/.rttlua dot file. This (Lua) file is executed on startup of rttlua:
+it in the ``~/.rttlua`` dot file. This (Lua) file is executed on startup of rttlua:
 
-::
+.. code-block:: lua
 
     require("rttlib")
     rttlib.color=true
-
-..
 
 The (optional) last line enables colors.
 
 Basic commands (read this!)
 ---------------------------
 
-  * rttlib.stat() Print information about component instances and their state
+  * ``rttlib.stat()`` Print information about component instances and their state
 
-::
+.. code-block:: none
 
     > rttlib.stat()
     Name                State               isActive  Period
@@ -153,9 +145,9 @@ Basic commands (read this!)
 
 ..
 
-  * rttlib.info() Print information about available components, types and services
+  * ``rttlib.info()`` Print information about available components, types and services
 
-::
+.. code-block:: none
 
     > rttlib.info()
     services:   marshalling scripting print LuaTLSF Lua os
@@ -166,25 +158,22 @@ Basic commands (read this!)
                 OCL::LuaComponent OCL::LuaTLSFComponent OCL::TcpReporting
     ...
 
-..
-
 Where's my TaskContext?
 -----------------------
 
 Here:
 
-::
+.. code-block:: lua
 
     > tc = rtt.getTC()
 
-..
 
-Above code calls the getTC() function, which returns the current TC and stores
-it in a variable 'tc'. For showing the interface just write =tc. In the repl
-the equal sign is a shortcut for 'return', which in turn causes the variable to
+Above code calls the ``getTC()`` function, which returns the current TC and stores
+it in a variable ``tc``. For showing the interface just write ``=tc``. In the repl
+the equal sign is a shortcut for ``return``, which in turn causes the variable to
 be printed. (BTW: This works for displaying any variable)
 
-::
+.. code-block:: none
 
     > =tc
     TaskContext: lua
@@ -200,24 +189,23 @@ be printed. (BTW: This works for displaying any variable)
       bool exec_file(string const& filename) // load (and run) the given lua script
       bool exec_str(string const& lua-string) // evaluate the given string in the lua environment
 
-..
 
 Since (rttlua beta5) the above does not print the standard TaskContext operations
-anymore. To print these, use tc:show().
+anymore. To print these, use ``tc:show()``.
 
 Getting persistent history with rlwrap
 --------------------------------------
 
 rttlua does not offer persistent history like in the taskbrowser. If you want it,
- you can use rlwrap and to wrap rttlua as follows:
+you can use rlwrap and to wrap rttlua as follows:
 
-::
+.. code-block:: bash
 
     alias rttlua='rlwrap -a -r -H ~/.rttlua-history rttlua-gnulinux'
 
 ..
 
-If you run 'rttlua' it should have persistent history.
+If you run ``rttlua`` it should have persistent history.
 
 
 Dataflow
@@ -229,7 +217,7 @@ up component interfaces for a more convenient way add/remove ports/properties.
 Creating Ports
 --------------
 
-::
+.. code-block:: lua
 
     > pin = rtt.InputPort("string")
     > pout = rtt.OutputPort("string")
@@ -249,9 +237,9 @@ Connecting Ports
 Directly
 ^^^^^^^^
 
-For this the ports don't have to be added to the TaskContext:
+For this the ports don't have to be added to the ``TaskContext``:
 
-::
+.. code-block:: lua
 
     > =pin:connect(pout)
     true
@@ -266,9 +254,9 @@ For this the ports don't have to be added to the TaskContext:
 Using the Deployer
 ^^^^^^^^^^^^^^^^^^
 
-The rttlua-* REPL automatically creates a deployment component that is a peer of the lua taskcontext:
+The ``rttlua-*`` REPL automatically creates a deployment component that is a peer of the lua taskcontext:
 
-::
+.. code-block:: lua
 
     > tc = rtt.getTC()
     > depl = tc:getPeer("Deployer")
@@ -286,7 +274,7 @@ RTT Types and Typekits
 Which types are available?
 --------------------------
 
-::
+.. code-block:: none
 
     > rttlib.info()
     services:       marshalling, scripting, print, os, Lua
@@ -303,7 +291,7 @@ Which types are available?
 Creating RTT types
 ------------------
 
-::
+.. code-block:: lua
 
     > cp = rtt.Variable("ConnPolicy")
     > =cp
@@ -319,7 +307,7 @@ Accessing global RTT constants
 
 *Printing the available constants:*
 
-::
+.. code-block:: none
 
     > =rtt.globals
     {SendNotReady=SendNotReady,LOCK_FREE=2,NewData=NewData,SendFailure=SendFailure,\
@@ -357,21 +345,17 @@ It is cumbersome to initalize complex types with many subfields:
 
 ..
 
-To avoid this, use the fromtab() method:
+To avoid this, use the ``fromtab()`` method:
 
-::
+.. code-block:: lua
 
     > t:fromtab({M={Z_y=1,Y_y=2,X_y=3,Y_z=4,Z_z=5,Y_x=6,Z_x=7,X_x=8,X_z=9},p={Y=3,X=3,Z=3}})
 
-..
-
 or even shorter using the table-call syntax of Lua,
 
-::
+.. code-block:: lua
 
     > t:fromtab{M={Z_y=1,Y_y=2,X_y=3,Y_z=4,Z_z=5,Y_x=6,Z_x=7,X_x=8,X_z=9},p={Y=3,X=3,Z=3}}
-
-..
 
 Initalization of array/sequence types
 -------------------------------------
@@ -380,7 +364,7 @@ When you created an RTT array type, the initial length will be zero. You must
 set the length of an array before you can assign elements to it (starting from
 toolchain-2.5 fromtab will do this automatically):
 
-::
+.. code-block:: lua
 
     > ref=rtt.Variable("array")
     > ref:resize(3)
@@ -396,11 +380,10 @@ Properties
 Creating
 --------
 
-::
+.. code-block:: lua
 
     > p1=rtt.Property("double", "p-gain", "Proportional controller gain")
 
-..
 
 (Note: the second and third argument (name and description) are optional and
 can also be set when adding the property to a TaskContext)
@@ -408,43 +391,39 @@ can also be set when adding the property to a TaskContext)
 Adding to TaskContext Interface
 -------------------------------
 
-::
+.. code-block:: lua
 
   > tc=rtt.getTC()
   > tc:addProperty(p1)
   > =tc -- check it is there...
 
-..
 
 Getting a Properties from a TaskContext
 ---------------------------------------
 
-::
+.. code-block:: lua
 
     > tc=rtt.getTC()
     > pgain = tc:getProperty("pgain")
     > =pgain -- will print it
 
-..
 
 Properties of basic types: setting the value
 --------------------------------------------
 
-::
+.. code-block:: lua
 
     > p1:set(3.14)
     > =p1  -- a property can be printed!
     p-gain (double) = 3.14 // Proportional controller gain
 
-..
 
 In particular, the following will not work:
 
-::
+.. code-block:: lua
 
     > p1=3.14
 
-..
 
 Lua works with references! This will assign the variable p1 a numeric value of 3.14
 and the reference to the property is lost.
@@ -452,20 +431,18 @@ and the reference to the property is lost.
 Properties of basic types: getting the value
 --------------------------------------------
 
-::
+.. code-block:: lua
 
     > print("the value of " .. p1:info().name .. " is: " .. p1:get())
     the value of p-gain is: 3.14
 
-..
-
 Properties of complex types: accessing
 --------------------------------------
 
-Assume a property of type KDL::Frame. Similarily to Variables the subfields
+Assume a property of type ``KDL::Frame``. Similarily to Variables the subfields
 can be accessed by using the dot syntax:
 
-::
+.. code-block:: lua
 
     > d = tc:getPeer("Deployer")
     > d:import('kdl_typekit')
@@ -480,8 +457,6 @@ can be accessed by using the dot syntax:
     (KDL.Frame) = {M={Z_y=0,Y_y=3,X_y=0,Y_z=0,Z_z=1,Y_x=0,Z_x=0,X_x=1,X_z=0},p={Y=1,X=0,Z=0}} //
     >
 
-..
-
 
 Like Variables, Properties feature a fromtab method to initalize a Property
 from values in a Lua table. See Section RTT Types and Typekits - Convenient
@@ -492,15 +467,13 @@ Removing
 
 As properties are not automatically garbage collected, property memory must be managed manually:
 
-::
+.. code-block:: lua
 
     > tc:removeProperty("p-gain")
     > =tc         -- p-gain is gone now
     > p1:delete() -- delete property and free memory
     > =p1         -- p1 is 'dead' now.
     userdata: 0x186f8c8
-
-..
 
 Operations
 ==========
@@ -513,18 +486,16 @@ Calling Operations
 The short and convenient way
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code-block:: lua
 
     > d = tc:getPeer("Deployer")
     > =d:getPeriod()
     0
 
-..
-
 The significantly faster and real-time safe way (because locally cached)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code-block:: lua
 
     > d = tc:getPeer("Deployer")
     > op = d:getOperation("getPeriod")
@@ -533,14 +504,12 @@ The significantly faster and real-time safe way (because locally cached)
     > =op() -- call it
     0
 
-..
-
 Sending Operations
 ------------------
 
 "Sending" Operations permits to asynchronously request an operation to be executed and collect the results at a later point in time.
 
-::
+.. code-block:: lua
 
     > d = tc:getPeer("Deployer")
     > op = d:getOperation("getPeriod")
@@ -548,15 +517,12 @@ Sending Operations
     > =handle:collect()
     SendSuccess    0
 
-..
 
 .. note::
 
     - ``collect()`` returns multiple arguments: first a SendStatus string ('SendSuccess', 'SendFailure') followed by zero to many output arguments of the operation.
     - ``collect`` blocks until the operation was executed, collectIfDone() will immediately return (but possibly with 'SendNotReady')
     - If your code make excessive use of "Sending Operations" something in your application design is probably wrong.
-
-..
 
 
 Can I define new Operations from Lua?
@@ -575,7 +541,7 @@ Loading and Using
 
 For example, to load the marshalling service in a component and then to use it to write a property (cpf) file:
 
-::
+.. code-block:: lua
 
     > tc=rtt.getTC()
     > depl=tc:getPeer("Deployer")
@@ -584,23 +550,20 @@ For example, to load the marshalling service in a component and then to use it t
     > =tc:provides("marshalling"):writeProperties("props.cpf")
     true
 
-..
-
 A second (and slightly faster) option is to get the Operation before calling it:
 
-::
+.. code-block:: lua
 
     > -- get the writeProperties operation ...
     > writeProps=tc:provides("marshalling"):getOperation("writeProperties")
     > =writeProps("props.cpf") -- and call it to write the properties to a file.
     true
 
-..
 
 What Operations and Ports are provided by a Service?
 ----------------------------------------------------
 
-::
+.. code-block:: none
 
     > depl:loadService("lua", "marshalling") -- load the marshalling service
     > depl:loadService("lua", "scripting") -- load the scripting service
@@ -639,15 +602,14 @@ Accessing the Global Service
 
 The RTT Global Service is useful for loading services into your application that don't belong to a specific component. Your C++ code accesses this object by calling
 
-::
+.. code-block:: cpp
 
     RTT::internal::GlobalService::Instance();
 
-..
 
 The GlobalService object can be accessed in Lua using a call to:
 
-::
+.. code-block:: lua
 
     gs = rtt.provides()
 
@@ -655,7 +617,7 @@ The GlobalService object can be accessed in Lua using a call to:
 
 Which you can access later-on again using the rtt table:
 
-::
+.. code-block:: lua
 
     rtt.provides("os"):argc() -- returns the number of arguments of this application
     rtt.provides("os"):argv() -- returns a string array of arguments of this application
@@ -670,29 +632,25 @@ You can add different types of Activities to your component:
 
 - periodic activity
 
-::
+.. code-block:: lua
 
     -- create activity for producer: period=1, priority=0,
     -- schedtype=ORO_SCHED_OTHER (1).
     depl:setActivity("producer", 1, 0, rtt.globals.ORO_SCHED_RT
 
-..
-
 - non-periodic activity
 
-::
+.. code-block:: lua
 
     -- create activity for producer: period=0, priority=0,
     -- schedtype=ORO_SCHED_OTHER (1).
     depl:setActivity("producer", 0, 0, rtt.globals.ORO_SCHED_RT)
 
-..
-
 - master-slave activity:
     - Attach a (non-)periodic activity to the master component
     - Indicate that a component is the slave of a master
 
-::
+.. code-block:: lua
 
     depl:setMasterSlaveActivity("name_of_master_component", "name_of_slave_component")
 
@@ -739,30 +697,25 @@ How to write a deployment script
 
 run it:
 
-::
+.. code-block:: bash
 
     $ rttlua-gnulinux -i deploy-app.lua
 
-..
 
-or using orocos_toolchain_ros
+or using ``rtt_ros_integration``
 
-::
+.. code-block:: bash
 
     $ rosrun ocl rttlua-gnulinux -i deploy-app.lua
-
-..
 
 .. note::
 
     The -i option makes rttlua enter interactive mode (the REPL) after executing the script. Without it would exit after finishing executing the script, which in this case is probably not what you want.
 
-..
-
 How to write a RTT-Lua component
 --------------------------------
 
-A Lua component is created by loading a Lua-script implementing zero or more TaskContext hooks in a OCL::LuaComponent. The following RTT hooks are currently supported:
+A Lua component is created by loading a Lua-script implementing zero or more ``TaskContext`` hooks in a ``OCL::LuaComponent``. The following RTT hooks are currently supported:
 
     - bool configureHook()
     - bool activateHook()
@@ -776,7 +729,7 @@ All hooks are optional, but if implemented they must return the correct return v
 
 The following code implements a simple consumer component with an event-triggered input port:
 
-::
+.. code-block:: lua
 
     require("rttlib")
     tc=rtt.getTC();
@@ -806,8 +759,6 @@ The following code implements a simple consumer component with an event-triggere
     inport:delete()
     end
 
-..
-
 A matching producer component is shown below:
 
 .. code-block:: lua
@@ -832,8 +783,6 @@ A matching producer component is shown below:
     tc:removePort("outport")
     outport:delete()
     end
-
-..
 
 A deployment script to deploy these two components:
 
@@ -989,7 +938,7 @@ Executing a LuaService function at the frequency of the host component
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 More useful than just running once is to be able to execute a function synchronously with the updateHook of the host component. This can be achieved by registering a ExecutionEngine hook (much easier than it sounds!).
 
-The following Lua service code implements a simple monitor that tracks the currently active (TaskContext) state of the component in whose context it is running. When the state changes the new state is written to a port "tc_state", which is added to the context TC.
+The following Lua service code implements a simple monitor that tracks the currently active (``TaskContext``) state of the component in whose context it is running. When the state changes the new state is written to a port ``tc_state``, which is added to the context TC.
 
 This code could be useful for a supervision statemachine that can then easily react to this state change by means of an event triggered port.
 
@@ -1038,11 +987,11 @@ This code could be useful for a supervision statemachine that can then easily re
 ..
 
 .. note::
-    the -i option causes rttlua to go to interactive mode after executing the script (and not exiting afterwards).
+    the ``-i`` option causes ``rttlua`` to go to interactive mode after executing the script (and not exiting afterwards).
 
 ..
 
-::
+.. code-block:: none
 
     $ rttlua-gnulinux -i service-eehook.lua
     > rttlib.portstats(hello)
@@ -1067,7 +1016,7 @@ It is often useful to validate a deployed system at runtime, however you want to
 
 1. Write a function to validate a **single component**
 
-The following function accepts a TaskContext as an argument and checks wether it has unconnected input ports. If yes it prints an error.
+The following function accepts a ``TaskContext`` as an argument and checks whether it has unconnected input ports. If yes it prints an error.
 
 .. code-block:: lua
 
@@ -1097,11 +1046,11 @@ This can be done using the ``mappeers`` function.
 
 ..
 
-The ``mappeers`` function is a special variant of map which calls the function given as a first argument on all peers reachable from a TaskContext (given as a second argument). We pass the Deployer here, which typically knows all components.
+The ``mappeers`` function is a special variant of map which calls the function given as a first argument on all peers reachable from a ``TaskContext`` (given as a second argument). We pass the Deployer here, which typically knows all components.
 
 Here's a dummy deployment example to illustrate:
 
-::
+.. code-block:: lua
 
     require "rttlib"
     tc=rtt.getTC()
@@ -1115,16 +1064,13 @@ Here's a dummy deployment example to illustrate:
 
     rttlib.mappeers(check_inport_conn, depl)
 
-..
 
 Executing it will print:
 
-::
+.. code-block:: none
 
     0.155 [ ERROR  ][/home/mk/bin//rttlua-gnulinux::main()] InputPort hello1.the_buffer_port is unconnected!
     0.155 [ ERROR  ][/home/mk/bin//rttlua-gnulinux::main()] InputPort hello2.the_buffer_port is unconnected!
-
-..
 
 Using rFSM Statecharts with RTT
 ===============================
@@ -1157,7 +1103,7 @@ Summary: Create a OCL::LuaComponent. In ``configureHook`` load and initalize the
 
 It is a best-practice to split the initalization (setting up required functions, peers or ports used by the fsm) and the fsm model itself into two files. This way the fsm model is kept as platform independent and hence reusable as possible.
 
-The following initalization file is executed in the newly create LuaComponent for preparing the environment for the statemachine, that is loaded and initalized in configureHook.
+The following initalization file is executed in the newly create LuaComponent for preparing the environment for the statemachine, that is loaded and initalized in ``configureHook``.
 
 **launch_fsm.lua**
 
@@ -1254,7 +1200,7 @@ A dummy statemachine stored in the **fsm.lua** file:
 
 ..
 
-Run it. cmd is an inverse (output) port which is connected to the incoming (from POV of the fsm) 'events' port of the fsm, so by writing to it we can send events:
+Run it. ``cmd`` is an inverse (output) port which is connected to the incoming (from POV of the fsm) ``events`` port of the fsm, so by writing to it we can send events:
 
 .. code-block:: bash
 
@@ -1288,7 +1234,7 @@ Run it. cmd is an inverse (output) port which is connected to the incoming (from
 
 ..
 
-After starting the supervisor we 'leave' it, so we can write to the 'events' ports:
+After starting the supervisor we ``leave`` it, so we can write to the ``events`` ports:
 
 .. code-block:: bash
 
@@ -1333,8 +1279,8 @@ This is basically the same as executing a function periodally in a service (see 
 
 The steps are:
 
-    - create LuaService in Component in question
-    - prepare Lua environment, i.e. call exec_string or exec_file to add functions.
+    - create ``LuaService`` in Component in question
+    - prepare Lua environment, i.e. call ``exec_string`` or ``exec_file`` to add functions.
     - launch the fsm with the following call in your deployment script:
 
 .. code-block:: lua
@@ -1543,7 +1489,7 @@ A Coordinator often needs to interact with many or all other components in its v
 
 Assume the Deployer has two peers "robot" and "controller", they can be accessed as follows:
 
-::
+.. code-block:: lua
 
     print(peertab.robot)
     -- or
@@ -1557,7 +1503,7 @@ Miscellaneous
 Connecting RTT Ports to ROS topics
 ----------------------------------
 
-::
+.. code-block:: lua
 
     > cp=rtt.Variable("ConnPolicy")
     > cp.transport=3 -- 3 is ROS
@@ -1568,7 +1514,7 @@ Connecting RTT Ports to ROS topics
 
 or with sweet one-liner (thx to Ruben!):
 
-::
+.. code-block:: lua
 
     > depl:stream("CompX.portY", rtt.provides("ros"):topic("/l_cart_twist/command"))
 
@@ -1626,7 +1572,7 @@ In short: write a function which accepts a lua table representation of you data 
 
 The out-of-box printing of a ConnPolicy will look as follows:
 
-::
+.. code-block:: none
 
     ./rttlua-gnulinux
     Orocos RTTLua 1.0-beta3 (gnulinux)
@@ -1655,38 +1601,32 @@ This not too bad, but we would like to display the string representation of the 
 
 and add it to the `rttlib.var_pp`` table of Variable formatters as follows:
 
-::
+.. code-block:: none
 
     rttlib.var_pp.ConnPolicy = ConnPolicy2tab
 
-..
-
 now printing a ``ConnPolicy`` again calls our function and prints the desired fields:
 
-::
+.. code-block:: lua
 
     > return rtt.Variable("ConnPolicy")
     {data_size=0,type="DATA",name_id="",init=false,pull=false,transport=0,lock_policy="LOCK_FREE",size=0}
     >
 
-..
-
 How to use classical OCL Deployers ? (like with Corba, or with a Taskbrowser)
 -----------------------------------------------------------------------------
 
-If you are used to manage your application with the classic OCL Taskbrowser or if you want your application to be connected via Corba, you may only use lua for deployment, and continue to use your former deployer. To do so, you have to load the lua service into your favorite deployer (deployer, cdeployer, deployer-corba, ...) and then call your deployment script.
+If you are used to manage your application with the classic OCL Taskbrowser or if you want your application to be connected via Corba, you may only use lua for deployment, and continue to use your former deployer. To do so, you have to load the lua service into your favorite deployer (``deployer``, ``cdeployer``, ``deployer-corba``, ...) and then call your deployment script.
 
 Exemple : launch your prefered deployer :
 
-::
+.. code-block:: bash
 
     cdeployer -s loadLua.ops
 
-..
-
 with loadLua.ops :
 
-::
+.. code-block:: none
 
     //load the lua service
     loadService ("Deployer","Lua")
@@ -1694,20 +1634,16 @@ with loadLua.ops :
     //execute your deployment file
     Lua.exec_file("yourLuaDeploymentFile.lua")
 
-..
-
 and with yourLuaDeploymentFile.lua containing the kind of stuff described in this Cookbook. Like the one in paragraph "How to write a deployment script"
 
 How to generate graphical representations of rFSM models
 --------------------------------------------------------
 
-The rfsm-viz command allows you to generate easy-to-read pictures representing the structure of your FSM model. This tool uses the rfsm2uml and fsm2dbg modules and requires the libgv-lua package. Practically:
+The ``rfsm-viz`` command allows you to generate easy-to-read pictures representing the structure of your FSM model. This tool uses the ``rfsm2uml`` and ``fsm2dbg`` modules and requires the ``libgv-lua`` package. Practically:
 
-::
+.. code-block:: bash
 
     $ <fsm_install_dir>/tools/rfsm-viz -f <your_fsm_file>.lua
-
-..
 
 options:
 
