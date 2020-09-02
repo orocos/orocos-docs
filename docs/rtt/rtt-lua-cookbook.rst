@@ -520,8 +520,8 @@ Sending Operations
 
 .. note::
 
-    - ``collect()`` returns multiple arguments: first a SendStatus string ('SendSuccess', 'SendFailure') followed by zero to many output arguments of the operation.
-    - ``collect`` blocks until the operation was executed, collectIfDone() will immediately return (but possibly with 'SendNotReady')
+    - ``collect()`` returns multiple arguments: first a SendStatus string (``SendSuccess``, ``SendFailure``) followed by zero to many output arguments of the operation.
+        - ``collect`` blocks until the operation was executed, ``collectIfDone()`` will immediately return (but possibly with ``SendNotReady``)
     - If your code make excessive use of "Sending Operations" something in your application design is probably wrong.
 
 
@@ -1294,7 +1294,7 @@ The steps are:
 
 ..
 
-The last line means the following: launch fsm in <fsmfile> in service identified by execstr_op, true: create an execution engine hook so that the rfsm.step is called at the component frequency. (See the generated rfsm_rtt API docs).
+The last line means the following: launch fsm in ``<fsmfile>`` in service identified by ``execstr_op``, true: create an execution engine hook so that the ``rfsm.step`` is called at the component frequency. (See the generated ``rfsm_rtt`` API docs).
 
 Replacing states, functions and transitions of an existing FSM model
 --------------------------------------------------------------------
@@ -1542,7 +1542,7 @@ How are types converted between RTT and Lua?
 +--------+--------+
 | RTT    | Lua    |
 +========+========+
-| bool 	 | boolean|
+| bool   | boolean|
 +--------+--------+
 | float  | number |
 +--------+--------+
