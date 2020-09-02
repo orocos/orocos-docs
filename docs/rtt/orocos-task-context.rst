@@ -400,6 +400,7 @@ Since Hello doesn't have any attributes, we create one dynamically:
     Hello [R]> the_attribute
      = Veni Vidi Vici !
 
+.. _reading-and-writing-ports:
 
 Reading and Writing Ports
 -------------------------
@@ -433,10 +434,12 @@ testing and inspecting what is happening inside your real-time programs,
 it is a very useful tool. The next sections show how you can add
 properties, methods etc to a TaskContext.
 
-    **Note**
+.. note::
 
     If you want a more in-depth tutorial, see the rtt-exercises package
     which covers each aspect also shown in this manual.
+
+.. _creating-a-basic-component:
 
 Creating a Basic Component
 ==========================
@@ -525,6 +528,8 @@ between states.
 
 The first section goes into detail on how to use these hooks.
 
+.. _task-application-code:
+
 Task Application Code
 ---------------------
 
@@ -539,7 +544,7 @@ The user may insert his configuration-time setup/cleanup code in the
 The run-time (or: real-time) application code belongs in the
 ``startHook()``, ``updateHook()`` and ``stopHook()`` functions.
 
-::
+.. code-block:: cpp
 
     class MyTask
         : public RTT::TaskContext
@@ -591,16 +596,16 @@ The run-time (or: real-time) application code belongs in the
            }
       };
 
-**Important**
+.. important::
 
-By default, the TaskContext enters the ``Stopped`` state
-(:numref:`fig-component-states`) when it is created,
-which makes ``configure()`` an optional call.
+   By default, the TaskContext enters the ``Stopped`` state
+   (:numref:`fig-component-states`) when it is created,
+   which makes ``configure()`` an optional call.
 
 If you want to *force* the user to call configure() of your TaskContext,
 set the TaskState in your constructor as such:
 
-::
+.. code-block:: cpp
 
     class MyTask
         : public RTT::TaskContext
@@ -659,7 +664,7 @@ A common task in control is executing an algorithm periodically. This is
 done by attaching an activity to the Execution Engine which has a
 periodic execution time set.
 
-::
+.. code-block:: cpp
 
       #include <rtt/Activity.hpp>
 
@@ -682,7 +687,7 @@ always running, but you can stop and start it too.
 You don't need to create a new Activity if you want to switch to
 periodic execution, you can also use the ``setPeriod`` function:
 
-::
+.. code-block:: cpp
 
       // In your TaskContext's configureHook():
       bool configureHook() {
@@ -691,7 +696,7 @@ periodic execution, you can also use the ``setPeriod`` function:
 
 An ``updateHook()`` function of a periodic task could look like:
 
-::
+.. code-block:: cpp
 
       class MyTask
         : public RTT::TaskContext
@@ -729,7 +734,7 @@ did its work.
 
 An ``updateHook()`` function of a non periodic task could look like:
 
-::
+.. code-block:: cpp
 
       class MyTask
         : public RTT::TaskContext
@@ -778,7 +783,7 @@ in the CoreLib reference.
 Data Flow Ports
 ---------------
 
-**Note**
+.. note::
 
     A component has ports in order to send or receive a stream of data.
     The algorithm writes Output ports to publish data to other
@@ -1379,7 +1384,7 @@ references (&) in the arguments or return type as well.
 The Attributes and Properties Interface
 ---------------------------------------
 
-    **Note**
+.. note::
 
     A task's properties are intended to configure and tune a task with
     certain values. Properties have the advantage of being writable to

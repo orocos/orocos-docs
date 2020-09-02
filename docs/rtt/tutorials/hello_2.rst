@@ -88,8 +88,7 @@ Exercise 2
 **********
 
 Read Orocos Component Builder's Manual,
-:doc:`Chap 2 <../../rtt/orocos-task-context>`
-sect. 3.5 (The Attributes and Properties Interface).
+:ref:`attributes-and-properties-interface`
 
 First, compile and run this application.
 
@@ -143,30 +142,30 @@ at runtime:
 In the ``TaskBrowser``: type from the Deployer:
 
 .. code-block:: none
-  
+
   loadService("hello", "marshalling")
 
 To make this permanent for your component, add this statement in the
 ``start.ops`` file.
 
-  **Optional**: 
+  *Optional*:
   use ``loadService`` in C++:
-  
+
     In C++ you need to
-    
+
     .. code-block:: cpp
-      
-      #include <rtt/marsh/Marshalling.hpp> 
-    
+
+      #include <rtt/marsh/Marshalling.hpp>
+
     and add to the constructor:
-    
+
     .. code-block:: cpp
-    
+
       this->getProvider<Marshalling>("marshalling");
 
     In the ``CMakeLists.txt``: add ``rtt-marshalling`` to the list of components
     to look for in the ``find_package`` macro
-    
+
     .. code-block:: cmake
 
       find_package(OROCOS-RTT REQUIRED)
@@ -184,20 +183,20 @@ Next Open and modify the XML file and read it back in using the marshalling obje
   For the optional exercises, read :doc:`Chap 2 <../../rtt/orocos-task-context>`,
   sect 6.1 (Task Property Configuration and XML format).
 
-\ 
-  **Optional** : read the property file from ``configureHook()`` and log it's
+\
+  *Optional* : read the property file from ``configureHook()`` and log it's
   value. You need to make the modifications detailed above in the note.
-  
-  **Optional** : write the property file in ``cleanupHook()``.
+
+  *Optional* : write the property file in ``cleanupHook()``.
 
 For ROS users: load the ``rtt_rosparam`` service as well and send the properties to the
-ROS master server instead of to the XML file. 
+ROS master server instead of to the XML file.
 
   At runtime:
     In ``TaskBrowser``: type ``import("rtt_rosnode")`` and ``.provide rosparam``
     in ``hello``.
 
 .. note::
-  
+
   Open question: Would you prefer to hard-code this property reading/writing or would
   you prefer to script it ?

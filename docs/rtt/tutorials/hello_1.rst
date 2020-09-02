@@ -61,8 +61,7 @@ Exercise 1
 **********
 
 Read Orocos Component Builder's Manual,
-:doc:`Chap 2 <../../rtt/orocos-task-context>` sect 3 (Creating a Basic Component)
-and 3.1 (Task Application Code).
+:ref:`creating-a-basic-component` and :ref:`task-application-code`.
 
 First, compile and run this application and try to start the component
 from the TaskBrowser console.
@@ -125,9 +124,9 @@ Next, add functions which use the ``RTT::log(RTT::Info)`` construct to display
 a notice when the ``configureHook()``, ``startHook()``, ``stopHook()`` and
 ``cleanupHook()``
 are executed. (
-  
+
 .. note::
-  
+
   Not all these functions return a bool!
 
 Recompile and restart this application and try to ``configure``, ``start``,
