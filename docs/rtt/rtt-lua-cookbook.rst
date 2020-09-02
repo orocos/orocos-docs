@@ -552,8 +552,8 @@ Sending Operations
 
 .. note::
 
-    - ``collect()`` returns multiple arguments: first a SendStatus string ('SendSuccess', 'SendFailure') followed by zero to many output arguments of the operation.
-    - ``collect`` blocks until the operation was executed, collectIfDone() will immediately return (but possibly with 'SendNotReady')
+    - ``collect()`` returns multiple arguments: first a SendStatus string (``SendSuccess``, ``SendFailure``) followed by zero to many output arguments of the operation.
+        - ``collect`` blocks until the operation was executed, ``collectIfDone()`` will immediately return (but possibly with ``SendNotReady``)
     - If your code make excessive use of "Sending Operations" something in your application design is probably wrong.
 
 ..
