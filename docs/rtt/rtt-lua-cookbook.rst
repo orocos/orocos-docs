@@ -67,7 +67,7 @@ recommended to load as it adds various syntactic shortcuts and pretty printing
 (Many examples on this page will not work without!). The easiest way to load it
 is to setup the ``LUA_PATH`` variable:
 
-::
+.. code-block:: bash
 
     export LUA_PATH=";;$HOME/src/git/orocos/ocl/lua/modules/?.lua"
 
