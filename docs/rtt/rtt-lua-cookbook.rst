@@ -1596,7 +1596,7 @@ How are types converted between RTT and Lua?
 +--------+--------+
 | RTT    | Lua    |
 +========+========+
-| bool 	 | boolean|
+| bool   | boolean|
 +--------+--------+
 | float  | number |
 +--------+--------+
