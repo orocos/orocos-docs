@@ -33,7 +33,7 @@ determinism. Meaning, that the system is free of priority-inversions,
 and all operations are lock-free. Real-time components can communicate
 with non real-time components (and vice verse) transparently.
 
-    **Note**
+.. note::
 
     In this manual, the words task and component are used as equal
     words, meaning a software component built using the C++ TaskContext
@@ -287,9 +287,9 @@ component, Hello.
     Hello [S]>
 
 
-**Note**
+.. note::
 
-To get a quick overview of the commands, type ``help``.
+   To get a quick overview of the commands, type ``help``.
 
 The first line shows the status between square brackets. The [S] here
 means that the component is in the stopped state. Other states can be
@@ -716,18 +716,18 @@ An ``updateHook()`` function of a periodic task could look like:
 
       };
 
-You can find more detailed information in `??? <#corelib-activities>`__
+You can find more detailed information in :ref:`corelib-activities`
 in the CoreLib reference.
 
 Default Component Execution Semantics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A TaskContext is run by default by a non periodic RTT:Activity object.
+A TaskContext is run by default by a non periodic ``RTT:Activity`` object.
 This is useful when ``updateHook()`` only needs to process data when it
 arrives on a port or must wait on network connections or does any other
 blocking operation.
 
-Upon start(), the Execution Engine waits for new methods or data to come
+Upon ``start()``, the Execution Engine waits for new methods or data to come
 in to be executed. Each time such an event happens, the user's
 application code (``updateHook()``) is called after the Execution Engine
 did its work.
@@ -765,7 +765,7 @@ An ``updateHook()`` function of a non periodic task could look like:
 
       };
 
-**Warning**
+.. warning::
 
     Non periodic activities should be used with care and with much
     thought in combination with scripts (see later). The ExecutionEngine
@@ -793,7 +793,7 @@ Data Flow Ports
     input ports.
 
     Reading and writing data ports is always real-time and thread-safe,
-    on the condition that copying your data (i.e. your operator= ) is as
+    on the condition that copying your data (i.e. your ``operator=`` ) is as
     well.
 
 Each component defines its data exchange ports and connections transmit
@@ -822,13 +822,13 @@ Which data can be transfered ?
 The data flow implementation can pass on any data type 'X', given that
 its class provides:
 
--  A default constructor: X::X()
+-  A default constructor: ``X::X()``
 
--  An assignment operator: const X& X::operator=(const X& )
+-  An assignment operator: ``const X& X::operator=(const X& )``
 
-For real-time data transfer (see also :ref:`guarantee-rt-data-flow`) the operator= must be
+For real-time data transfer (see also :ref:`guarantee-rt-data-flow`) the ``operator=`` must be
 real-time when assigning equal sized objects. When assigning not equal
-sized objects, your operator= should free the memory and allocate enough
+sized objects, your ``operator=`` should free the memory and allocate enough
 room for the new size.
 
 In addition, if you want to send your data out of your process to
@@ -840,16 +840,16 @@ another process or host, it will additionally need:
 -  A transport for the data type registered with the type system (see
    the transport (ROS, CORBA ,MQueue, ...) documentation)
 
-The standard C++ and std::vector<double> data types are already included
+The standard C++ and ``std::vector<double>`` data types are already included
 in the RTT library for real-time transfer and out of process transport.
 
 Setting up the Data Flow Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any kind of data can be exchanged (also user defined C/C++ types) but
-for readability, only the 'double' C type is used here.
+for readability, only the ``double`` C type is used here.
 
-::
+.. code-block:: cpp
 
       #include <rtt/Port.hpp>
       using namespace RTT;
@@ -883,12 +883,12 @@ for readability, only the 'double' C type is used here.
          // ...
       };
 
-The example starts with declaring all the ports of MyTask. A template
-parameter '<double>' specifies the type of data the task wants to
+The example starts with declaring all the ports of ``MyTask``. A template
+parameter ``<double>`` specifies the type of data the task wants to
 exchange through that port. Logically, if input and output are to be
 connected, they must agree on this type. The name is given in the
-addPort() function. This name can be used to 'match' ports between
-connected tasks ( using 'connectPorts', see :ref:`connecting-services`),
+``addPort()`` function. This name can be used to 'match' ports between
+connected tasks ( using ``connectPorts``, see :ref:`connecting-services`),
 but it is possible *and preferred* to connect Ports with different
 names using the Orocos deployer.
 
@@ -897,10 +897,10 @@ There are two ways to add a port to the TaskContext interface: using
 arriving on the port will wake up ('trigger') the activity of our
 TaskContext and updateHook() get's executed.
 
-**Note**
+.. note::
 
     Only ``RTT::InputPort`` can be added as EventPort and will cause
-    your component to be triggered (ie wake up and call updateHook).
+    your component to be triggered (ie wake up and call ``updateHook``).
 
 .. _guarantee-rt-data-flow:
 
@@ -913,14 +913,14 @@ or struct with only data which can be copied without causing memory
 allocations work out of the box. No special measures must be taken and
 the port is immediately ready to use.
 
-If however, your type is more complex, like a std::vector or other
+If however, your type is more complex, like a ``std::vector`` or other
 dynamically sized object, additional setup steps must be done. First,
-the type must guarantee that its operator=() is real-time in case two
+the type must guarantee that its ``operator=()`` is real-time in case two
 equal-sized objects are used. Second, before sending the first data to
 the port, a properly sized data sample must be given to the output port.
 An example:
 
-::
+.. code-block:: cpp
 
       OutputPort<std::vector<double> > myport("name");
 
@@ -934,7 +934,7 @@ An example:
       // be passed on in hard real-time.
       myport.write( example ); // hard real-time.
 
-setDataSample does not actually send the data to all receivers, it just
+``setDataSample`` does not actually send the data to all receivers, it just
 uses this sample to initiate the connection, such that any subsequent
 writes to the port with a similar sample will be hard real-time. If you
 omit this call, data transfer will proceed, but the RTT makes no
@@ -1009,7 +1009,7 @@ system such that (part of) the calculation can happen in a script. Also,
 the TaskBrowser can then be used to inspect the contents of the DataFlow
 on-line.
 
-    **Note**
+.. note::
 
     In scripting, it is currently not yet possible to know which event
     port woke your task up.
@@ -1017,7 +1017,7 @@ on-line.
 A small program script could be loaded into MyTask with the following
 contents:
 
-::
+.. code-block:: none
 
       program MyControlProgram {
         var double the_K  = K        // read task property, see later.
@@ -1034,11 +1034,11 @@ contents:
         }
       }
 
-The program "MyControlProgram" starts with declaring two variables and
-reading the task's Property 'K'. Then it goes into an endless loop,
-trying to Pop a set point value from the "SetPoint\_X" Port. If that
-succeeds (new or old data present) the "Data\_R" Port is read and a
-simple calculation is done. The result is written to the "Data\_W"
+The program ``MyControlProgram`` starts with declaring two variables and
+reading the task's Property ``K``. Then it goes into an endless loop,
+trying to Pop a set point value from the ``SetPoint_X`` Port. If that
+succeeds (new or old data present) the ``Data_R`` Port is read and a
+simple calculation is done. The result is written to the ``Data_W``
 OutputPort and can now be read by the other end(s). Alternatively, the
 result may be directly used by the Task in order to write it to a device
 or any non-task object. You can use methods (below) to send data from
@@ -1046,7 +1046,7 @@ scripts back to the C++ implementation.
 
 Remark that the program is executed within the thread of the component.
 In order to avoid the endless loop, a 'wait' point must be present. The
-"yield" command inserts such a wait point and is part of the Scripting
+``yield`` command inserts such a wait point and is part of the Scripting
 syntax. If you plan to use Scripting state machines, such a
 ``while(true)`` loop (and hence wait point) is not necessary. See the
 Scripting Manual for a full overview of the syntax.
@@ -1054,12 +1054,10 @@ Scripting Manual for a full overview of the syntax.
 The OperationCaller/Operation Interface
 ---------------------------------------
 
-    **Note**
-
-    A task's operations define which functions a component offers.
-    Operations are grouped in 'services', much like C++ class methods
-    are grouped in classes. OperationCallers are helper objects for
-    calling operations.
+A task's operations define which functions a component offers.
+Operations are grouped in 'services', much like C++ class methods
+are grouped in classes. ``OperationCallers`` are helper objects for
+calling operations.
 
 Operations are C/C++ functions that can be used in scripting or can be
 called from another process or accross a network. They take arguments
@@ -1101,11 +1099,11 @@ register it with ``addOperation()``, defined in ``RTT::Service``.
       };
 
 In the above example, we wish to add 3 functions to the method
-interface: reset, getName and changeParameter. You need to pass the name
+interface: ``reset``, ``getName`` and ``changeParameter``. You need to pass the name
 of the function, address (function pointer) of this function and the
 object on which it must be called (this) to addOperation. Optionally,
-you may document the operation with .doc("...") and each argument with a
-.arg() call.
+you may document the operation with ``.doc("...")`` and each argument with a
+``.arg()`` call.
 
 Using this mechanism, any method of *any* class can be added to a task's
 method interface, not just functions of a TaskContext You can also add
@@ -1648,7 +1646,7 @@ such that they can use each other's Services.
 Connecting Peer Components
 --------------------------
 
-    **Note**
+.. note::
 
     The ``addPeer`` and ``connectPeers`` functions are used to connect
     TaskContexts and allow them to use each other's interface. The
@@ -1664,7 +1662,7 @@ complete flat or circular networks or any kind of mixed network.
 
 Peers are connected as such (hasPeer takes a string argument ):
 
-::
+.. code-block:: cpp
 
       // bi-directional :
       connectPeers( &a_task, &b_task );
@@ -1699,7 +1697,7 @@ can access your peer's peers.
 Setting up the Data Flow
 ------------------------
 
-    **Note**
+.. note::
 
     In typical applications, the DeploymentComponent ('deployer') will
     form connections between ports using a program script or XML file.
@@ -1755,6 +1753,8 @@ Tasks can be disconnected from a network by invoking ``disconnect()`` on
 that task. It will inform all its peers that it has left the network and
 disconnect all its ports.
 
+.. _providing-and-requiring-services:
+
 Providing and Requiring Services
 ================================
 
@@ -1773,9 +1773,9 @@ The only difference between setting up a service and adding an
 operation, is by adding provides("servicename") in front of
 addOperation.
 
-::
+.. code-block:: cpp
 
-       #include <rtt/TaskContext.hpp>
+      #include <rtt/TaskContext.hpp>
       #include <iostream>
 
       class MyServer : public RTT::TaskContext {
@@ -1808,9 +1808,9 @@ The only difference between setting up a service and adding a
 OperationCaller object, is by adding requires("servicename") in front of
 addOperationCaller.
 
-::
+.. code-block:: cpp
 
-       #include <rtt/TaskContext.hpp>
+      #include <rtt/TaskContext.hpp>
       #include <iostream>
 
       class MyClient : public RTT::TaskContext {
@@ -1851,11 +1851,11 @@ listing. We check in configureHook if this interface is ready to be
 called. Update hook then calls these methods.
 
 The remaining question is now: how is the connection done from client to
-server ? The ``RTT::ServiceRequester`` has a method
+server? The ``RTT::ServiceRequester`` has a method
 ``connectTo(Service*)`` which does this connection from OperationCaller
 object to operation. If you wanted to hardcode this, it would look like:
 
-::
+.. code-block:: cpp
 
       bool configureHook() {
          requires("display")->connectTo( getPeer("server")->provides("display") );

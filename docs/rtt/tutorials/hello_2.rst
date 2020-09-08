@@ -92,12 +92,13 @@ Read Orocos Component Builder's Manual,
 
 First, compile and run this application.
 
+.. note::
+
   This tutorial assumes that you have installed Orocos through the pre-compiled
   packages distributed via ROS in Ubuntu. If you don't have it installed, try
-  following the instructions from
-  `ROS installation <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_.
-  Additional to ``ros-kinetic-desktop-full`` (recommended by ROS) install Orocos
-  packages.
+  following the instructions from :ref:`installation-options`.
+
+..
 
   .. code-block:: bash
 

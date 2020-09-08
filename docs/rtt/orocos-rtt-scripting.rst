@@ -224,7 +224,7 @@ Table: array and string constructors
       biglist = list           // 'biglist' is now equal to 'list' (non real-time)
 
 
-**Important**
+.. important:
 
       The 'size' value given upon construction (array(10) or string(17))
       must be a *legal expression at parse time and is only evaluated
@@ -664,7 +664,7 @@ If one of the statements of the called function throws an exception, an
 exception is thrown in the current program and the calling program goes
 into the error state.
 
-    **Note**
+.. note::
 
     The 'call' keyword has been deprecated since version 2.5 and should
     no longer be used.
@@ -844,7 +844,7 @@ Automatic Mode: State Change Semantics
 In order to enter automatic mode, the State Machine must be first
 reactive and then started with the start() command (see later on).
 
-    **Note**
+.. note::
 
     This mechanism is in addition to 'reactive' mode. A state machine in
     automatic mode still reacts to events.
@@ -1091,7 +1091,7 @@ external (asynchronous) events. Orocos components can define reactions
 to data arriving on ``RTT::InputPort``\ s. When new data arrives on this
 port, we speak of an 'event'.
 
-    **Note**
+.. note::
 
     A StateMachine can only react to InputPorts which have been added
     with 'addEventPort' to the TaskContext.
@@ -1132,7 +1132,7 @@ short notation statement is equivalent to writing (NOTE: the added
 
 ..
 
-    **Important**
+.. important::
 
     This short notation differs however from the long form as such: if
     multiple transitions are waiting on the same port, but with a
@@ -1198,12 +1198,12 @@ addEventOperation function:
          this->provides()->addEventOperation(requestSafe).doc("This operation does nothing except for requesting the SAFE state");
 
 
-**Note**
+.. note::
 
     A StateMachine can only react to Operations which have been added
     with 'addEventOperation' to the TaskContext.
 
-**Note**
+.. note::
 
     A StateMachine can only react to Operations of the component it runs
     in.

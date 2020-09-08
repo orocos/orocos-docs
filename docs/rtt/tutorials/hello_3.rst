@@ -4,7 +4,7 @@ Hello world 3 - RTT Tutorial: Data Ports
 
 
 The source code of this tutorial can be found in the `GitHub repository
-<https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples/rtt-exercises/hello_3_data_ports>`_.
+<https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples/rtt-exercises/hello_3_dataports>`_.
 
 Contents of ``HelloWorld.cpp``:
 
@@ -133,6 +133,43 @@ Exercise 3
 
 Read Orocos Component Builder's Manual,
 :ref:`data-flow-ports`.
+
+.. note::
+
+  This tutorial assumes that you have installed Orocos through the pre-compiled
+  packages distributed via ROS in Ubuntu. If you don't have it installed, try
+  following the instructions from :ref:`installation-options`.
+
+..
+
+  Now you should have a working Orocos + ROS integration bundle. If you used a
+  different system or installation method, please adapt the following lines to
+  your convenience.
+
+  .. note::
+    ROS is not needed to run Orocos or to follow this tutorial, but it
+    is a convenient way to quickly get started.
+
+  .. code-block:: bash
+
+    # You can change the next two settings in accordance to your setup
+    export RTT_TUTORIALS_WS=${HOME}/orocos_tutorials_ws
+    export ROS_DISTRO=kinetic
+
+    # Get the repository with the exercises on place
+    mkdir -p ${RTT_TUTORIALS_WS}/src
+    cd ${RTT_TUTORIALS_WS}/src
+    git clone https://github.com/orocos-toolchain/rtt_examples.git
+    cd ..
+
+    # Build the examples using ROS catkin tools
+    source /opt/ros/${ROS_DISTRO}/setup.bash
+    catkin build
+
+    # Run the example of the tutorial
+    source ${RTT_TUTORIALS_WS}/devel/setup.bash
+    deployer-gnulinux -lInfo -s $(rospack find hello_3_data_ports)/start.ops
+
 
 Reading and writing Ports
 --------------------------

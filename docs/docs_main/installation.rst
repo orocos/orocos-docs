@@ -25,6 +25,7 @@ Orocos depending on the operating system where it will run.
 | OCL       |            |                        |         |            |         |
 +-----------+------------+------------+-----------+---------+------------+---------+
 
+.. _installation-options:
 
 Installation options
 ====================
