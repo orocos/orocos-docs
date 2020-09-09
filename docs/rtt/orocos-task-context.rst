@@ -1051,6 +1051,8 @@ syntax. If you plan to use Scripting state machines, such a
 ``while(true)`` loop (and hence wait point) is not necessary. See the
 Scripting Manual for a full overview of the syntax.
 
+.. _operation-interface:
+
 The OperationCaller/Operation Interface
 ---------------------------------------
 
@@ -1460,7 +1462,7 @@ need their set() and get() methods to write and read them.
 An external task can access attributes through an Attribute object and
 the getValue method:
 
-::
+.. code-block:: cpp
 
       Attribute<bool> the_flag = a_task->getValue("aflag");
       assert( the_flag.ready() );
@@ -1483,7 +1485,7 @@ Accessing Task Attributes in Scripts
 
 A program script can access the above attributes simply by naming them:
 
-::
+.. code-block:: none
 
       // a program in "ATask" does :
       var double pi2 = pi * 2.
@@ -1492,7 +1494,7 @@ A program script can access the above attributes simply by naming them:
 
       set Param = "B Value"
 
-::
+.. code-block:: none
 
       // an external (peer task) program does :
       var double pi2 = ATask.pi * 2.
@@ -1502,7 +1504,7 @@ A program script can access the above attributes simply by naming them:
 When trying to assign a value to a constant, the script parser will
 throw an exception, thus before the program is run.
 
-    **Important**
+.. important::
 
     The same restrictions of :ref:`method-args-types`
     hold for the attribute types, when you want to access them from

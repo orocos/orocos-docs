@@ -5,6 +5,11 @@ Hello world 4 - RTT Tutorial: Operations
 The source code of this tutorial can be found in the `GitHub repository
 <https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples/rtt-exercises/hello_4_operations>`_.
 
+In this tutorial we will introduce you to operations and how they expose functions so they
+can be used in scripting and by other processes. To illustrate this two components will
+be created in ``HelloWorld.cpp``. It is advised to read :ref:`operation-interface` before
+starting this tutorial.
+
 Contents of ``HelloWorld.cpp``:
 
 .. code-block:: cpp
@@ -33,17 +38,13 @@ Contents of ``HelloWorld.cpp``:
             : public TaskContext
         {
         protected:
-            /**
-            * @name Operations
-            * @{
-            */
+
             /**
             * Returns a string.
             */
             string getMessage() {
                 return "Hello World";
             }
-            /** @} */
 
         public:
             /**
@@ -74,7 +75,6 @@ Contents of ``HelloWorld.cpp``:
           */
           OperationCaller< string(void) > getMessage;
 
-          /** @} */
 
         public:
           World(std::string name)
@@ -82,9 +82,9 @@ Contents of ``HelloWorld.cpp``:
           {
           }
 
-          bool configureHook() {
-
-          // Lookup the Hello component.
+          bool configureHook()
+          {
+              // Lookup the Hello component.
               TaskContext* peer = this->getPeer("hello");
               if ( !peer ) {
                 log(Error) << "Could not find Hello component!"<<endlog();
@@ -113,10 +113,8 @@ Contents of ``HelloWorld.cpp``:
 
 
 
-Exercise 4
+Tutorial 4
 **********
-
-Read :ref:`attributes-and-properties-interface`
 
 .. note::
 
@@ -150,27 +148,84 @@ Read :ref:`attributes-and-properties-interface`
     source /opt/ros/${ROS_DISTRO}/setup.bash
     catkin build
 
-    # Run the example of the tutorial
-    source ${RTT_TUTORIALS_WS}/devel/setup.bash
-    deployer-gnulinux -lInfo -s $(rospack find hello_4_operations)/start.ops
+Creating an Operation
+---------------------
 
-First, compile and run this application as shown above, and use ``getMessage()`` in the TaskBrowser.
-Configure and start the World component (``world.start()``) and see
-how it uses ``getMessage()``. Fix any bugs :-)
+In our example the ``Hello`` component provides an operation, the operation is just a function
+which returns a string ``"Hello World"``. Adding the operation can be done with the ``addOperation``
+method:
 
-Next, add to the ``Hello`` component a second method ``bool sayIt(string sentence, string& answer)``
-which uses ``log(Info)`` to display a sentence in the thread of the ``Hello`` component.
-When sentence is "Orocos", the answer is "Hello Friend!" and ``true`` is returned. Otherwise,
-``false`` is returned and ``answer`` remains untouched.
-Add this function to the default ``Service`` of this class and document it
-and its arguments. Create in the TaskBrowser a variable ``var string string_result``
-and use it as the ``answer`` argument when calling ``sayIt("Orocos",string_result)``
+.. code-block:: cpp
 
-    *Optional* : Test sending and collecting arguments with the TaskBrowser. You'll
-    have to create a ``var SendHandle sh`` object in the TaskBrowser and assign to it
-    the result of a ``sayIt.send("Orocos",string_result)`` call. Collecting the result
-    is done using ``sh.collect( bool_result, string_result)``. Think about it why !
+    this->addOperation("getMessage", &Hello::getMessage, this).doc("Returns a friendly word.");
 
-    *Optional* : Next do the same in C++. Create an ``OperationCaller`` to ``sayIt``
-    and call ``sayIt.send("Orocos", string_result)`` in ``updateHook`` of the ``World`` component, then
-    ``collect()`` the ``string_result`` in the next iteration of ``updateHook()``.
+Calling an Operation
+--------------------
+
+From the deployer
+^^^^^^^^^^^^^^^^^
+
+Start the Orocos deployer (``deployer-gnulinux -lInfo``), and create the ``Hello`` component:
+
+.. code-block:: none
+
+    import("hello_4_operations")
+
+    loadComponent("hello", "Example::Hello")
+
+    // Print the interface of the hello component, the new "getMessage" operation should now be listed.
+    ls hello
+
+Calling the operation is then as simple as:
+
+.. code-block:: none
+
+    hello.getMessage()
+
+Using the ``OperationCaller``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Components can call operations of other components using an instance of ``OperationCaller``. In order
+to do this the components must first be connected using ``connectPeers`` in the Orocos deployer:
+
+.. code-block:: none
+
+    import("hello_4_operations")
+
+    loadComponent("hello","Example::Hello")
+    loadComponent("world","Example::World")
+
+    connectPeers("hello","world")
+
+The component that wants to call the operation of the other component first needs to look up the peer
+using ``this->getPeer("hello")``, and retrieve the operation it wishes to call using ``peer->getOperation("getmessage")``.
+All this is preferable done in the ``configureHook`` method:
+
+.. code-block:: cpp
+
+    bool configureHook()
+    {
+        // Lookup the Hello component.
+        TaskContext* peer = this->getPeer("hello");
+        if ( !peer ) {
+          log(Error) << "Could not find Hello component!"<<endlog();
+          return false;
+        }
+
+        // It is best practice to lookup methods of peers in
+        // your configureHook.
+        getMessage = peer->getOperation("getmessage");
+        if ( !getMessage.ready() ) {
+          log(Error) << "Could not find Hello.getMessage Operation!"<<endlog();
+          return false;
+        }
+    }
+
+The operation can then be called using the ``OperationCaller getMessage``, for example in the ``updateHook``:
+
+.. code-block:: cpp
+
+    void updateHook()
+    {
+      log(Info) << "Receiving from 'hello': " << getMessage() <<endlog();
+    }

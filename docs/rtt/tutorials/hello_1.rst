@@ -52,14 +52,34 @@ In this tutorial a component of type ``Hello`` will be created, you can find the
 
             bool configureHook()
             {
+              log(Info) << "Configure !" <<endlog();
+              this->setPeriod(0.5);
               return true;
             }
+
+            bool startHook()
+            {
+              log(Info) << "Start !" <<endlog();
+              return this->getPeriod() == 0.5;
+            }
+
+            void stopHook()
+            {
+              log(Info) << "Stop !" <<endlog();
+            }
+
+            void cleanupHook()
+            {
+              log(Info) << "Cleanup !" <<endlog();
+            }
+
         };
     }
 
     ORO_CREATE_COMPONENT( Example::Hello )
 
-Exercise 1
+
+Tutorial 1
 **********
 
 .. note::
@@ -94,40 +114,72 @@ First, compile the application as shown below.
   catkin build
 
 
+All components inherit from ``RTT::TaskContext``, which provides the ExecutionEngine which
+executes the application code. You can add your application code in the respective ``*Hook``
+methods. The component must be registered using the ``ORO_CREATE_COMPONENT`` macro.
 
-  # Run the example of the tutorial
+Let's see how this works in practice. The ``start.ops`` file used to deploy this component looks like:
+
+.. code-block:: node
+
+    import("hello-1-task-execution")
+
+    loadComponent("hello","Example::Hello")
+
+The import statement just imports the package, the ``loadComponent`` instantiates the component ``Example::Hello``
+with name ``hello`` (this is the ``std::string name`` passed to the constructor of ``RTT::TaskContext``).
+
+You can run it this way:
+
+.. code-block:: bash
+
   source ${RTT_TUTORIALS_WS}/devel/setup.bash
   deployer-gnulinux -lInfo -s $(rospack find hello_1_task_execution)/start.ops
 
 Now you should have the interface of the Orocos deployer that allows to input
 Orocos scripting language commands.
 
-How often is ``updateHook()`` executed ? Why ?
-
 .. tip::
   In order to find out which functions this component has, type ``ls``, and
   for detailed information, type ``help this`` (i.e. print the interface of the
   'this' task object).
 
-Next, Set the period of the component in ``configureHook`` to 0.5 seconds and
-make ``start()`` succeed when the period of the component indeed equals 0.5
-seconds.
+We can then configure our component (invoke the ``configureHook`` function):
 
-Next, add functions which use the ``RTT::log(RTT::Info)`` construct to display
-a notice when the ``configureHook()``, ``startHook()``, ``stopHook()`` and
-``cleanupHook()``
-are executed. (
+.. code-block:: none
+
+    hello.configure()
+
+In this example the period of the is set in the ``configureHook`` method.
+
+Next we can start our component:
+
+.. code-block:: none
+
+    hello.start()
+
+This will call the ``startHook`` function of our component, if that returns ``true``,
+the ``updateHook`` function will be executed, at the rate defined by the period that was set in ``configureHook``.
+In this example, ``startHook`` only returns ``true`` if the period is set to 0.5. Try to set
+this to a different value in ``updateHook`` and see what happens when you try to start the application.
 
 .. note::
 
-  Not all these functions return a bool!
+    By default a component starts in the ``Stopped`` state (see :ref:`task-application-code`), which makes the ``configure``
+    call optional. You can make the ``configure`` call required by specifying the state of the ``TaskContext`` in the constructor
+    of your component:
 
-Recompile and restart this application and try to ``configure``, ``start``,
-``stop`` and ``cleanup`` the component.
+    .. code-block:: cpp
 
-  *Optional* : Let the Hello component be created in the ``PreOperational`` mode.
-  What effect does this have on the acceptance of the ``start()`` method?
+        Hello(std::string name)
+            : RTT::TaskContext(name, PreOperational)
+        {
+        }
 
-  *Optional* : Replace the ``Activity`` with a ``SlaveActivity``. What are
-  the effects of trigger and update in comparison with the other activity types?
+The ``stopHook`` and ``cleanupHook`` can also be invoked from the Orocos deployer:
+
+.. code-block:: none
+
+    hello.stop()
+    hello.cleanup()
 

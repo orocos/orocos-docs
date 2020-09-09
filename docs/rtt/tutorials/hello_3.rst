@@ -6,6 +6,10 @@ Hello world 3 - RTT Tutorial: Data Ports
 The source code of this tutorial can be found in the `GitHub repository
 <https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples/rtt-exercises/hello_3_dataports>`_.
 
+In this tutorial we will create 2 different components and show you how they can send
+and receive data from each other. Both components are defined in the ``HelloWorld.ccp`` file.
+It is recommended to first read :ref:`data-flow-ports` before starting this tutorial.
+
 Contents of ``HelloWorld.cpp``:
 
 .. code-block:: cpp
@@ -59,8 +63,19 @@ Contents of ``HelloWorld.cpp``:
                 this->ports()->addPort( input ).doc("Data consuming port.");
             }
 
+            bool configureHook()
+            {
+                // configuration only succeeds if the input port is connected
+                return input.connected();
+            }
+
             void updateHook()
             {
+                while ( input.read(read_helper) == NewData )
+                {
+                    log(Info) << "Received data : " << read_helper <<endlog();
+                    output.write( read_helper );
+                }
             }
         };
 
@@ -128,11 +143,8 @@ Contents of ``start.ops``
     hello.start()
 
 
-Exercise 3
+Tutorial 3
 **********
-
-Read Orocos Component Builder's Manual,
-:ref:`data-flow-ports`.
 
 .. note::
 
@@ -142,9 +154,7 @@ Read Orocos Component Builder's Manual,
 
 ..
 
-  Now you should have a working Orocos + ROS integration bundle. If you used a
-  different system or installation method, please adapt the following lines to
-  your convenience.
+First, compile the application as shown below.
 
   .. note::
     ROS is not needed to run Orocos or to follow this tutorial, but it
@@ -166,52 +176,117 @@ Read Orocos Component Builder's Manual,
     source /opt/ros/${ROS_DISTRO}/setup.bash
     catkin build
 
-    # Run the example of the tutorial
-    source ${RTT_TUTORIALS_WS}/devel/setup.bash
-    deployer-gnulinux -lInfo -s $(rospack find hello_3_data_ports)/start.ops
+Creating multiple components
+----------------------------
 
+In this tutorial two components are defined in the same package. The ``ORO_CREATE_COMPONENT`` macro
+we used in the previous tutorials only allows for one component to be registered in a package. You can
+add more than one component in a package like this:
+
+.. code-block:: cpp
+
+    ORO_CREATE_COMPONENT_LIBRARY()
+    ORO_LIST_COMPONENT_TYPE( Example::Hello )
+    ORO_LIST_COMPONENT_TYPE( Example::World )
 
 Reading and writing Ports
 --------------------------
 
-First, compile and run this application and use the
-``output.write("foo")`` and ``input.read( read_helper )`` of the Hello component in the TaskBrowser.
-This uses the ``read_helper`` attribute to store a read value. Clearly, you should
-notice that no data is consumed or produced.
+Components can use ``RTT::InputPort`` and ``RTT::OutputPort`` objects to send and receive data, a
+template parameter speciefies the type of data that the component wants to send or receive. When input
+and output ports are connected, they need to have the same type. You can add ports to a component
+using the ``addPort`` function.
 
-    *Optional* : Check the TaskBrowser documentation
-    on how you can create 'opposite' data ports to a live component in order to
-    send data to its input ports or read the data out of its output ports.
+It is considered good practice to check if the ports of the TaskContext are connected in
+the ``configureHook`` function:
 
-Write a ``configureHook()`` in Hello which checks if the input port is
-connected and returns false if it is not.
-Question: how did Hello specify it requires a configureHook() call ?
+.. code-block:: cpp
 
-Next, write an ``updateHook()`` in Hello which reads ``input`` and
-writes the data to ``output``. Be careful only to write data
-when a read from the input was succesful. Do this by checking
-the return value of ``read()`` (``NoData``, ``OldData`` or ``NewData`` ?).
+    bool configureHook()
+    {
+        // configuration only succeeds if the input port is connected
+        return input.connected();
+    }
 
-Finally start the World component (``world.start()``). See how it uses the
-input port in C++.
+The data from an input port can be read using the ``read()`` function, which is typically used in
+the ``updateHook``:
 
-Connection policies
---------------------
+.. code-block:: cpp
 
-We did not specify yet if connections should be buffered or not. Modify in
-start.ops the connect() statement to indicate a buffering policy (use ``BUFFER`` as type),
-buffer size 10 and using locks (``LOCKED``).
-Set the period of World's activity to 0.1s
-and modify updateHook in Hello to keep reading (using a while loop) as long as NewData is available
-and print the results.
+    void updateHook()
+    {
+        if (input.read(read_helper) = RTT::NewData)
+        {
+          // Do something.
+        }
+    }
 
-    *Optional*: Analysing real-time behaviour:
+In the above example, the data that is read is stored in the ``read_helper`` member variable of the
+TaskContext. The ``read`` function returns either ``RTT::NewData``, ``RTT::NoData``, or ``RTT::OldData``.
+Writing to an output port is as simple as:
 
-    Create a struct ``Data`` that holds an ``std::vector<double>`` and logs in
-    the constructor, destructor, copy constructor and ``operator=``. Replace
-    the ports in this example with ports holding ``<Data>``. Re-run the program,
-    Explain when and why data is copied, constructed or destructed in both the
-    default 'data' connection policy and in the 'buffered' connection policy.
+.. code-block:: cpp
 
-    Now find out how to initialise a connection such that copies are real-time
-    safe with respect to copying the vector of doubles.
+    output.write(value);
+
+Connecting ports
+----------------
+
+Run the application with the Orocos deployer:
+
+.. code-block:: bash
+
+    deployer-gnulinux -lInfo start.ops
+
+In the ``start.ops`` file both the ``Hello`` and ``World`` components are created:
+
+.. code-block:: none
+
+    import("hello_3_dataports")
+
+    loadComponent("hello","Example::Hello")
+    loadComponent("world","Example::World")
+
+    var double period = 0.5
+    var int priority  = 0
+    setActivity("hello", period, priority , ORO_SCHED_OTHER )
+    setActivity("world", period, priority , ORO_SCHED_OTHER )
+
+Connecting the input port of ``hello`` to the output port of ``world``, can be done with
+the ``connect`` method, and requires a ``ConnPolicy`` as well (we use the default here):
+
+.. code-block:: none
+
+    connect("world.output","hello.input", ConnPolicy() )
+
+When we now start the two components, you should see the data being printed from the
+``updateHook`` of the ``hello`` component:
+
+.. code-block:: none
+
+    hello.configure()
+    hello.start()
+    world.start()
+
+Now stop the ``world`` component, and update its period to 0.1, so it runs 5 times faster,
+and restart it:
+
+.. code-block:: none
+
+    world.stop()
+    setActivity("hello", 0.1, 0 , ORO_SCHED_OTHER )
+    world.start()
+
+You should now notice that some data is not being printed, the default ``ConnPolicy`` does
+not do any buffering. You can create a ``ConnPolicy`` that does do buffering, and use that
+to connect the two ports:
+
+.. code-block:: none
+
+    var ConnPolicy cp
+    cp.type = CIRCULAR_BUFFER
+    cp.size = 10
+    cp.lock_policy = LOCKED
+    connect("world.output","hello.input", cp )
+
+Now you should see all data printed from the ``updateHook`` method of the ``hello`` component

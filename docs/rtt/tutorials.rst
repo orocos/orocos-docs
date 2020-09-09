@@ -25,7 +25,9 @@ allthough installing Orocos together with ROS is the easiest way to get going, a
 way to do it if you plan on integrating your Orocos components with ROS).
 
 The source code for these tutorials can be found on `GitHub
-<https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples>`_.
+<https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples>`_. They are phrased as exercises there,
+without much explanation. If you already went through the :doc:`Orocos Component Builders Manual <orocos-components-manual>` it may be more
+useful to try them that way.
 
 ..
   These are the most important tutorials for a total beginner
