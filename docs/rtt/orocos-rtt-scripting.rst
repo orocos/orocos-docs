@@ -1,3 +1,5 @@
+.. _orocos-scripting-reference-manual:
+
 =====================================
 The Orocos Scripting Reference Manual
 =====================================
@@ -138,6 +140,8 @@ Variables, constants and aliases are defined for the following types:
 bool, int, double, string and array. The Orocos Typekit System allows
 any application or library to extend these types.
 
+.. _strings-and-arrays:
+
 Strings and Arrays
 ~~~~~~~~~~~~~~~~~~
 
@@ -188,12 +192,12 @@ constructors:
 
 Table: array and string constructors
 
-    **Warning**
+.. warning:
 
     The 'Copy Syntax' syntax leads to not real-time scripts because the
     size is expanded at run-time. See the examples below.
 
-::
+.. code-block:: none
 
       // A free string and free array :
       // applestring is expanded to contain 6 characters (non real-time)
@@ -408,6 +412,8 @@ was called. Calling operations and expressions on the other hand
 typically do not impose a yield, and thus are executed immediately after
 each other.
 
+.. _program-syntax:
+
 Program Syntax
 --------------
 
@@ -494,13 +500,15 @@ statement changes a variable or is empty.
 Note that Orocos scripting does not (yet) support the postfix or prefix
 increment/decrement operators like ++ and --.
 
+.. _while-statement:
+
 The while Statement
 ~~~~~~~~~~~~~~~~~~~
 
 The while statement is another looping primitive in the Orocos script
 language. A ``do`` statement is not implemented
 
-::
+.. code-block:: none
 
       var int i = 0;
       while i < 10
@@ -542,7 +550,7 @@ Operations can be called like calling C functions. They take arguments
 and return a value immediately. They can be used in expressions or stand
 alone :
 
-::
+.. code-block:: none
 
       // var int arg1 = 3, arg2 = 4
       // ignore the return value :
@@ -559,7 +567,7 @@ alone :
 
 These operations are executed directly one after the other.
 
-    **Warning**
+.. warning::
 
     A method throwing an exception, will cause a run-time program error.
     If this is not wanted, put 'try' in front of the method call
@@ -752,6 +760,8 @@ Some basic properties of the program can be inspected likewise :
 
 which all return a boolean indicating true or false.
 
+.. _orocos-state-descriptions:
+
 Orocos State Descriptions : The Real-Time State Machine
 =======================================================
 
@@ -938,6 +948,8 @@ owner TaskContext by writing:
       sm->activate();
       sm->start();
 
+.. _defining-statemachines:
+
 Defining StateMachines
 ----------------------
 
@@ -1082,6 +1094,8 @@ Preconditions are specified as follows:
 They are checked in addition to transitions to that state and can make
 such a transition fail, hence block the transition, as if the transition
 condition in the first place did not succeed.
+
+.. _data-flow-event-transitions:
 
 Data Flow Event Transitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

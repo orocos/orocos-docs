@@ -185,8 +185,11 @@ Calling the operation is then as simple as:
 Using the ``OperationCaller``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Components can call operations of other components using an instance of ``OperationCaller``. In order
-to do this the components must first be connected using ``connectPeers`` in the Orocos deployer:
+Components can call operations of other components using an instance of ``OperationCaller``.  It is considered
+best practice to have this ``OperationCaller`` as a member of your class. The ``OperationCaller`` needs to be templated
+with the signature of the operation you wish to call. In the above example we wish to call ``string getMessage()``, so
+our OperationCaller looks like this: ``OperationCaller<string(void)>``. In order to be able to call operations of
+other components, the components must first be connected using ``connectPeers`` in the Orocos deployer:
 
 .. code-block:: none
 

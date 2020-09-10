@@ -1772,8 +1772,8 @@ the second what it needs from others to do.
 Here's a simple use case for two components:
 
 The only difference between setting up a service and adding an
-operation, is by adding provides("servicename") in front of
-addOperation.
+operation, is by adding ``provides("servicename")`` in front of
+``addOperation``.
 
 .. code-block:: cpp
 
@@ -1807,8 +1807,8 @@ order to allow another component to find it by name. Here's an example
 on how to use this service:
 
 The only difference between setting up a service and adding a
-OperationCaller object, is by adding requires("servicename") in front of
-addOperationCaller.
+``OperationCaller`` object, is by adding ``requires("servicename")`` in front of
+``addOperationCaller``.
 
 .. code-block:: cpp
 
@@ -1846,15 +1846,15 @@ addOperationCaller.
          }
       };
 
-What you're seeing is this: the client has 2 OperationCaller objects for
-calling the functions in the "display" service. The method objects must
-have the same name as defined in the 'provides' lines in the previous
-listing. We check in configureHook if this interface is ready to be
-called. Update hook then calls these methods.
+What you're seeing is this: the client has 2 ``OperationCaller`` objects for
+calling the functions in the ``"display"`` service. The method objects must
+have the same name as defined in the ``'provides'`` lines in the previous
+listing. We check in ``configureHook`` if this interface is ready to be
+called. In ``updateHook`` these methods are then called.
 
 The remaining question is now: how is the connection done from client to
 server? The ``RTT::ServiceRequester`` has a method
-``connectTo(Service*)`` which does this connection from OperationCaller
+``connectTo(Service*)`` which does this connection from ``OperationCaller``
 object to operation. If you wanted to hardcode this, it would look like:
 
 .. code-block:: cpp
@@ -1885,7 +1885,7 @@ from or to files, you can use the ``RTT::Marshalling`` service. It
 creates or reads files in the XML Component Property Format such that it
 is human readable and modifiable.
 
-::
+.. code-block:: cpp
 
       // ...
       RTT::TaskContext* a_task = ...
@@ -1910,7 +1910,7 @@ contain elements for each Property or PropertyBag in your task. Below is
 a component with five properties. There are three properties at the top
 level of which one is a PropertyBag, holding two other properties.
 
-::
+.. code-block:: cpp
 
     #include <rtt/TaskContext.hpp>
     #include <rtt/Property.hpp>
@@ -2032,7 +2032,7 @@ ExecutionEngine. A program can be paused, it's variables inspected and
 reset while it is loaded in the Processor. A simple program script can
 look like :
 
-::
+.. code-block:: none
 
       program foo
       {
@@ -2045,7 +2045,7 @@ Any number of programs may be listed in a file.
 
 Orocos Programs are loaded as such into a TaskContext :
 
-::
+.. code-block:: cpp
 
       RTT::TaskContext* a_task = ...
 
@@ -2055,7 +2055,7 @@ When the Program is loaded in the Task Context, it can also be
 controlled from other scripts or a TaskBrowser. Assuming you have loaded
 a Program with the name 'foo', the following commands are available :
 
-::
+.. code-block:: none
 
       foo.start()
       foo.pause()
@@ -2065,7 +2065,7 @@ a Program with the name 'foo', the following commands are available :
 
 While you also can inspect its status :
 
-::
+.. code-block:: none
 
       var bool ret
       ret = foo.isRunning()
@@ -2076,7 +2076,7 @@ While you also can inspect its status :
 You can also inspect and change the variables of a loaded program, but
 as in any application, this should only be done for debugging purposes.
 
-::
+.. code-block:: none
 
       set foo.i = 3
       var double oldj = foo.j
@@ -2089,7 +2089,7 @@ locally to the component. Take a look at the
 ``RTT::scripting::ProgramInterface`` class reference for more program
 related functions. One can get a pointer to a program by calling:
 
-::
+.. code-block:: cpp
 
       scripting::ScriptingService* sa = dynamic_cast<scripting::ScriptingService*>(this->getService("scripting"));
       scripting::ProgramInterface* foo = sa->getProgram("foo");
@@ -2111,7 +2111,7 @@ state and only executed when the state machine is in that state. This
 section limits to showing how an Orocos State Description (osd) script
 can be loaded in a Task Context.
 
-::
+.. code-block:: cpp
 
       RTT::TaskContext* a_task = ...
 
@@ -2122,7 +2122,7 @@ controlled from your scripts or TaskBrowser. Assuming you have
 instantiated a State Machine with the name 'machine', the following
 commands are available :
 
-::
+.. code-block:: none
 
       machine.activate()
       machine.start()
@@ -2139,7 +2139,7 @@ commands are available :
 As with programs, you can inspect and change the variables of a loaded
 StateMachine.
 
-::
+.. code-block:: none
 
       set machine.myParam = ...
 
@@ -2216,14 +2216,14 @@ Library*.
 The process goes as such: A component inherits from ``RTT::TaskContext``
 and has some Orocos primitives as class members. Instead of calling:
 
-::
+.. code-block:: cpp
 
       this->addOperation("name", &foo).doc("Description").arg("Arg1","Arg1 Description");
 
 and providing a description for the primitive as well as each argument,
 one writes:
 
-::
+.. code-block:: cpp
 
       this->addLocalOperation("name", &foo );
 
@@ -2234,7 +2234,7 @@ primitive.
 In order to access the interface of such a Component, the user code may
 use:
 
-::
+.. code-block:: cpp
 
       taskA->getLocalOperation("name");
 
@@ -2281,7 +2281,7 @@ Polymorphism : Task Interfaces
 Most projects have define their own task interfaces in C++. Assume you
 have a class with the following interface :
 
-::
+.. code-block:: cpp
 
       class DeviceInterface
       {
@@ -2318,7 +2318,7 @@ Step 1 : Export the interface
 We construct a TaskContext, which exports your C++ interface to a task's
 interface.
 
-::
+.. code-block:: cpp
 
       #include <rtt/TaskContext.hpp>
       #include <rtt/Operation.hpp>
@@ -2370,7 +2370,7 @@ Step 2 : Inherit from the new interface
 Your DeviceInterface implementations now only need to inherit from
 ``TaskDeviceInterface`` to instantiate a Device TaskContext :
 
-::
+.. code-block:: cpp
 
       #include "TaskDeviceInterface.hpp"
 

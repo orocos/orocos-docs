@@ -42,14 +42,7 @@ useful to try them that way.
    3 - Data Ports <tutorials/hello_3>
    4 - Operations <tutorials/hello_4>
    5 - Services <tutorials/hello_5>
-..
-  - **1** - :doc:`Taks execution <tutorials/hello_1>`
-  - **2** - :doc:`Properties <tutorials/hello_2>`
-  - **3** - :doc:`Data Ports <tutorials/hello_3>`
-  - **4** - :doc:`Operations <tutorials/hello_4>`
-  - **5** - :doc:`Services <tutorials/hello_5>`
-- **6** - Scripting
-- **7** - Deployment
+   6 - Scripting <tutorials/hello_6>
 
 Other examples:
 
