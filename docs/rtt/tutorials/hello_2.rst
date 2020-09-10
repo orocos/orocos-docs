@@ -6,6 +6,11 @@ Hello world 2 - RTT Tutorial: Properties
 The source code of this tutorial can be found in the `GitHub repository
 <https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples/rtt-exercises/hello_2_properties>`_.
 
+It is recommended to read :ref:`attributes-and-properties-interface` before starting this tutorial.
+
+In this tutorial we will create a ``HelloWorld`` component, and add some properties, attributes, and constants,
+and show how to use them.
+
 Contents of ``HelloWorld.cpp``:
 
 .. code-block:: cpp
@@ -28,6 +33,7 @@ Contents of ``HelloWorld.cpp``:
     #include <rtt/Property.hpp>
     #include <rtt/Attribute.hpp>
     #include <rtt/Component.hpp>
+    #include <rtt/marsh/Marshalling.hpp>
 
     using namespace std;
     using namespace RTT;
@@ -74,40 +80,53 @@ Contents of ``HelloWorld.cpp``:
                   property("Hello World")
             {
                 // Now add it to the interface:
-                this->addProperty("property", property).doc("This property can contain any friendly string.");
+                this->addProperty("my_property", property).doc("This property can contain any friendly string.");
 
-                this->addAttribute("attribute", attribute);
-                this->addConstant("constant", constant);
+                this->addAttribute("my_attribute", attribute);
+                this->addConstant("my_constant", constant);
+
+                /* OPTIONAL
+                this->getProvider<Marshalling>("marshalling");
+                */
             }
+
+            bool configureHook()
+            {
+                /* OPTIONAL
+                if ( this->getProvider<Marshalling>("marshalling")->readProperties("hello.xml") == true ) {
+                    log(Info) << "The property value is now: " << property << endlog();
+                } else {
+                    log(Warning) << "No hello.xml property file present yet !" << endlog();
+                }
+                */
+                return true;
+            }
+
+            void cleanupHook()
+            {
+                /* OPTIONAL
+                this->getProvider<Marshalling>("marshalling")->writeProperties("hello.xml");
+                */
+            }
+
         };
     }
 
     ORO_CREATE_COMPONENT( Example::Hello )
 
-Exercise 2
+Tutorial 2
 **********
 
-Read Orocos Component Builder's Manual,
-:doc:`Chap 2 <../../rtt/orocos-task-context>`
-sect. 3.5 (The Attributes and Properties Interface).
 
-First, compile and run this application.
+.. note::
 
   This tutorial assumes that you have installed Orocos through the pre-compiled
   packages distributed via ROS in Ubuntu. If you don't have it installed, try
-  following the instructions from
-  `ROS installation <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_.
-  Additional to ``ros-kinetic-desktop-full`` (recommended by ROS) install Orocos
-  packages.
+  following the instructions from :ref:`installation-options`.
 
-  .. code-block:: bash
+..
 
-    # With Ubuntu 16.04, install Orocos via ROS packages
-    sudo apt-get install ros-kinetic-rtt-ros-integration
-
-  Now you should have a working Orocos + ROS integration bundle. If you used a
-  different system or installation method, please adapt the following lines to
-  your convenience.
+First, compile and run this application.
 
   .. note::
     ROS is not needed to run Orocos or to follow this tutorial, but it
@@ -129,75 +148,104 @@ First, compile and run this application.
     source /opt/ros/${ROS_DISTRO}/setup.bash
     catkin build
 
-    # Run the example of the tutorial
-    source ${RTT_TUTORIALS_WS}/devel/setup.bash
-    deployer-gnulinux -lInfo -s $(rospack find hello_1_task_execution)/start.ops
 
-Use 'property' and 'attribute':
-Change and print their values in the ``TaskBrowser``.
+Properties, attributes, and constants can be used to expose members of a TaskContext,
+and do so each in a different way. You can add them, and give them a name using the
+``addProperty``, ``addAttribute``, and ``addConstant`` functions as shown above.
 
-Next save the properties of this component to a ``hello.xml`` file:
-You will need to install the ``marshalling`` service using the TaskBrowser
-at runtime:
 
-In the ``TaskBrowser``: type from the Deployer:
+Let's run the application with the Orocos deployer:
+
+The ``start.ops`` file for the deployment (run with ``deployer-gnulinux -lInfo start.ops``):
 
 .. code-block:: none
-  
-  loadService("hello", "marshalling")
 
-To make this permanent for your component, add this statement in the
-``start.ops`` file.
+    import("hello_2_properties")
+    loadComponent("hello", "Example::Hello")
 
-  **Optional**: 
-  use ``loadService`` in C++:
-  
-    In C++ you need to
-    
-    .. code-block:: cpp
-      
-      #include <rtt/marsh/Marshalling.hpp> 
-    
-    and add to the constructor:
-    
-    .. code-block:: cpp
-    
-      this->getProvider<Marshalling>("marshalling");
+    // Inspect the interface of the "hello" component:
+    ls hello
 
-    In the ``CMakeLists.txt``: add ``rtt-marshalling`` to the list of components
-    to look for in the ``find_package`` macro
-    
-    .. code-block:: cmake
+You can see the property string listed under ``Configuration Properties``, and the attribute and constant
+we added can be found under ``Attributes`` in the output of ``ls hello``.
 
-      find_package(OROCOS-RTT REQUIRED)
+The value of the property and attribute can be changed in the deployer interface:
 
-    See : http://www.orocos.org/wiki/orocos/toolchain/getting-started/cmake-and-building
-    and use that syntax in the CMakeLists.txt file to link 'HelloWorld' with marshalling.
+.. code-block:: none
 
-When marshalling is loaded:
-In order to find out how to write the property to a file using ``marshalling``,
-type ``marshalling`` to see the interface of the marshalling task object.
+    hello.property  = "My new property value"
+    hello.attribute = 2.0
 
-Next Open and modify the XML file and read it back in using the marshalling object.
+The value of the constant can of course not be changed.
+
+Unlike attributes, properties can be written to an xml file for persisten storage. The ``marshalling``
+service is required to do that. You can either load the service in the ``hello`` TaskContext with the
+Orocos deployer, and read and write the properties to an xml file like this:
+
+.. code-block:: none
+
+    loadService("hello", "marshalling")
+
+You can inspect the interface of the marshalling service as follows:
+
+.. code-block:: none
+
+    hello.marshalling
+
+Reading and writing properties to an xml file can then be done using the ``readProperties`` and ``writeProperties`` functions:
+
+.. code-block:: none
+
+    // Writes to XML:
+    hello.writeProperties("hello.xml")
+
+    // Reads from XML:
+    hello.readProperties("hello.xml")
+
+You can add these instructions to the ``start.ops`` file to make them permanent.
+
+The other way to do this is to load the service in the constructor of the TaskContext:
+
+.. code-block:: cpp
+
+    Hello(std::string name)
+    : TaskContext(name),
+      // Name, description, value
+      property("Hello World")
+    {
+        // Now add it to the interface:
+        this->addProperty("my_property", property).doc("This property can contain any friendly string.");
+
+        this->addAttribute("my_attribute", attribute);
+        this->addConstant("my_constant", constant);
+
+        // load the marshalling service
+        this->getProvider<Marshalling>("marshalling");
+    }
+
+Then you can read and write the properties in respectively the ``configureHook`` and ``cleanupHook``.
+
+.. code-block:: cpp
+
+    bool configureHook()
+    {
+        // Read properties from xml file
+        if ( this->getProvider<Marshalling>("marshalling")->readProperties("hello.xml") == true ) {
+            log(Info) << "The property value is now: " << property << endlog();
+        } else {
+            log(Warning) << "No hello.xml property file present yet !" << endlog();
+        }
+        return true;
+    }
+
+    void cleanupHook()
+    {
+        // write properties to xml file
+        this->getProvider<Marshalling>("marshalling")->writeProperties("hello.xml");
+    }
+
 
 .. note::
-  For the optional exercises, read :doc:`Chap 2 <../../rtt/orocos-task-context>`,
-  sect 6.1 (Task Property Configuration and XML format).
 
-\ 
-  **Optional** : read the property file from ``configureHook()`` and log it's
-  value. You need to make the modifications detailed above in the note.
-  
-  **Optional** : write the property file in ``cleanupHook()``.
-
-For ROS users: load the ``rtt_rosparam`` service as well and send the properties to the
-ROS master server instead of to the XML file. 
-
-  At runtime:
-    In ``TaskBrowser``: type ``import("rtt_rosnode")`` and ``.provide rosparam``
-    in ``hello``.
-
-.. note::
-  
   Open question: Would you prefer to hard-code this property reading/writing or would
   you prefer to script it ?

@@ -33,7 +33,7 @@ determinism. Meaning, that the system is free of priority-inversions,
 and all operations are lock-free. Real-time components can communicate
 with non real-time components (and vice verse) transparently.
 
-    **Note**
+.. note::
 
     In this manual, the words task and component are used as equal
     words, meaning a software component built using the C++ TaskContext
@@ -287,9 +287,9 @@ component, Hello.
     Hello [S]>
 
 
-**Note**
+.. note::
 
-To get a quick overview of the commands, type ``help``.
+   To get a quick overview of the commands, type ``help``.
 
 The first line shows the status between square brackets. The [S] here
 means that the component is in the stopped state. Other states can be
@@ -400,6 +400,7 @@ Since Hello doesn't have any attributes, we create one dynamically:
     Hello [R]> the_attribute
      = Veni Vidi Vici !
 
+.. _reading-and-writing-ports:
 
 Reading and Writing Ports
 -------------------------
@@ -433,10 +434,12 @@ testing and inspecting what is happening inside your real-time programs,
 it is a very useful tool. The next sections show how you can add
 properties, methods etc to a TaskContext.
 
-    **Note**
+.. note::
 
     If you want a more in-depth tutorial, see the rtt-exercises package
     which covers each aspect also shown in this manual.
+
+.. _creating-a-basic-component:
 
 Creating a Basic Component
 ==========================
@@ -525,6 +528,8 @@ between states.
 
 The first section goes into detail on how to use these hooks.
 
+.. _task-application-code:
+
 Task Application Code
 ---------------------
 
@@ -539,7 +544,7 @@ The user may insert his configuration-time setup/cleanup code in the
 The run-time (or: real-time) application code belongs in the
 ``startHook()``, ``updateHook()`` and ``stopHook()`` functions.
 
-::
+.. code-block:: cpp
 
     class MyTask
         : public RTT::TaskContext
@@ -591,16 +596,16 @@ The run-time (or: real-time) application code belongs in the
            }
       };
 
-**Important**
+.. important::
 
-By default, the TaskContext enters the ``Stopped`` state
-(:numref:`fig-component-states`) when it is created,
-which makes ``configure()`` an optional call.
+   By default, the TaskContext enters the ``Stopped`` state
+   (:numref:`fig-component-states`) when it is created,
+   which makes ``configure()`` an optional call.
 
 If you want to *force* the user to call configure() of your TaskContext,
 set the TaskState in your constructor as such:
 
-::
+.. code-block:: cpp
 
     class MyTask
         : public RTT::TaskContext
@@ -659,7 +664,7 @@ A common task in control is executing an algorithm periodically. This is
 done by attaching an activity to the Execution Engine which has a
 periodic execution time set.
 
-::
+.. code-block:: cpp
 
       #include <rtt/Activity.hpp>
 
@@ -682,7 +687,7 @@ always running, but you can stop and start it too.
 You don't need to create a new Activity if you want to switch to
 periodic execution, you can also use the ``setPeriod`` function:
 
-::
+.. code-block:: cpp
 
       // In your TaskContext's configureHook():
       bool configureHook() {
@@ -691,7 +696,7 @@ periodic execution, you can also use the ``setPeriod`` function:
 
 An ``updateHook()`` function of a periodic task could look like:
 
-::
+.. code-block:: cpp
 
       class MyTask
         : public RTT::TaskContext
@@ -711,25 +716,25 @@ An ``updateHook()`` function of a periodic task could look like:
 
       };
 
-You can find more detailed information in `??? <#corelib-activities>`__
+You can find more detailed information in :ref:`corelib-activities`
 in the CoreLib reference.
 
 Default Component Execution Semantics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A TaskContext is run by default by a non periodic RTT:Activity object.
+A TaskContext is run by default by a non periodic ``RTT:Activity`` object.
 This is useful when ``updateHook()`` only needs to process data when it
 arrives on a port or must wait on network connections or does any other
 blocking operation.
 
-Upon start(), the Execution Engine waits for new methods or data to come
+Upon ``start()``, the Execution Engine waits for new methods or data to come
 in to be executed. Each time such an event happens, the user's
 application code (``updateHook()``) is called after the Execution Engine
 did its work.
 
 An ``updateHook()`` function of a non periodic task could look like:
 
-::
+.. code-block:: cpp
 
       class MyTask
         : public RTT::TaskContext
@@ -760,7 +765,7 @@ An ``updateHook()`` function of a non periodic task could look like:
 
       };
 
-**Warning**
+.. warning::
 
     Non periodic activities should be used with care and with much
     thought in combination with scripts (see later). The ExecutionEngine
@@ -778,7 +783,7 @@ in the CoreLib reference.
 Data Flow Ports
 ---------------
 
-**Note**
+.. note::
 
     A component has ports in order to send or receive a stream of data.
     The algorithm writes Output ports to publish data to other
@@ -788,7 +793,7 @@ Data Flow Ports
     input ports.
 
     Reading and writing data ports is always real-time and thread-safe,
-    on the condition that copying your data (i.e. your operator= ) is as
+    on the condition that copying your data (i.e. your ``operator=`` ) is as
     well.
 
 Each component defines its data exchange ports and connections transmit
@@ -817,13 +822,13 @@ Which data can be transfered ?
 The data flow implementation can pass on any data type 'X', given that
 its class provides:
 
--  A default constructor: X::X()
+-  A default constructor: ``X::X()``
 
--  An assignment operator: const X& X::operator=(const X& )
+-  An assignment operator: ``const X& X::operator=(const X& )``
 
-For real-time data transfer (see also :ref:`guarantee-rt-data-flow`) the operator= must be
+For real-time data transfer (see also :ref:`guarantee-rt-data-flow`) the ``operator=`` must be
 real-time when assigning equal sized objects. When assigning not equal
-sized objects, your operator= should free the memory and allocate enough
+sized objects, your ``operator=`` should free the memory and allocate enough
 room for the new size.
 
 In addition, if you want to send your data out of your process to
@@ -835,16 +840,16 @@ another process or host, it will additionally need:
 -  A transport for the data type registered with the type system (see
    the transport (ROS, CORBA ,MQueue, ...) documentation)
 
-The standard C++ and std::vector<double> data types are already included
+The standard C++ and ``std::vector<double>`` data types are already included
 in the RTT library for real-time transfer and out of process transport.
 
 Setting up the Data Flow Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any kind of data can be exchanged (also user defined C/C++ types) but
-for readability, only the 'double' C type is used here.
+for readability, only the ``double`` C type is used here.
 
-::
+.. code-block:: cpp
 
       #include <rtt/Port.hpp>
       using namespace RTT;
@@ -878,12 +883,12 @@ for readability, only the 'double' C type is used here.
          // ...
       };
 
-The example starts with declaring all the ports of MyTask. A template
-parameter '<double>' specifies the type of data the task wants to
+The example starts with declaring all the ports of ``MyTask``. A template
+parameter ``<double>`` specifies the type of data the task wants to
 exchange through that port. Logically, if input and output are to be
 connected, they must agree on this type. The name is given in the
-addPort() function. This name can be used to 'match' ports between
-connected tasks ( using 'connectPorts', see :ref:`connecting-services`),
+``addPort()`` function. This name can be used to 'match' ports between
+connected tasks ( using ``connectPorts``, see :ref:`connecting-services`),
 but it is possible *and preferred* to connect Ports with different
 names using the Orocos deployer.
 
@@ -892,10 +897,10 @@ There are two ways to add a port to the TaskContext interface: using
 arriving on the port will wake up ('trigger') the activity of our
 TaskContext and updateHook() get's executed.
 
-**Note**
+.. note::
 
     Only ``RTT::InputPort`` can be added as EventPort and will cause
-    your component to be triggered (ie wake up and call updateHook).
+    your component to be triggered (ie wake up and call ``updateHook``).
 
 .. _guarantee-rt-data-flow:
 
@@ -908,14 +913,14 @@ or struct with only data which can be copied without causing memory
 allocations work out of the box. No special measures must be taken and
 the port is immediately ready to use.
 
-If however, your type is more complex, like a std::vector or other
+If however, your type is more complex, like a ``std::vector`` or other
 dynamically sized object, additional setup steps must be done. First,
-the type must guarantee that its operator=() is real-time in case two
+the type must guarantee that its ``operator=()`` is real-time in case two
 equal-sized objects are used. Second, before sending the first data to
 the port, a properly sized data sample must be given to the output port.
 An example:
 
-::
+.. code-block:: cpp
 
       OutputPort<std::vector<double> > myport("name");
 
@@ -929,7 +934,7 @@ An example:
       // be passed on in hard real-time.
       myport.write( example ); // hard real-time.
 
-setDataSample does not actually send the data to all receivers, it just
+``setDataSample`` does not actually send the data to all receivers, it just
 uses this sample to initiate the connection, such that any subsequent
 writes to the port with a similar sample will be hard real-time. If you
 omit this call, data transfer will proceed, but the RTT makes no
@@ -1004,7 +1009,7 @@ system such that (part of) the calculation can happen in a script. Also,
 the TaskBrowser can then be used to inspect the contents of the DataFlow
 on-line.
 
-    **Note**
+.. note::
 
     In scripting, it is currently not yet possible to know which event
     port woke your task up.
@@ -1012,7 +1017,7 @@ on-line.
 A small program script could be loaded into MyTask with the following
 contents:
 
-::
+.. code-block:: none
 
       program MyControlProgram {
         var double the_K  = K        // read task property, see later.
@@ -1029,11 +1034,11 @@ contents:
         }
       }
 
-The program "MyControlProgram" starts with declaring two variables and
-reading the task's Property 'K'. Then it goes into an endless loop,
-trying to Pop a set point value from the "SetPoint\_X" Port. If that
-succeeds (new or old data present) the "Data\_R" Port is read and a
-simple calculation is done. The result is written to the "Data\_W"
+The program ``MyControlProgram`` starts with declaring two variables and
+reading the task's Property ``K``. Then it goes into an endless loop,
+trying to Pop a set point value from the ``SetPoint_X`` Port. If that
+succeeds (new or old data present) the ``Data_R`` Port is read and a
+simple calculation is done. The result is written to the ``Data_W``
 OutputPort and can now be read by the other end(s). Alternatively, the
 result may be directly used by the Task in order to write it to a device
 or any non-task object. You can use methods (below) to send data from
@@ -1041,20 +1046,20 @@ scripts back to the C++ implementation.
 
 Remark that the program is executed within the thread of the component.
 In order to avoid the endless loop, a 'wait' point must be present. The
-"yield" command inserts such a wait point and is part of the Scripting
+``yield`` command inserts such a wait point and is part of the Scripting
 syntax. If you plan to use Scripting state machines, such a
 ``while(true)`` loop (and hence wait point) is not necessary. See the
 Scripting Manual for a full overview of the syntax.
 
+.. _operation-interface:
+
 The OperationCaller/Operation Interface
 ---------------------------------------
 
-    **Note**
-
-    A task's operations define which functions a component offers.
-    Operations are grouped in 'services', much like C++ class methods
-    are grouped in classes. OperationCallers are helper objects for
-    calling operations.
+A task's operations define which functions a component offers.
+Operations are grouped in 'services', much like C++ class methods
+are grouped in classes. ``OperationCallers`` are helper objects for
+calling operations.
 
 Operations are C/C++ functions that can be used in scripting or can be
 called from another process or accross a network. They take arguments
@@ -1096,11 +1101,11 @@ register it with ``addOperation()``, defined in ``RTT::Service``.
       };
 
 In the above example, we wish to add 3 functions to the method
-interface: reset, getName and changeParameter. You need to pass the name
+interface: ``reset``, ``getName`` and ``changeParameter``. You need to pass the name
 of the function, address (function pointer) of this function and the
 object on which it must be called (this) to addOperation. Optionally,
-you may document the operation with .doc("...") and each argument with a
-.arg() call.
+you may document the operation with ``.doc("...")`` and each argument with a
+``.arg()`` call.
 
 Using this mechanism, any method of *any* class can be added to a task's
 method interface, not just functions of a TaskContext You can also add
@@ -1379,7 +1384,7 @@ references (&) in the arguments or return type as well.
 The Attributes and Properties Interface
 ---------------------------------------
 
-    **Note**
+.. note::
 
     A task's properties are intended to configure and tune a task with
     certain values. Properties have the advantage of being writable to
@@ -1457,7 +1462,7 @@ need their set() and get() methods to write and read them.
 An external task can access attributes through an Attribute object and
 the getValue method:
 
-::
+.. code-block:: cpp
 
       Attribute<bool> the_flag = a_task->getValue("aflag");
       assert( the_flag.ready() );
@@ -1480,7 +1485,7 @@ Accessing Task Attributes in Scripts
 
 A program script can access the above attributes simply by naming them:
 
-::
+.. code-block:: none
 
       // a program in "ATask" does :
       var double pi2 = pi * 2.
@@ -1489,7 +1494,7 @@ A program script can access the above attributes simply by naming them:
 
       set Param = "B Value"
 
-::
+.. code-block:: none
 
       // an external (peer task) program does :
       var double pi2 = ATask.pi * 2.
@@ -1499,7 +1504,7 @@ A program script can access the above attributes simply by naming them:
 When trying to assign a value to a constant, the script parser will
 throw an exception, thus before the program is run.
 
-    **Important**
+.. important::
 
     The same restrictions of :ref:`method-args-types`
     hold for the attribute types, when you want to access them from
@@ -1643,7 +1648,7 @@ such that they can use each other's Services.
 Connecting Peer Components
 --------------------------
 
-    **Note**
+.. note::
 
     The ``addPeer`` and ``connectPeers`` functions are used to connect
     TaskContexts and allow them to use each other's interface. The
@@ -1659,7 +1664,7 @@ complete flat or circular networks or any kind of mixed network.
 
 Peers are connected as such (hasPeer takes a string argument ):
 
-::
+.. code-block:: cpp
 
       // bi-directional :
       connectPeers( &a_task, &b_task );
@@ -1694,7 +1699,7 @@ can access your peer's peers.
 Setting up the Data Flow
 ------------------------
 
-    **Note**
+.. note::
 
     In typical applications, the DeploymentComponent ('deployer') will
     form connections between ports using a program script or XML file.
@@ -1750,6 +1755,8 @@ Tasks can be disconnected from a network by invoking ``disconnect()`` on
 that task. It will inform all its peers that it has left the network and
 disconnect all its ports.
 
+.. _providing-and-requiring-services:
+
 Providing and Requiring Services
 ================================
 
@@ -1765,12 +1772,12 @@ the second what it needs from others to do.
 Here's a simple use case for two components:
 
 The only difference between setting up a service and adding an
-operation, is by adding provides("servicename") in front of
-addOperation.
+operation, is by adding ``provides("servicename")`` in front of
+``addOperation``.
 
-::
+.. code-block:: cpp
 
-       #include <rtt/TaskContext.hpp>
+      #include <rtt/TaskContext.hpp>
       #include <iostream>
 
       class MyServer : public RTT::TaskContext {
@@ -1800,12 +1807,12 @@ order to allow another component to find it by name. Here's an example
 on how to use this service:
 
 The only difference between setting up a service and adding a
-OperationCaller object, is by adding requires("servicename") in front of
-addOperationCaller.
+``OperationCaller`` object, is by adding ``requires("servicename")`` in front of
+``addOperationCaller``.
 
-::
+.. code-block:: cpp
 
-       #include <rtt/TaskContext.hpp>
+      #include <rtt/TaskContext.hpp>
       #include <iostream>
 
       class MyClient : public RTT::TaskContext {
@@ -1839,18 +1846,18 @@ addOperationCaller.
          }
       };
 
-What you're seeing is this: the client has 2 OperationCaller objects for
-calling the functions in the "display" service. The method objects must
-have the same name as defined in the 'provides' lines in the previous
-listing. We check in configureHook if this interface is ready to be
-called. Update hook then calls these methods.
+What you're seeing is this: the client has 2 ``OperationCaller`` objects for
+calling the functions in the ``"display"`` service. The method objects must
+have the same name as defined in the ``'provides'`` lines in the previous
+listing. We check in ``configureHook`` if this interface is ready to be
+called. In ``updateHook`` these methods are then called.
 
 The remaining question is now: how is the connection done from client to
-server ? The ``RTT::ServiceRequester`` has a method
-``connectTo(Service*)`` which does this connection from OperationCaller
+server? The ``RTT::ServiceRequester`` has a method
+``connectTo(Service*)`` which does this connection from ``OperationCaller``
 object to operation. If you wanted to hardcode this, it would look like:
 
-::
+.. code-block:: cpp
 
       bool configureHook() {
          requires("display")->connectTo( getPeer("server")->provides("display") );
@@ -1878,7 +1885,7 @@ from or to files, you can use the ``RTT::Marshalling`` service. It
 creates or reads files in the XML Component Property Format such that it
 is human readable and modifiable.
 
-::
+.. code-block:: cpp
 
       // ...
       RTT::TaskContext* a_task = ...
@@ -1903,7 +1910,7 @@ contain elements for each Property or PropertyBag in your task. Below is
 a component with five properties. There are three properties at the top
 level of which one is a PropertyBag, holding two other properties.
 
-::
+.. code-block:: cpp
 
     #include <rtt/TaskContext.hpp>
     #include <rtt/Property.hpp>
@@ -2025,7 +2032,7 @@ ExecutionEngine. A program can be paused, it's variables inspected and
 reset while it is loaded in the Processor. A simple program script can
 look like :
 
-::
+.. code-block:: none
 
       program foo
       {
@@ -2038,7 +2045,7 @@ Any number of programs may be listed in a file.
 
 Orocos Programs are loaded as such into a TaskContext :
 
-::
+.. code-block:: cpp
 
       RTT::TaskContext* a_task = ...
 
@@ -2048,7 +2055,7 @@ When the Program is loaded in the Task Context, it can also be
 controlled from other scripts or a TaskBrowser. Assuming you have loaded
 a Program with the name 'foo', the following commands are available :
 
-::
+.. code-block:: none
 
       foo.start()
       foo.pause()
@@ -2058,7 +2065,7 @@ a Program with the name 'foo', the following commands are available :
 
 While you also can inspect its status :
 
-::
+.. code-block:: none
 
       var bool ret
       ret = foo.isRunning()
@@ -2069,7 +2076,7 @@ While you also can inspect its status :
 You can also inspect and change the variables of a loaded program, but
 as in any application, this should only be done for debugging purposes.
 
-::
+.. code-block:: none
 
       set foo.i = 3
       var double oldj = foo.j
@@ -2082,7 +2089,7 @@ locally to the component. Take a look at the
 ``RTT::scripting::ProgramInterface`` class reference for more program
 related functions. One can get a pointer to a program by calling:
 
-::
+.. code-block:: cpp
 
       scripting::ScriptingService* sa = dynamic_cast<scripting::ScriptingService*>(this->getService("scripting"));
       scripting::ProgramInterface* foo = sa->getProgram("foo");
@@ -2104,7 +2111,7 @@ state and only executed when the state machine is in that state. This
 section limits to showing how an Orocos State Description (osd) script
 can be loaded in a Task Context.
 
-::
+.. code-block:: cpp
 
       RTT::TaskContext* a_task = ...
 
@@ -2115,7 +2122,7 @@ controlled from your scripts or TaskBrowser. Assuming you have
 instantiated a State Machine with the name 'machine', the following
 commands are available :
 
-::
+.. code-block:: none
 
       machine.activate()
       machine.start()
@@ -2132,7 +2139,7 @@ commands are available :
 As with programs, you can inspect and change the variables of a loaded
 StateMachine.
 
-::
+.. code-block:: none
 
       set machine.myParam = ...
 
@@ -2209,14 +2216,14 @@ Library*.
 The process goes as such: A component inherits from ``RTT::TaskContext``
 and has some Orocos primitives as class members. Instead of calling:
 
-::
+.. code-block:: cpp
 
       this->addOperation("name", &foo).doc("Description").arg("Arg1","Arg1 Description");
 
 and providing a description for the primitive as well as each argument,
 one writes:
 
-::
+.. code-block:: cpp
 
       this->addLocalOperation("name", &foo );
 
@@ -2227,7 +2234,7 @@ primitive.
 In order to access the interface of such a Component, the user code may
 use:
 
-::
+.. code-block:: cpp
 
       taskA->getLocalOperation("name");
 
@@ -2274,7 +2281,7 @@ Polymorphism : Task Interfaces
 Most projects have define their own task interfaces in C++. Assume you
 have a class with the following interface :
 
-::
+.. code-block:: cpp
 
       class DeviceInterface
       {
@@ -2311,7 +2318,7 @@ Step 1 : Export the interface
 We construct a TaskContext, which exports your C++ interface to a task's
 interface.
 
-::
+.. code-block:: cpp
 
       #include <rtt/TaskContext.hpp>
       #include <rtt/Operation.hpp>
@@ -2363,7 +2370,7 @@ Step 2 : Inherit from the new interface
 Your DeviceInterface implementations now only need to inherit from
 ``TaskDeviceInterface`` to instantiate a Device TaskContext :
 
-::
+.. code-block:: cpp
 
       #include "TaskDeviceInterface.hpp"
 

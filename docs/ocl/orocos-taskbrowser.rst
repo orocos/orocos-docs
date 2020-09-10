@@ -43,8 +43,7 @@ interactivity. In both views, the component network can be browsed.
 TaskBrowser Setup
 =================
 
-Consult the `Component Builder's
-Manual <http://www.orocos.org/toolchain>`__ for instructions on how to
+Consult the `Component Builder's Manual <http://www.orocos.org/toolchain>`__ for instructions on how to
 setup and use the TaskBrowser. Typically, you will start the 'deployer'
 application.
 

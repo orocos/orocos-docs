@@ -15,6 +15,20 @@ RTT Tutorials
 Basic tutorials
 ***************
 
+In these tutorials you will be introduced to the concept of a Component, and how to use it.
+You will learn how your application logic is executed, how to configure a component, how components
+interact with each other, and how to deploy them.
+
+These tutorials assume you have a working installation of Orocos, if not follow the installation
+instructions from :ref:`installation-options` (you do not need ROS for these basic tutorials,
+allthough installing Orocos together with ROS is the easiest way to get going, and is the recommended
+way to do it if you plan on integrating your Orocos components with ROS).
+
+The source code for these tutorials can be found on `GitHub
+<https://github.com/orocos-toolchain/rtt_examples/tree/rtt-2.0-examples>`_. They are phrased as exercises there,
+without much explanation. If you already went through the :doc:`Orocos Component Builders Manual <orocos-components-manual>` it may be more
+useful to try them that way.
+
 ..
   These are the most important tutorials for a total beginner
   => copy from github in markdown and rephrase as tutorials like ROS tutorials
@@ -23,18 +37,12 @@ Basic tutorials
 .. toctree::
    :maxdepth: 1
 
-   1 - Taks execution <tutorials/hello_1>
+   1 - Task execution <tutorials/hello_1>
    2 - Properties <tutorials/hello_2>
-
-..
-  - **1** - :doc:`Taks execution <tutorials/hello_1>`
-  - **2** - :doc:`Properties <tutorials/hello_2>`
-
-- **3** - Dataports
-- **4** - Operations
-- **5** - Services
-- **6** - Scripting
-- **7** - Deployment
+   3 - Data Ports <tutorials/hello_3>
+   4 - Operations <tutorials/hello_4>
+   5 - Services <tutorials/hello_5>
+   6 - Scripting <tutorials/hello_6>
 
 Other examples:
 
