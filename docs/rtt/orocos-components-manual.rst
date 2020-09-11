@@ -63,14 +63,12 @@ set of components for application development. The Orocos Component
 Library (OCL) is a collection of infrastructure components for building
 applications.
 
-The Toolchain contains components for `component
-deployment <http://www.orocos.org/stable/documentation/ocl/v2.x/doc-xml/orocos-deployment.html>`__
-and
-`distribution <http://www.orocos.org/stable/documentation/rtt/v2.x/doc-xml/orocos-transports-corba.html>`__,
+The Toolchain contains components for :doc:`component
+deployment <../ocl/orocos-deployment>` and
+:doc:`distribution <orocos-transports-corba>`,
 `real-time status
 logging <http://www.orocos.org/wiki/Using_real-time_logging>`__ and
-`data
-reporting <http://www.orocos.org/stable/documentation/ocl/v2.x/doc-xml/orocos-reporting.html>`__.
+:doc:`data reporting <../ocl/orocos-reporting>`.
 It also contains tools for `creating component
 packages <http://www.orocos.org/wiki/orocos/toolchain/getting-started/using-orocreate-pkg>`__,
 extremely `simple build
