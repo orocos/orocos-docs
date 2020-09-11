@@ -58,7 +58,7 @@ when another activity executes.
 Executing a Function Periodically
 ---------------------------------
 
-    **Note**
+.. note::
 
     When you use a TaskContext, the ExecutionEngine is the function to
     be executed periodically and you don't need to write the classes
@@ -164,8 +164,8 @@ Non Periodic Activity Semantics
 If you want to create an activity which reads file-IO, or displays
 information or does any other possibly blocking operation, the
 ``RTT::Activity`` implementation can be used with a period of zero (0).
-When it is ``start()``'ed, its loop() method will be called exactly once
-and then it will wait, after which it can be start()'ed again. Analogous
+When it is ``start()``'ed, its ``loop()`` method will be called exactly once
+and then it will wait, after which it can be ``start()``'ed again. Analogous
 to a periodic Activity, the user can implement ``initialize()``,
 ``loop()`` and ``finalize()`` functions in a
 ``RTT::base::RunnableInterface`` which will be used by the activity for
@@ -190,19 +190,19 @@ functions in a derived class of Activity.
       activity.stop();
 
 The Activity behaves differently when being non periodic in the way
-start() and stop() work. Only the first invocation of start() will
-invoke initialize() and then loop() once. Any subsequent call to start()
-will cause loop() to be executed again (if it finished in the first
+``start()`` and ``stop()`` work. Only the first invocation of ``start()`` will
+invoke ``initialize()`` and then ``loop()`` once. Any subsequent call to ``start()``
+will cause ``loop()`` to be executed again (if it finished in the first
 place).
 
-Since the user's loop() is allowed to block the user must reimplement
+Since the user's ``loop()`` is allowed to block the user must reimplement
 the ``RunnableInterface::breakLoop()`` function. This function must do
-whatever necessary to let the user's loop() function return (mostly set
-a flag). It must return true on success, false if it was unable to let
-the loop() function return (the latter is the default implementation's
-return value). ``stop()`` then waits until loop() returns or aborts if
-``breakLoop()`` returns false. When successful, stop() executes the
-finalize() function.
+whatever necessary to let the user's ``loop()`` function return (mostly set
+a flag). It must return ``true`` on success, ``false`` if it was unable to let
+the ``loop()`` function return (the latter is the default implementation's
+return value). ``stop()`` then waits until ``loop()`` returns or aborts if
+``breakLoop()`` returns ``false``. When successful, ``stop()`` executes the
+``finalize()`` function.
 
 Selecting the Scheduler
 -----------------------
@@ -447,12 +447,14 @@ Signal carries one or more arguments :
 
       event( 1, 2.0 );
 
-    **Important**
+.. important::
 
     The return type of callbacks is ignored and can not be recovered.
 
-``setup()`` and the ``RTT::Handle`` object
-------------------------------------------
+
+On ``setup()`` and the ``RTT::Handle`` object
+---------------------------------------------
+
 
 Signal connections can be managed by using a Handle which both
 ``connect()`` and ``setup()`` return :

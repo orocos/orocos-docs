@@ -1,3 +1,5 @@
+.. _orocos-scripting-reference-manual:
+
 =====================================
 The Orocos Scripting Reference Manual
 =====================================
@@ -138,6 +140,8 @@ Variables, constants and aliases are defined for the following types:
 bool, int, double, string and array. The Orocos Typekit System allows
 any application or library to extend these types.
 
+.. _strings-and-arrays:
+
 Strings and Arrays
 ~~~~~~~~~~~~~~~~~~
 
@@ -188,12 +192,12 @@ constructors:
 
 Table: array and string constructors
 
-    **Warning**
+.. warning:
 
     The 'Copy Syntax' syntax leads to not real-time scripts because the
     size is expanded at run-time. See the examples below.
 
-::
+.. code-block:: none
 
       // A free string and free array :
       // applestring is expanded to contain 6 characters (non real-time)
@@ -224,7 +228,7 @@ Table: array and string constructors
       biglist = list           // 'biglist' is now equal to 'list' (non real-time)
 
 
-**Important**
+.. important:
 
       The 'size' value given upon construction (array(10) or string(17))
       must be a *legal expression at parse time and is only evaluated
@@ -408,6 +412,8 @@ was called. Calling operations and expressions on the other hand
 typically do not impose a yield, and thus are executed immediately after
 each other.
 
+.. _program-syntax:
+
 Program Syntax
 --------------
 
@@ -494,13 +500,15 @@ statement changes a variable or is empty.
 Note that Orocos scripting does not (yet) support the postfix or prefix
 increment/decrement operators like ++ and --.
 
+.. _while-statement:
+
 The while Statement
 ~~~~~~~~~~~~~~~~~~~
 
 The while statement is another looping primitive in the Orocos script
 language. A ``do`` statement is not implemented
 
-::
+.. code-block:: none
 
       var int i = 0;
       while i < 10
@@ -542,7 +550,7 @@ Operations can be called like calling C functions. They take arguments
 and return a value immediately. They can be used in expressions or stand
 alone :
 
-::
+.. code-block:: none
 
       // var int arg1 = 3, arg2 = 4
       // ignore the return value :
@@ -559,7 +567,7 @@ alone :
 
 These operations are executed directly one after the other.
 
-    **Warning**
+.. warning::
 
     A method throwing an exception, will cause a run-time program error.
     If this is not wanted, put 'try' in front of the method call
@@ -664,7 +672,7 @@ If one of the statements of the called function throws an exception, an
 exception is thrown in the current program and the calling program goes
 into the error state.
 
-    **Note**
+.. note::
 
     The 'call' keyword has been deprecated since version 2.5 and should
     no longer be used.
@@ -751,6 +759,8 @@ Some basic properties of the program can be inspected likewise :
       res = ATask.progname.isPaused()
 
 which all return a boolean indicating true or false.
+
+.. _orocos-state-descriptions:
 
 Orocos State Descriptions : The Real-Time State Machine
 =======================================================
@@ -844,7 +854,7 @@ Automatic Mode: State Change Semantics
 In order to enter automatic mode, the State Machine must be first
 reactive and then started with the start() command (see later on).
 
-    **Note**
+.. note::
 
     This mechanism is in addition to 'reactive' mode. A state machine in
     automatic mode still reacts to events.
@@ -937,6 +947,8 @@ owner TaskContext by writing:
       // activate and start a StateMachine :
       sm->activate();
       sm->start();
+
+.. _defining-statemachines:
 
 Defining StateMachines
 ----------------------
@@ -1083,6 +1095,8 @@ They are checked in addition to transitions to that state and can make
 such a transition fail, hence block the transition, as if the transition
 condition in the first place did not succeed.
 
+.. _data-flow-event-transitions:
+
 Data Flow Event Transitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1091,7 +1105,7 @@ external (asynchronous) events. Orocos components can define reactions
 to data arriving on ``RTT::InputPort``\ s. When new data arrives on this
 port, we speak of an 'event'.
 
-    **Note**
+.. note::
 
     A StateMachine can only react to InputPorts which have been added
     with 'addEventPort' to the TaskContext.
@@ -1132,7 +1146,7 @@ short notation statement is equivalent to writing (NOTE: the added
 
 ..
 
-    **Important**
+.. important::
 
     This short notation differs however from the long form as such: if
     multiple transitions are waiting on the same port, but with a
@@ -1198,12 +1212,12 @@ addEventOperation function:
          this->provides()->addEventOperation(requestSafe).doc("This operation does nothing except for requesting the SAFE state");
 
 
-**Note**
+.. note::
 
     A StateMachine can only react to Operations which have been added
     with 'addEventOperation' to the TaskContext.
 
-**Note**
+.. note::
 
     A StateMachine can only react to Operations of the component it runs
     in.
