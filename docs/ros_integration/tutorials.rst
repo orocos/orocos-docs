@@ -19,7 +19,7 @@ ROS 1 integration
 
    tutorial_ros1_1_installation
    tutorial_ros1_2_topics
-   tutorials_ros1
+   tutorial_ros1_3_services
 
 
 ROS 2 integration

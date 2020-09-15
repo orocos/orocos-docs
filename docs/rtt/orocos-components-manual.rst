@@ -1,4 +1,4 @@
-.. _orocos-component-builders-manual
+.. _orocos-component-builders-manual:
 
 =====================================
 The Orocos Component Builder's Manual
