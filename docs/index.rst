@@ -82,9 +82,9 @@ Orocos Project documentation
   :caption: ROS integration
   :maxdepth: 1
 
-  Orocos + ROS 1 <https://github.com/orocos/rtt_ros_integration>
-  Orocos + ROS 2 <https://github.com/orocos/rtt_ros2_integration>
-  Tutorials (external) <https://gitlab.com/dustingooding/orocos_examples>
+  Overview <ros_integration/overview>
+  Sources <ros_integration/sources>
+  ros_integration/tutorials
 
 .. image:: https://www.orocos.org/files/logo-t.png
   :width: 150 px
