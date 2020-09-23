@@ -34,4 +34,4 @@ ROS 2 integration
 External tutorials
 ******************
 
-`Tutorials (external) <https://gitlab.com/dustingooding/orocos_examples>`_
+`Tutorials (external) <https://gitlab.com/dustingooding/orocos_examples/-/blob/master/README.adoc#user-content-simpleros-component>`_
