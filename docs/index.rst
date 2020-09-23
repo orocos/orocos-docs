@@ -33,7 +33,7 @@ Orocos Project documentation
   rtt/orocos-typekit-plugin
   rtt/rtt-lua-cookbook.rst
   Tutorials <rtt/tutorials>
-  Examp3les <rtt/examples>
+  Examples <rtt/examples>
 
 .. toctree::
   :hidden:
