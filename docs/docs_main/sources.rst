@@ -34,9 +34,6 @@ openly and can be found through the following links.
 - `rFSM <https://github.com/orocos/rFSM>`_: a small and
   powerful statechart implementation in Lua.
   `Main author's version <https://github.com/kmarkus/rFSM>`_.
-- `iTaSC <https://gitlab.kuleuven.be/rob-itasc>`_: a framework to generate robot
-  motions by specifying constraints between (parts of) the robots and their
-  environment.
 
 Ros integration
 +++++++++++++++
