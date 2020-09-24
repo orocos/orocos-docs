@@ -74,8 +74,7 @@ Orocos Project documentation
   :maxdepth: 1
 
   Overview <bfl/overview>
-  ROS reference <http://wiki.ros.org/bfl>
-  Source <https://github.com/ros-gbp/bfl-release>
+  Source <https://github.com/toeklk/orocos-bayesian-filtering>
 
 .. toctree::
   :hidden:
