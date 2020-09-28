@@ -116,8 +116,8 @@ We can deploy, as always, with an ``start.ops`` file:
 
     loadComponent("my_component", "StandardComponent")
 
-    stream("my_component.input", ros.comm.topic("component_input"))
-    stream("my_component.output", ros.comm.topic("component_output"))
+    stream("my_component.input", ros.comm.topic("some_namespace/component_input"))
+    stream("my_component.output", ros.comm.topic("some_namespace/component_output"))
 
     my_component.configure()
     my_component.start()
