@@ -117,7 +117,7 @@ We can deploy with the following script:
     loadService("my_component", "rosservice")
 
     // connect the operation to the ros service:
-    my_component.rosservice.connect("simple_service.myOperation", "/my_component/my_operation", "my_msgs/MyService")
+    my_component.rosservice.connect("simple_service.myOperation", "/my_namespace/my_operation", "my_msgs/MyService")
 
 Operations can also be exposed as ROS services without having to adher to the typical
 ``bool operation(Service::Request& request, Service::Response& response)`` interface, with
