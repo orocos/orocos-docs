@@ -13,5 +13,5 @@ on top of the Realtime Services, or be used for estimation in Kinematics &
 Dynamics applications.
 
 - `About BFL <https://github.com/orocos/orocos-bayesian-filtering/blob/master/orocos_bfl/README.md>`_
-- `Getting started guide <../_static/bfl_pdfs/getting_started_guide.pdf>`_
-- `Installation guide <../_static/bfl_pdfs/installation_guide.pdf>`_
+- `Getting started guide <getting_started_guide.pdf>`_
+- `Installation guide <installation_guide.pdf>`_
