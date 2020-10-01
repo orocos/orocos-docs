@@ -119,7 +119,7 @@ html_sidebars = {
     ]
 }
 
-html_extra_path = []
+html_extra_path = ['_extra']
 
 # -- Options for HTMLHelp output ------------------------------------------
 

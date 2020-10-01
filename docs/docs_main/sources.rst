@@ -27,7 +27,7 @@ openly and can be found through the following links.
 
 - `KDL <https://github.com/orocos/orocos_kinematics_dynamics>`_: an application
   independent framework for modeling and computation of kinematic chains.
-- `BFL <https://gitlab.kuleuven.be/rob-orocos/bfl>`_: an application
+- `BFL <https://github.com/orocos/orocos-bayesian-filtering>`_: an application
   independent framework for inference in Dynamic Bayesian Networks, i.e.,
   recursive information processing and estimation algorithms based on Bayes'
   rule.

@@ -12,4 +12,6 @@ Sequential Monte Carlo methods), etc. These algorithms can, for example, be run
 on top of the Realtime Services, or be used for estimation in Kinematics &
 Dynamics applications.
 
-- `Getting started guide <http://people.mech.kuleuven.be/~tdelaet/bfl_doc/getting_started_guide/node29.html>`_
+- `About BFL <https://github.com/orocos/orocos-bayesian-filtering/blob/master/orocos_bfl/README.md>`_
+- `Getting started guide <getting_started_guide.pdf>`_
+- `Installation guide <installation_guide.pdf>`_
