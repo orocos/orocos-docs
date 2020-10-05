@@ -406,7 +406,7 @@ In order to tell the RTT how to display your type, you may overload the
 ``operator<<()`` and ``operator>>()`` for your type (preferred). The
 code below shows the latter option:
 
-::
+.. code-block:: none
 
       #include <rtt/types/StructTypeInfo.hpp>
       #include <ostream>

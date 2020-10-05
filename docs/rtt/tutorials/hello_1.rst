@@ -120,7 +120,7 @@ methods. The component must be registered using the ``ORO_CREATE_COMPONENT`` mac
 
 Let's see how this works in practice. The ``start.ops`` file used to deploy this component looks like:
 
-.. code-block:: node
+.. code-block:: none
 
     import("hello-1-task-execution")
 
