@@ -2,6 +2,7 @@
 *************
 RTT Tutorials
 *************
+
 .. warning::
 
   This section is still under construction. The content of the exercises is also
@@ -66,22 +67,14 @@ Advanced examples
 - `Using real-time logging
   <http://www.orocos.org/wiki/rtt/rtt-20/real-time-logging/using-real-time-logging>`_
 
-All links list from `Examples and tutorials
+Extra examples and tutorials listed at `Examples and tutorials
 <https://www.orocos.org/wiki/rtt/examples-and-tutorials>`_:
 
-- `Developing plugins and toolkits
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/developing-plugins-and-toolkits>`_
 - `Experienced users
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/experienced-users>`_
+  <https://orocos.org/wiki/rtt/examples-and-tutorials/experienced-users.html>`_
 - `Name connections, no ports (aka Orocos' best kept secret)
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/name-connections-not-ports-aka-orocos-best-kept-secret>`_
+  <https://orocos.org/wiki/rtt/examples-and-tutorials/name-connections-not-ports-aka-orocos-best-kept-secret.html>`_
 - `Simple examples
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/simple-examples>`_
-- `Simple TCP client using non-periodic component
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/simple-tcp-client-using-non-periodic-component>`_
-- `Using XML substitution to manage complex deployments
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/using-xml-substitution-manage-complex-deployments>`_
-- `Using real-time logging
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/using-real-time-logging>`_
+  <https://orocos.org/wiki/rtt/examples-and-tutorials/simple-examples.html>`_
 - `omniORBpy - python bindings for omniORB
-  <https://www.orocos.org/wiki/rtt/examples-and-tutorials/omniorbpy-python-binding-omniorb>`_
+  <https://orocos.org/wiki/rtt/examples-and-tutorials/omniorbpy-python-binding-omniorb.html>`_

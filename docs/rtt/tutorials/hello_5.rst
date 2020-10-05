@@ -172,6 +172,7 @@ and our methods in a required service with the name ``Robot``.
 
 We will do this explicitly by creating a provides and a requires service
 class.
+
    - Create a ``RobotService`` class which inherits from ``ServiceProvider`` and
      add the ``mymethod`` operation (cut & paste from ``Hello``).
    - Create a ``Robot`` class which inherits from ``ServiceRequester`` and
@@ -194,4 +195,3 @@ Finally test this all in the TaskBrowser, how did the interface of ``Hello`` and
     *Optional*: rewrite this exercise, with the exact same functionality,
     but with the least amount of code and classes.
     What effects has this on re-usability ?
-/
