@@ -62,7 +62,7 @@ Transporting 'simple' data types
 Simple data types without pointers or dynamically sized objects, can be
 transported quite easily. They are added as such:
 
-::
+.. code-block:: cpp
 
       // myapp.cpp
       #include <rtt/types/TemplateTypeInfo.hpp>
@@ -106,7 +106,7 @@ uses the boost::serialization library for this. This library already
 understands the standard containers (vector,list,...) and is easily
 extendable to learn your types. Adding complex data goes as such:
 
-::
+.. code-block:: cpp
 
       // myapp.cpp
       #include <rtt/types/TemplateTypeInfo.hpp>
@@ -178,7 +178,7 @@ use the createStream function to setup a data flow stream in each
 process. This requires you to choose a name of the connection and use
 this name in both processes:
 
-::
+.. code-block:: cpp
 
     // process1.cpp:
 
@@ -251,7 +251,7 @@ So it's more robust, but it requires the CORBA transport.
 
 An Out-Of-Band connection is always setup like this:
 
-::
+.. code-block:: cpp
 
       TaskContext *task_a, *task_b;
       // init task_a, task_b...
@@ -285,7 +285,7 @@ over the mqueue transport, the workflow is fairly identical. The code
 below is for C++, but the equivalent can be done in any CORBA enabled
 language:
 
-::
+.. code-block:: cpp
 
       #include <rtt/transports/corba/CorbaConnPolicy.hpp>
       // ...
@@ -317,7 +317,7 @@ Alternatively, you can use the create streams functions directly from
 the CORBA interface, in order to create unmanaged streams. In that case,
 the code becomes:
 
-::
+.. code-block:: cpp
 
       #include <rtt/transports/corba/CorbaConnPolicy.hpp>
       // ...

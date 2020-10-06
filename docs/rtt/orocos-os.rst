@@ -123,12 +123,14 @@ done. Inside ORO\_main() the user may expect that the system is properly
 set up and can be used. The resulting orocos-rtt library will contain
 the real main() function which will call the ORO\_main() function.
 
-    **Important**
+.. important::
 
     Do not forget to include ``<rtt/os/main.h>`` in the main program
     file, or the linker will not find the ORO\_main function.
 
-    **Note**
+..
+
+.. note::
 
     Using global objects ( or *static* class members ) which use the OS
     functions before ORO\_main() is entered (because they are
@@ -181,7 +183,7 @@ its stop() method if loop() is still being executed and, if successful,
 will wait until loop() returns. The ``Thread::isRunning()`` function can
 be used to check if loop() is being executed or not.
 
-    **Note**
+.. note::
 
     The ``RTT::Activity`` provides a better integrated implementation
     for SingleThread and should be favourably used.
@@ -232,7 +234,7 @@ entered, the pin will be set high, and when step() is left, the pin is
 set low again. From within any RTT activity function, you may then
 additionally use the ThreadScope driver as such :
 
-::
+.. code-block:: cpp
 
       RTT::DigitalOutInterface* pp = DigitalOutInterface::nameserver.getObject("ThreadScope");
     if ( pp )
@@ -264,7 +266,7 @@ given Mutex is locked. This is called a scoped lock.
 
 The first listing shows a complete lock over a function :
 
-::
+.. code-block:: cpp
 
       RTT::os::Mutex m;
       void foo() {
@@ -277,7 +279,7 @@ The first listing shows a complete lock over a function :
 Any scope is valid, so if the critical section is smaller than the size
 of the function, you can :
 
-::
+.. code-block:: cpp
 
       RTT::os::Mutex m;
       void bar() {
@@ -300,7 +302,7 @@ Orocos provides a C++ semaphore abstraction class
 tasks or threads. The higher level Event implementation in CoreLib can
 be used for thread safe signalling and data exchange in periodic tasks.
 
-::
+.. code-block:: cpp
 
       RTT::os::Semaphore sem(0); // initial value is zero.
       void foo() {

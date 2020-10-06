@@ -161,7 +161,7 @@ Reading the configuration file
 The property file of the reporting component *must* be read with the
 loadProperties script method:
 
-::
+.. code-block:: none
 
       marshalling.loadProperties("reporting.cpf")
 
@@ -170,7 +170,7 @@ loads your ``ReportData`` struct into the ReportingComponent.
 
 With
 
-::
+.. code-block:: none
 
       marshalling.writeProperties("reporting.cpf")
 
