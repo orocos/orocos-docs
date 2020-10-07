@@ -60,6 +60,12 @@ the software via pre-compiled packages. There are two main options:
 
     sudo apt-get install ros-${ROS_DISTRO}-rtt-ros-integration``
 
+  The bayesian filtering library can be installed using:
+
+  .. code-block:: bash
+
+    sudo apt-get install ros-${ROS_DISTRO}-bfl
+
   The kinematics and dynamics library package can be installed using:
 
   .. code-block:: bash
@@ -82,19 +88,19 @@ For the users that want to run Orocos in a different system or need a specific
 set of components, the installation can be done from sources.
 There are two main methods to build and install Orocos.
 
-- Using CMake (default way):
-
   The above mentioned dependencies can be installed with ``apt``:
 
   .. code-block:: bash
 
-      apt install -y build-essential cmake libboost-all-dev libxml-xpath-perl libboost-all-dev pkg-config libxml2-dev
+      apt install -y build-essential cmake libboost-all-dev libxml-xpath-perl libboost-all-dev pkg-config libxml2-dev ruby-dev
 
   If you want to built RTT with Corba support, you will also need the OmniORB packages:
 
   .. code-block:: bash
 
       apt install omniorb omniidl omniorb-idl omniorb-nameserver libomniorb4-dev
+
+- Using CMake (default way):
 
   Clone the source repo from github:
 
