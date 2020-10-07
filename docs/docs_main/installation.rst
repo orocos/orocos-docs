@@ -3,10 +3,6 @@
 Requirements and installation guide
 ===================================
 
-.. warning::
-   This guide is under construction and the material will be soon linked and
-   completed properly.
-
 .. contents::
    :depth: 3
 ..
@@ -64,6 +60,18 @@ the software via pre-compiled packages. There are two main options:
 
     sudo apt-get install ros-${ROS_DISTRO}-rtt-ros-integration``
 
+  The kinematics and dynamics library package can be installed using:
+
+  .. code-block:: bash
+
+    sudo apt-get install ros-${ROS_DISTRO}-orocos-kdl
+
+  And the python bindings:
+
+  .. code-block:: bash
+
+    sudo apt-get install ros-${ROS_DISTRO}-python-orocos-kdl
+
 - `Docker <https://hub.docker.com/u/orocos>`_: Docker images with Orocos
   preinstalled are distributed.
 
@@ -118,4 +126,35 @@ There are two main methods to build and install Orocos.
 
     make install
 
-- Using ROS build tools (``catkin``, ``colcon``), see https://github.com/orocos/rtt_ros_integration
+- Using ROS build tools (``catkin``)
+
+  Make sure you have ROS installed, see `ROS installation instructions <https://wiki.ros.org/ROS/Installation>`_.
+
+  Create a workspace and clone the orocos toolchain:
+
+  .. code-block:: bash
+
+    mkdir -p ~/ws/underlay_isolated/src/orocos
+    cd ~/ws/underlay_isolated
+    git clone --recursive https://github.com/orocos-toolchain/orocos_toolchain.git src/orocos/orocos_toolchain
+
+  Compile using ``catkin_make_isolated``, you can specify the install space and whether you want to enable CORBA or not:
+
+  .. code-block:: bash
+
+    catkin_make_isolated \
+        --install \
+        --install-space /opt/orocos/${ROS_DISTRO} \
+        --cmake-args \
+            -DBUILD_TESTING=OFF \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DENABLE_CORBA=ON \
+            -DCORBA_IMPLEMENTATION=OMNIORB \
+            -DOROCOS_INSTALL_INTO_PREFIX_ROOT=ON \
+
+  To set up your ros and orocos environments:
+
+  .. code-block:: bash
+
+    source /opt/ros/${ROS_DISTRO}/setup.bash
+    source /opt/orocos/${ROS_DISTRO}/setup.bash
