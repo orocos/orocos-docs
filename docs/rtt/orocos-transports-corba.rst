@@ -30,7 +30,7 @@ The Corba transport provides:
 Setup CORBA Naming (Required!)
 ==============================
 
-    **Important**
+.. important::
 
     Follow these instructions carefully or your setup will not work !
 
@@ -83,14 +83,14 @@ This is an example deployment script '``server-script.ops``' for
 creating your first process and making one component available in the
 network:
 
-::
+.. code-block:: none
 
       import("ocl")                               // make sure ocl is loaded
 
       loadComponent("MyComponent","TaskContext")  // Create a new default TaskContext
       server("MyComponent",true)                  // make MyComponent a CORBA server, and
                                                   // register it with the Naming Service ('true')
-                
+
 
 You can start this application with:
 
@@ -101,13 +101,13 @@ You can start this application with:
 In another console, start a client program '``client-script.ops``' that
 wishes to use this component:
 
-::
+.. code-block:: none
 
       import("ocl")                               // make sure ocl is loaded
 
       loadComponent("MyComponent","CORBA")        // make 'MyComponent' available in this program
-        MyComponent.start()                         // Use the component as usual...connect ports etc.
-                
+      MyComponent.start()                         // Use the component as usual...connect ports etc.
+
 
 You can start this application with:
 
@@ -161,7 +161,7 @@ The following limitations apply:
 Code Examples
 =============
 
-    **Note**
+.. note::
 
     You only need this example code if you don't use the deployer
     application!
@@ -176,7 +176,7 @@ different computers, given that a network connection exists.
 In order to setup your component to be available to other components
 *transparantly*, proceed as:
 
-::
+.. code-block:: cpp
 
       // server.cpp
       #include <rtt/transports/corba/TaskContextServer.hpp>
@@ -202,16 +202,16 @@ In order to setup your component to be available to other components
 
          // Wait for requests:
          TaskContextServer::RunOrb();
-          
+
          // Cleanup Corba:
          TaskContextServer::DestroyOrb();
          return 0;
-      } 
+      }
 
 Next, in order to connect to your component, you need to create a
 'proxy' in another file:
 
-::
+.. code-block:: cpp
 
       // client.cpp
       #include <rtt/transports/corba/TaskContextServer.hpp>
@@ -243,7 +243,7 @@ Next, in order to connect to your component, you need to create a
          // Cleanup Corba:
          TaskContextServer::DestroyOrb();
          return 0;
-      } 
+      }
 
 Both examples can be found in the ``corba-example`` package on
 Orocos.org. You may use 'connectPeers' and the related methods to form
@@ -265,7 +265,7 @@ CORBA object type.
 
 In order to provide the ORB-wide timeout value in seconds, use:
 
-::
+.. code-block:: cpp
 
         // Wait no more than 0.1 seconds for a response.
         ApplicationSetup::InitORB(argc, argv, 0.1);
@@ -333,11 +333,11 @@ use it. Instead, it is better started via some extra lines in
 
 .. code-block:: bash
 
-      ################################################################################
-      #  Start CORBA Naming Service
-      echo Starting CORBA Naming Service
-      pidof Naming_Service || Naming_Service -m 0 -ORBListenEndpoints iiop://192.168.246.151:2809 -ORBDaemon
-      ################################################################################ 
+   ################################################################################
+   #  Start CORBA Naming Service
+   echo Starting CORBA Naming Service
+   pidof Naming_Service || Naming_Service -m 0 -ORBListenEndpoints iiop://192.168.246.151:2809 -ORBDaemon
+   ################################################################################
 
 Where 192.168.246.151 should of course be replaced by your ip adres
 (using a hostname may yield trouble due to the new 127.0.1.1 entries in
@@ -349,14 +349,14 @@ NameServiceIOR
 
 .. code-block:: bash
 
-      [user@host ~]$ echo $NameServiceIOR
-      corbaloc:iiop:192.168.246.151:2809/NameService 
+   [user@host ~]$ echo $NameServiceIOR
+   corbaloc:iiop:192.168.246.151:2809/NameService
 
 You can set it f.i. in your .bashrc file or on the command line via
 
 .. code-block:: bash
 
-      export NameServiceIOR=corbaloc:iiop:192.168.246.151:2809/NameService
+   export NameServiceIOR=corbaloc:iiop:192.168.246.151:2809/NameService
 
 See the orocos website for more information on compiling/running the
 ktaskbrowser.

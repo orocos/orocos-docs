@@ -30,7 +30,7 @@ Comments
 Various sorts of comments are supported in the syntax. Here is a small
 listing showing the various syntaxes:
 
-::
+.. code-block:: none
 
       # A perl-style comment, starting at a '#', and running until
       # the end of the line.
@@ -88,7 +88,7 @@ difference with integers, we require a dot to be present. String
 literals are surrounded by double quotes, and can contain all the normal
 C/C++ style escaped characters. Here are some examples:
 
-::
+.. code-block:: none
 
       // a string with some escaped letters:
       "\"OROCOS rocks, \" my mother said..."
@@ -111,7 +111,7 @@ defined with an expression, for which it acts as an alias or an
 *abbreviation* during the rest of the program. All of them can always be
 used as expressions. Here is some code showing how to use them.
 
-::
+.. code-block:: none
 
       // define a variable of type int, called counter,
       // and give it the initial value 0.
@@ -165,27 +165,27 @@ constructors:
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Copy Syntax (copy done at run-time)        | Pre-allocate syntax (init done at parse-time)   | Notes                                                                                      |
 +============================================+=================================================+============================================================================================+
-| ::                                         | ::                                              | Creates an empty string. (``std::string``)                                                 |
+| .. code-block:: none                       | .. code-block:: none                            | Creates an empty string. (``std::string``)                                                 |
 |                                            |                                                 |                                                                                            |
 |     var string x = string()                |     var string x                                |                                                                                            |
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ::                                         | ::                                              | Creates a string with contents "Hello World".                                              |
+| .. code-block:: none                       | .. code-block:: none                            | Creates a string with contents "Hello World".                                              |
 |                                            |                                                 |                                                                                            |
 |     var string x = string("Hello World")   |     var string x("Hello World")                 |                                                                                            |
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ::                                         | ::                                              | Creates an empty array. (``std::vector<double>)``                                          |
+| .. code-block:: none                       | .. code-block:: none                            | Creates an empty array. (``std::vector<double>)``                                          |
 |                                            |                                                 |                                                                                            |
 |     var array x = array()                  |     var array x                                 |                                                                                            |
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ::                                         | ::                                              | Creates an array with 10 elements, all equal to 0.0.                                       |
+| .. code-block:: none                       | .. code-block:: none                            | Creates an array with 10 elements, all equal to 0.0.                                       |
 |                                            |                                                 |                                                                                            |
 |     var array x = array(10)                |     var array x(10)                             |                                                                                            |
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ::                                         | ::                                              | Creates an array with 10 elements, all equal to 3.0.                                       |
+| .. code-block:: none                       | .. code-block:: none                            | Creates an array with 10 elements, all equal to 3.0.                                       |
 |                                            |                                                 |                                                                                            |
 |     var array x = array(10, 3.0)           |     var array x(10, 3.0)                        |                                                                                            |
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ::                                         | ::                                              | Creates an array with 3 elements: {1.0, 2.0, 3.0}. Any number of arguments may be given.   |
+| .. code-block:: none                       | .. code-block:: none                            | Creates an array with 3 elements: {1.0, 2.0, 3.0}. Any number of arguments may be given.   |
 |                                            |                                                 |                                                                                            |
 |     var array x = array(1.0, 2.0, 3.0)     |     var array x(1.0, 2.0, 3.0)                  |                                                                                            |
 +--------------------------------------------+-------------------------------------------------+--------------------------------------------------------------------------------------------+
@@ -236,7 +236,7 @@ Table: array and string constructors
       in the examples ), but if you create a Task constant or variable
       which holds an integer, you can also use it as in :
 
-::
+.. code-block:: none
 
       var array example( 5 * numberOfItems )
 
@@ -246,7 +246,7 @@ Table: array and string constructors
       be zero upon parse time ! The following example is *a common
       mistake* also :
 
-::
+.. code-block:: none
 
       numberOfItems = 10
       var array example( 5 * numberOfItems )
@@ -259,7 +259,7 @@ Table: array and string constructors
 Another property of container types is that you can index (use []) their
 contents. The index may be any expression that return an int.
 
-::
+.. code-block:: none
 
       // ... continued
       // Set an item of a container :
@@ -292,7 +292,7 @@ When a data type is a C++ struct or class, it contains fields which you
 might want to access directly. These can be accessed for reading or
 writing by using a dot '.' and the name of the field:
 
-::
+.. code-block:: none
 
       var mydata d1;
 
@@ -302,7 +302,7 @@ writing by using a dot '.' and the name of the field:
 Some value types, like array and string, are containing *read-only*
 values or useful information about their size and capacity:
 
-::
+.. code-block:: none
 
       var string s1 = "abcdef"
 
@@ -310,7 +310,7 @@ values or useful information about their size and capacity:
       var int size = s1.size
       var int cap  = s1.capacity
 
-::
+.. code-block:: none
 
       var array a1( 10 )
       var array a2(20) = a1
@@ -356,7 +356,7 @@ In C++ code
 Parsing the program is done using the 'getProvider' function to call the
 scripting service's functions:
 
-::
+.. code-block:: cpp
 
       #include <rtt/Activity.hpp>
       #include <rtt/TaskContext.hpp>
@@ -381,7 +381,7 @@ In case you wish to have a pointer to a program script object
 (``RTT::scripting::ProgramInterface``), you can have so only from within
 the owner TaskContext by writing:
 
-::
+.. code-block:: cpp
 
       // Services are always accessed using a shared_ptr
       // cast the "scripting" RTT::Service to an RTT::scripting::ScriptingService shared_ptr:
@@ -422,7 +422,7 @@ Program Syntax
 
 A program is formed like this:
 
-::
+.. code-block:: none
 
       program progname {
         // an arbitrary number of statements
@@ -441,7 +441,7 @@ Variables and Assignments
 A variable is declared with the ``var`` keyword and can be changed using
 the ``=`` symbol. It looks like this:
 
-::
+.. code-block:: none
 
       var int a, b, c;
       a = 3 * (b = (5 * (c = 1))); // a = 15, b = 5, c = 1
@@ -457,7 +457,7 @@ A Program script can contain if..then..else blocks, very similar to C
 syntax, except that the *then* word is mandatory and that the braces ()
 can be omitted. For example:
 
-::
+.. code-block:: none
 
       var int x = 3
 
@@ -486,7 +486,7 @@ initialises a variable or is empty. The condition contains a boolean
 expression (use 'true' to simulate an empty condition). The second
 statement changes a variable or is empty.
 
-::
+.. code-block:: none
 
       // note the var when declaring i:
       for ( var int i = 0; i != 10; i = i + 1 )
@@ -531,7 +531,7 @@ The break Statement
 To break out of a while or for loop, the break statement is available.
 It will break out of the innermost loop, in case of nesting.
 
-::
+.. code-block:: none
 
       var int i = 0
       while true  {
@@ -581,7 +581,7 @@ state and waits for user intervention. This can be intercepted by using
 a *try...catch* statement. It tries to execute the method, and if it
 throws, the optional catch clause is executed :
 
-::
+.. code-block:: none
 
       // just try ignores the exception of action :
       try comp.action( args )
@@ -601,7 +601,7 @@ Setting Task Attributes and Properties
 Task attributes/Properties are set in the same way as ordinary script
 variables.
 
-::
+.. code-block:: none
 
       // Setting a property named MyProp of type double
       var double d = 5.0
@@ -614,7 +614,7 @@ Statements can be grouped in functions. A function can only call another
 function which is earlier defined. Thus recursive function calling is
 not allowed in this language.
 
-::
+.. code-block:: none
 
       // A function only known in the current scripting service
       void func_name( int arg1, double arg2 ) {
@@ -663,7 +663,7 @@ Calling functions
 
 A function can be called as a regular Operation :
 
-::
+.. code-block:: none
 
       foo(arg)      // is a global, local or exported function of the current component
 
@@ -684,7 +684,7 @@ The return statement behaves like in traditional languages. For programs
 and functions that do not return a value, the return statement is
 written like:
 
-::
+.. code-block:: none
 
       export void foo(int i) {
          // ...
@@ -696,7 +696,7 @@ written like:
 When the return statement returns a value, it must be on the same line
 as the return word:
 
-::
+.. code-block:: none
 
       export int foo(int i) {
          // ...
@@ -717,7 +717,7 @@ execution of the current script and allows the Execution Engine in which
 it runs to do something else. You will need this in an endless while
 loop, for example:
 
-::
+.. code-block:: none
 
       while( true ) {
         log("Waiting...")
@@ -738,7 +738,7 @@ manipulated from another script. This can be done through the programs
 subtask of the TaskContext in which the program was loaded. Assume that
 you loaded "progname" in task "ATask", you can write
 
-::
+.. code-block:: none
 
       ATask.progname.start()
       ATask.progname.pause()
@@ -752,7 +752,7 @@ debugger). The last line stops the program fully (running or paused).
 
 Some basic properties of the program can be inspected likewise :
 
-::
+.. code-block:: none
 
       var bool res =  ATask.progname.isRunning()
       res = ATask.progname.inError()
@@ -906,7 +906,7 @@ In C++ code
 
 Parsing the StateMachine is very analogous to parsing Programs in C++:
 
-::
+.. code-block:: cpp
 
       #include <rtt/Activity.hpp>
       #include <rtt/TaskContext.hpp>
@@ -935,7 +935,7 @@ In case you wish to have a pointer to a state machine script object
 (``RTT::scripting::StateMachine``), you can have so only from within the
 owner TaskContext by writing:
 
-::
+.. code-block:: cpp
 
       // Services are always accessed using a shared_ptr
       // cast the "scripting" RTT::Service to an RTT::scripting::ScriptingService shared_ptr:
@@ -961,7 +961,7 @@ parameters it got in its instantiation.
 
 A StateMachine definition looks like this :
 
-::
+.. code-block:: none
 
       StateMachine MyStateMachineDefinition
       {
@@ -1044,7 +1044,7 @@ transition can be found to another state. The transitions section
 defines one or more ``select`` *state* statements. These can be guarded
 by if...then clauses (the transition conditions):
 
-::
+.. code-block:: none
 
       // In state XYZ :
       // conditionally select the START state
@@ -1081,7 +1081,7 @@ preconditions will be checked before the state is entered.
 
 Preconditions are specified as follows:
 
-::
+.. code-block:: none
 
       state X {
         // make sure the robot is not moving axis 1 when entering this state
@@ -1114,7 +1114,7 @@ Event transitions are an extension to the transitions above and cite an
 InputPort name between the transition and the if statement. They are
 specified as:
 
-::
+.. code-block:: none
 
       state X {
         var double d
@@ -1132,7 +1132,7 @@ specified as:
 Both the transition programs and the the select statements are optional,
 but at least a program or select statement must be given. The
 
-::
+.. code-block:: none
 
       transition x_in_port(d) if (d >1.3) then {
 
@@ -1140,7 +1140,7 @@ but at least a program or select statement must be given. The
 short notation statement is equivalent to writing (NOTE: the added
 .read(d) part) :
 
-::
+.. code-block:: none
 
       transition if ( x_in_port.read(d) == NewData && d >1.3) then {...
 
@@ -1183,7 +1183,7 @@ events instead of edge events as seen above. The syntax for level events
 shows that the port must be read out in the if statement, as a normal
 port read:
 
-::
+.. code-block:: none
 
       transition if (robotState.read(robot_state) != NoData && Robot.STATE_SAFE == robot_state) select SAFE;
 
@@ -1201,7 +1201,7 @@ TaskContext the state machine runs in. In order to respond in a state
 machine to such an event, the operation needs to be added with the
 addEventOperation function:
 
-::
+.. code-block:: none
 
       // member variable of 'MyComp':
       Operation<void(int)> requestSafe; // don't forget to initialize with a "name" in the constructor.
@@ -1225,7 +1225,7 @@ addEventOperation function:
 Reacting to an Operation call is similar to responding to port events
 above:
 
-::
+.. code-block:: none
 
       state X {
         var int reason;
@@ -1264,7 +1264,7 @@ A Root Machine is a normal instantiation of a StateMachine, one that
 does not depend on a parent StateMachine ( see below ). They are defined
 as follows:
 
-::
+.. code-block:: none
 
       StateMachine SomeStateMachine
       {
@@ -1297,7 +1297,7 @@ below ) the parent Machine.
 
 You can define a StateMachine public variable as follows:
 
-::
+.. code-block:: none
 
       StateMachine SomeStateMachine
       {
@@ -1330,7 +1330,7 @@ This example creates some handy public variables in the StateMachine
 SomeStateMachine, and uses them throughout the state machine. They can
 also be read and modified from other tasks or programs :
 
-::
+.. code-block:: none
 
       var int readcounter = 0
       readcounter = taskname.mymachine.counter
@@ -1343,7 +1343,7 @@ StateMachine parameters
 A StateMachine can have parameters that need to be set on its
 instantiation. Here's an example:
 
-::
+.. code-block:: none
 
       StateMachine AxisController
       {
@@ -1388,7 +1388,7 @@ Instantiating SubMachines
 
 An instantiation of a SubMachine is written as follows:
 
-::
+.. code-block:: none
 
       StateMachine ChildStateMachine
       {
@@ -1453,7 +1453,7 @@ However, you can still change the values of the parameters afterwards.
 The syntax is: "set someSubMachine.someParam = someExpression". Here's
 an elaborate example:
 
-::
+.. code-block:: none
 
       StateMachine ChildStateMachine
       {
@@ -1510,7 +1510,7 @@ an elaborate example:
 You can also query if a child State Machine is in a certain state. The
 syntax looks like:
 
-::
+.. code-block:: none
 
     someSubMachine.inState( "someStateName" )
 
@@ -1524,7 +1524,7 @@ through the "states" subtask of the TaskContext in which the state
 machine was loaded. Assume that you loaded "machine" with subcontexts
 "axisx" and "axisy" in task "ATask", you can write
 
-::
+.. code-block:: none
 
       ATask.machine.activate()
       ATask.machine.axisx.activate()
@@ -1551,7 +1551,7 @@ initial state and finally deactivated.
 Thus both RootMachines and SubMachines can be controlled. Some basic
 properties of the states can be inspected likewise :
 
-::
+.. code-block:: none
 
       var bool res =  ATask.machine.isActive()      // Active ?
       res = ATask.machine.axisy.isRunning()     // Running ?
@@ -1567,7 +1567,7 @@ On Reactive Mode Commands
 
 Consider the following StateMachine :
 
-::
+.. code-block:: none
 
       StateMachine X {
          // ...
@@ -1599,7 +1599,7 @@ Consider the following StateMachine :
 
 A program interacting with this StateMachine can look like this :
 
-::
+.. code-block:: none
 
        program interact {
            // First activate x :
@@ -1660,7 +1660,7 @@ Automatic Mode Commands
 
 Consider the following StateMachine, as in the previous section :
 
-::
+.. code-block:: none
 
       StateMachine X {
          // ...
@@ -1691,7 +1691,7 @@ Consider the following StateMachine, as in the previous section :
 
 A program interacting with this StateMachine can look like this :
 
-::
+.. code-block:: none
 
        program interact {
            // First activate x :
@@ -1744,7 +1744,7 @@ to exploit most common functions.
 
 The Example below shows a state machine for controlling 6 axes.
 
-::
+.. code-block:: none
 
         StateMachine Simple_nAxes_Test
         {
@@ -1835,7 +1835,7 @@ The Example below shows a state machine for controlling 6 axes.
 
 Below is a program script example.
 
-::
+.. code-block:: none
 
       /**
        * This program is executed in the exec_state.

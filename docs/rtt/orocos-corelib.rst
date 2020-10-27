@@ -72,7 +72,7 @@ There are two ways to run a function in a periodically. By :
    activity using activity.run( &run\_impl ) or at construction time of
    an Activity : Activity activity(priority, period, &run\_impl );.
 
-   ::
+   .. code-block:: cpp
 
          #include <rtt/RunnableInterface.hpp>
          #include <rtt/Activity.hpp>
@@ -123,7 +123,7 @@ There are two ways to run a function in a periodically. By :
 -  Inheriting from an Activity class and overriding the initialize(),
    step() and finalize() methods.
 
-   ::
+   .. code-block:: cpp
 
          class MyOtherPeriodicFunction
              : public RTT::Activity
@@ -172,7 +172,7 @@ to a periodic Activity, the user can implement ``initialize()``,
 executing the user's functions. Alternatively, you can reimplement said
 functions in a derived class of Activity.
 
-::
+.. code-block:: cpp
 
       int priority = 5;
 
@@ -217,7 +217,7 @@ scheduler type, by providing an extra argument during construction. When
 a priority is specified, the Activity selects the the ORO\_SCHED\_RT
 scheduler.
 
-::
+.. code-block:: cpp
 
       // Equivalent to Activity my_act(OS::HighestPriority, 0.001) :
       Activity my_act(ORO_SCHED_RT, OS::HighestPriority, 0.001);
@@ -236,7 +236,7 @@ implemented which will execute ``RunnableInterface::step()`` or
 ``RunnableInterface::loop()`` when called by the user. Three versions of
 the ``SlaveActivity`` can be constructed:
 
-::
+.. code-block:: cpp
 
       #include <rtt/SlaveActivity.hpp>
 
@@ -289,12 +289,12 @@ information such as the priority and periodicity and allows to control
 the real-timeness of the thread which runs this activity. A non periodic
 activity's thread will return a period of zero.
 
-A ``RTT::base::RunnableInterface`` can get the same information through
+An ``RTT::base::RunnableInterface`` can get the same information through
 the ``this->getActivity()->thread()`` method calls.
 
 This example shows how to manipulate a thread.
 
-::
+.. code-block:: cpp
 
     #include "rtt/ActivityInterface.hpp"
 
@@ -338,7 +338,7 @@ Signal Basics
 
 This example shows how a handler is connected to an Signal.
 
-::
+.. code-block:: cpp
 
      #include <rtt/internal/Signal.hpp>
 
@@ -358,7 +358,7 @@ Now we will connect the handler function to a signal. Each event-handler
 connection is stored in a Handle object, for later reference and
 connection management.
 
-::
+.. code-block:: cpp
 
      // The <..> means the callback functions must be of type "void foo(void)"
      RTT::internal::Signal<void(void)> emergencyStop;
@@ -376,14 +376,14 @@ connection management.
 
 Finally, we emit the event and see how the handler functions are called:
 
-::
+.. code-block:: cpp
 
      std::cout << "Emit/Call the event\n";
      emergencyStop();
 
 The program will output these messages:
 
-::
+.. code-block:: none
 
          Register appropriate handlers to the Emergency Stop Signal
          Emit the event
@@ -395,7 +395,7 @@ manual <http://www.boost.org/libs/bind/bind.html>`__. You must use bind
 if you want to call C++ class member functions to 'bind' the member
 function to an object :
 
-::
+.. code-block:: cpp
 
       ClassName object;
       boost::bind( &ClassName::FunctionName, &object)
@@ -403,7 +403,7 @@ function to an object :
 Where ClassName::FunctionName must have the same signature as the
 Signal. When the Signal is called,
 
-::
+.. code-block:: cpp
 
       object->FunctionName( args )
 
@@ -411,7 +411,7 @@ is executed by the Signal.
 
 When you want to call free ( C ) functions, you do not need bind :
 
-::
+.. code-block:: cpp
 
       Signal<void(void)> event;
       void foo() { ... }
@@ -422,7 +422,7 @@ This can no longer be changed once the ``RTT::internal::Signal`` is
 created. If the type changes, the event() method must given other
 arguments. For example :
 
-::
+.. code-block:: cpp
 
       RTT::internal::Signal<void(void)> e_1;
       e_1();
@@ -436,7 +436,7 @@ arguments. For example :
 Furthermore, you need to setup the connect call differently if the
 Signal carries one or more arguments :
 
-::
+.. code-block:: cpp
 
       SomeClass someclass;
 
@@ -459,7 +459,7 @@ On ``setup()`` and the ``RTT::Handle`` object
 Signal connections can be managed by using a Handle which both
 ``connect()`` and ``setup()`` return :
 
-::
+.. code-block:: cpp
 
       RTT::internal::Signal<void(int, float)> event;
       RTT::Handle eh;
@@ -480,7 +480,7 @@ Signal connections can be managed by using a Handle which both
 Handle objects can be copied and will all show the same status. To have
 a connection setup, but not connected, one can write :
 
-::
+.. code-block:: cpp
 
       RTT::internal::Signal<void(int, float)> event;
       RTT::Handle eh;
@@ -522,7 +522,7 @@ Usage Example
 
 Also take a look at the interface documentation.
 
-::
+.. code-block:: cpp
 
       #include <rtt/os/TimeService.hpp>
       #include <rtt/Time.hpp>
@@ -546,7 +546,7 @@ network connection.
 The advantages of this class come clear when building Orocos Components,
 since it allows a component to make internal data to its scripts.
 
-::
+.. code-block:: cpp
 
       // an attribute, representing a double of value 1.0:
       RTT::Attribute<double> myAttr(1.0);
@@ -580,20 +580,22 @@ change the values as they see fit. Java for example presents a Property
 API. The Doxygen Property API should provide enough information for
 successfully using them in your Software Component.
 
-    **Note**
+.. note::
 
     Reading and writing a properties value can be done in real-time.
     Every other transaction, like marshaling (writing to disk),
     demarshaling (reading from disk) or building the property is not a
     real-time operation.
 
-    ::
+..
 
-          // a property, representing a double of value 1.0:
+.. code-block:: cpp
 
-          RTT::Property<double> myProp("Parameter A","A demo parameter", 1.0); // not real-time !
-          myProp = 10.9; // real-time
-          double a = myProp.get(); // real-time
+      // a property, representing a double of value 1.0:
+
+      RTT::Property<double> myProp("Parameter A","A demo parameter", 1.0); // not real-time !
+      myProp = 10.9; // real-time
+      double a = myProp.get(); // real-time
 
 Properties are mainly used for two purposes. First, they allow an
 external entity to browse their contents, as they can form hierarchies
@@ -617,7 +619,7 @@ recursive operations on a bag, you can use the helper functions we
 created and which are defined in ``PropertyBag.hpp`` (see Doxygen
 documentation). These operations are however, most likely not real-time.
 
-    **Note**
+.. note
 
     When you want to put a PropertyBag into another PropertyBag, you
     need to make a Property<PropertyBag> and insert that property into
@@ -629,7 +631,7 @@ property which is stored in a PropertyBag: the property object's value
 acts like the original. The name and description are not mirrored, only
 copied upon initialisation:
 
-::
+.. code-block
 
       RTT::PropertyBag bag;
       RTT::Property<double> w("Weight", "in kilograms", 70.5 );
@@ -716,7 +718,7 @@ typed buffer of type *T* and works as a FIFO queue for storing elements
 of type T. It is lock-free, non blocking and read and writes happen in
 bounded time. It is not subject to priority inversions.
 
-::
+.. code-block:: cpp
 
       #include <rtt/BufferLockFree.hpp>
 
@@ -745,7 +747,7 @@ semantics than just (vectors of) doubles. The default constructor of the
 data is called when the DataObject is constructed. Here is an example of
 creating and using a DataObject :
 
-::
+.. code-block:: cpp
 
       #include <rtt/DataObjectInterfaces.hpp>
 
@@ -769,7 +771,7 @@ Orocos applications can have pretty complex start-up and initialisation
 code. A logging framework, using ``RTT::Logger`` helps to track what
 your program is doing.
 
-    **Note**
+.. note::
 
     Logging can only be done in the non-real-time parts of your
     application, thus not in the Real-time Periodic Activities !
@@ -803,7 +805,7 @@ Table: Logger Log Levels
 You can change the amount of log info printed on your console by setting
 the environment variable ORO\_LOGLEVEL to one of the above numbers :
 
-::
+.. code-block:: bash
 
       export ORO_LOGLEVEL=5
 
@@ -817,7 +819,7 @@ information of what is happening inside Orocos.
 
 If you want to disable logging completely, use
 
-::
+.. code-block:: bash
 
     export ORO_LOGLEVEL=-1
 
@@ -826,7 +828,7 @@ before you start your program.
 For using the ``RTT::Logger`` class in your own application, consult the
 API documentation.
 
-::
+.. code-block:: cpp
 
       #include <rtt/Logger.hpp>
 
@@ -842,7 +844,7 @@ in front (using log() ) or at the end (using endlog()) of the log
 message. When no log level is specified, the previously set level is
 used. The above message could result in :
 
-::
+.. code-block:: none
 
       0.123 [ ERROR  ][MyModule] An error Occured : 333
       0.124 [ Debug  ][MyModule] <contents of debugstring and data >

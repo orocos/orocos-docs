@@ -127,10 +127,9 @@ device layer can be queried for entities, since logical device drivers
 are typically instantiated where needed, given an earlier loaded
 physical device driver.
 
-`example\_title <#example_name_service>`__ shows how one could query the
-``RTT::DigitalOutInterface``.
+The example below shows how one could query the ``RTT::DigitalOutInterface``.
 
-::
+.. code-block:: cpp
 
       FancyCard* fc = new FancyCard("CardName"); // FancyCard implements DigitalOutInterface
 

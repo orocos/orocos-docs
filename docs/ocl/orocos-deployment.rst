@@ -75,7 +75,7 @@ the DeploymentComponent is by default 'Deployer'. In order to change
 this name, use for example ``deployer-gnulinux NewDeployerName``. See
 also ``deployer-<target> --help`` for an overview of the options.
 
-    **Note**
+.. note::
 
     In case you set the OROCOS\_TARGET environment variable to the
     target you want to use (for example "gnulinux"), you can also start
@@ -139,25 +139,25 @@ options.
 
 Some examples are
 
-::
+.. code-block:: bash
 
-      deployer-corba --log-level warning -s myfile.xml
+    deployer-corba --log-level warning -s myfile.xml
 
 
 Sets the Orocos log level to ``warning`` and deploys file ``myfile.xml``
 
-::
+.. code-block:: bash
 
-      deployer-corba -l fatal --no-consolelog -s leftfile.xml LeftDeployer
+    deployer-corba -l fatal --no-consolelog -s leftfile.xml LeftDeployer
 
 
 Sets the Orocos log level to ``fatal``, turns off all logging to
 console, names the deployer ``LeftDeployer`` and deploys file
 ``leftfile.xml``
 
-::
+.. code-block:: bash
 
-      deployer-corba -l fatal --no-consolelog -s leftfile.xml LeftDeployer -- -ORBInitRef NameService=corbaloc:iiop:me.mine.home:2809/NameService -ORBFooBar 1
+    deployer-corba -l fatal --no-consolelog -s leftfile.xml LeftDeployer -- -ORBInitRef NameService=corbaloc:iiop:me.mine.home:2809/NameService -ORBFooBar 1
 
 
 As with the previous example, and also passes some options through to
@@ -206,7 +206,7 @@ components can be found, and which component libraries to import.
 
 Imagine that you have this directory structure:
 
-::
+.. code-block:: none
 
      /opt/robot                    : your orocos install path (lib, include, etc)
      /opt/robot/lib/orocos/        : orocos installed components
@@ -217,7 +217,7 @@ Imagine that you have this directory structure:
 And that you have a project 'robot-13' which is installed there as well,
 but in a subdirectory of the ``/opt/robot/lib/orocos`` directory:
 
-::
+.. code-block:: none
 
      /opt/robot/lib/orocos/robot-13         : robot-13 components
                           /robot-13/plugins : robot-13 services and other plugins
@@ -251,7 +251,7 @@ In XML, the path statement looks like:
 
 The script method equivalent is:
 
-::
+.. code-block:: none
 
       // note: small 'p':
       path("/opt/robot/lib/orocos")
@@ -283,7 +283,7 @@ In XML, the import statement looks like:
 
 The script method equivalent is:
 
-::
+.. code-block:: none
 
       // note: small 'i':
       import("robot-13")
@@ -304,7 +304,7 @@ available in the next step.
 To see the effects of the import function, the available types can be
 queried by invoking the ``displayComponentTypes`` (script) method:
 
-.. code-block:: rest
+.. code-block:: none
 
      (type 'ls' for context info) :displayComponentTypes()
           Got :displayComponentTypes()
@@ -335,7 +335,7 @@ the 'Include' directive. The include directive may occur at any place in
 the XML file (but under <properties>) and will be processed as-if the
 included file is inserted at that point.
 
-    **Warning**
+.. warning::
 
     This option is new and experimental and may change in meaning and/or
     name in the future. When using the Xerces XML parser in Orocos, you
@@ -392,7 +392,7 @@ component, which is exported using the ``ORO_CREATE_COMPONENT`` macro
 
 The script method equivalent is:
 
-::
+.. code-block:: none
 
       loadComponent("Reporter", "OCL::FileReporting")
 
@@ -563,14 +563,14 @@ You can check the available services or plugins (ie discovered by the
 DeploymentComponent) with '.services' or '.plugins' and load a service
 from the TaskBrowser prompt *in the current visited component* with
 
-::
+.. code-block:: none
 
     .provide
             <servicename>
 
 . The Deployer has the equivalent function which looks like this:
 
-::
+.. code-block:: none
 
       loadService("Reporter","scripting")
 
@@ -599,7 +599,7 @@ start() method will be called during ``startComponents()``. By default
 There is no literal alternative for AutoConf in scripting. Just use the
 ``configure()`` operation of your component in order to configure it:
 
-::
+.. code-block:: none
 
       Controller.configure()
       Controller.start()
@@ -664,7 +664,7 @@ the ``AutoConnect`` flag. If an automatic port connection fails, the
 configuration procedure will not fail and just continue. An error
 message may be logged. By default, ``AutoConnect`` is 0 (off).
 
-    **Note**
+.. note::
 
     AutoConnect is only useful for simple applications, use the explicit
     'Ports' connection method to connect different named ports to each
@@ -673,7 +673,7 @@ message may be logged. By default, ``AutoConnect`` is 0 (off).
 In scripting, you can use the ``ConnPolicy`` struct for connecting
 ports. For example:
 
-::
+.. code-block:: none
 
       var ConnPolicy cp
       cp.type = BUFFER
@@ -730,7 +730,7 @@ of the Component, just before the Component is ``cleanup()``.
 In scripting, you can use the ``marshalling`` service in order to do the
 property loading for you. For example:
 
-::
+.. code-block:: none
 
       loadService("MyComponent","marshalling")
       MyComponent.marshalling.readProperties("file.cpf")
@@ -763,7 +763,7 @@ and control it. For example, use its services, start and stop it etc.
 Loading and Running Orocos Program Scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **Note**
+.. note::
 
     This section is for starting scripts from the XML file. In case you
     want to use a script directly (or after an XML file), you can use
@@ -787,7 +787,7 @@ again done during the ``configureComponents()`` step.
 If you want to have a program or statemachine started you need to do so
 at the end of the script file itself, by adding
 
-::
+.. code-block:: none
 
       programname.start()
       statemachine_instance.activate()
@@ -797,7 +797,7 @@ statements. Be aware that this is done during the configuration phase of
 your components, so before updateHook() is executed. You are however
 allowed to start your component from the script by merely calling
 
-::
+.. code-block:: none
 
       start()
 
@@ -832,7 +832,7 @@ scripts, since scripts need periodic execution in case they have to wait
 for an operation to complete. Alternatively, you can set the period at
 the top of your script file by adding the statement:
 
-::
+.. code-block:: none
 
       setPeriod(0.01)
 
@@ -872,7 +872,7 @@ Naming Service to register its name. If this is not wanted, set the
 
 The script method equivalent of the above XML construct is:
 
-::
+.. code-block:: none
 
       server("Reporter", true)
 
@@ -909,7 +909,7 @@ using the same name as the original. This also works for the scripting
 deployer command 'loadComponent'. For example, you can type in the
 TaskBrowser:
 
-::
+.. code-block:: none
 
       loadComponent("MyComponent", "CORBA")
       loadComponent("MyComponent.ior", "IORFile")
@@ -924,7 +924,7 @@ Setting up a deployable component library
 This section explains how to prepare a component library for deployment.
 It is demonstrated with an example.
 
-    **Note**
+.. note::
 
     The ``orocreate-pkg`` script of OCL does all the setup work for you.
     This section is given for reference use only.
@@ -939,7 +939,7 @@ component type. Assume we have written the ``OCL::HelloWorld`` component
 ``orocos-helloworld.so`` library. The following code is added to
 HelloWorld.cpp:
 
-::
+.. code-block:: cpp
 
       #include "HelloWorld.hpp"
       #include <ocl/Component.hpp>
@@ -958,7 +958,7 @@ once for the whole library. Say your library has components
 NS::\ ``ComponentX`` and NS::\ ``ComponentZ`` in namespace NS. In order
 to export both components, you could write in ``ComponentX.cpp``:
 
-::
+.. code-block:: cpp
 
       #include "ComponentX.hpp"
       #include <ocl/Component.hpp>
@@ -972,7 +972,7 @@ to export both components, you could write in ``ComponentX.cpp``:
 and in ``ComponentY.cpp`` the same but without the
 ORO\_CREATE\_COMPONENT\_LIBRARY macro:
 
-::
+.. code-block:: cpp
 
       #include "ComponentY.hpp"
       #include <ocl/Component.hpp>
@@ -986,12 +986,10 @@ For each additional component in the same library, the
 ORO\_LIST\_COMPONENT\_TYPE macro is added. It is allowed to put all the
 ORO\_LIST\_COMPONENT\_TYPE macros in a single file.
 
-    **Note**
+.. note::
 
     You may not link multiple libraries that use ORO\_CREATE\_COMPONENT,
     since only one of the component types will be found.
-
-    **Note**
 
     ORO\_CREATE\_COMPONENT\_LIBRARY() replaces the pre-2.3.0
     ORO\_CREATE\_COMPONENT\_TYPE() macro. The old macro is still kept
@@ -1007,7 +1005,7 @@ static library will not be dynamically loadable. In the final executable
 the DeploymentComponent will be able to find the linked in components
 and setup the application using the XML file.
 
-    **Important**
+.. important::
 
     The macros need some help to figure out if you are compiling a
     shared or static library. You need to define the *RTT\_COMPONENT*
@@ -1031,7 +1029,7 @@ options :
       CFLAGS= -O2 -Wall
       LDFLAGS=
 
-**Note**
+.. note::
 
   If you use CMake with the UseOrocos.cmake macros, you don't need any
   of this manual setup. The Orocos macros set the right flags for you.
