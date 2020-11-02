@@ -42,7 +42,7 @@ Orocos libraries can be installed in multiple ways, depending on your system
 and the components required.
 
 Binaries
-********
+--------
 
 The easiest way to get Orocos running in a GNU/Linux server is installing
 the software via pre-compiled packages. There are two main options:
@@ -82,7 +82,7 @@ the software via pre-compiled packages. There are two main options:
   preinstalled are distributed.
 
 From source
-***********
+-----------
 
 For the users that want to run Orocos in a different system or need a specific
 set of components, the installation can be done from sources.
@@ -100,7 +100,8 @@ There are two main methods to build and install Orocos.
 
       apt install omniorb omniidl omniorb-idl omniorb-nameserver libomniorb4-dev
 
-- Using CMake (default way):
+Using CMake (default way):
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Clone the source repo from github:
 
@@ -132,7 +133,8 @@ There are two main methods to build and install Orocos.
 
     make install
 
-- Using ROS build tools (``catkin``)
+Using ROS build tools (``catkin``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Make sure you have ROS installed, see `ROS installation instructions <https://wiki.ros.org/ROS/Installation>`_.
 
