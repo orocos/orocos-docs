@@ -38,9 +38,8 @@ the scripting language allows to 'program' components without
 recompiling the source.
 
 If you're familiar with the Lua programming language, you can also
-implement components an statemachines in real-time Lua scripts. Check
-out the `Lua
-Cookbook <http://www.orocos.org/wiki/orocos/toolchain/luacookbook>`__
+implement components and statemachines in real-time Lua scripts, check
+out the :doc:`Lua Cookbook <rtt-lua-cookbook>`
 website.
 
 Orocos Toolchain Overview
