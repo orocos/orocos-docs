@@ -16,5 +16,5 @@ The source code for the integration with ROS 1 can be found in:
 Orocos & ROS 2 Integration
 **************************
 
-The source code for the integration with ROS 1 can be found in:
+The source code for the integration with ROS 2 can be found in:
 `GitHub: rtt\_ros2\_integration <https://github.com/orocos/rtt_ros2_integration>`_.
